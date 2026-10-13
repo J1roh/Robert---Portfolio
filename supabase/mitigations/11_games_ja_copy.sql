@@ -5,7 +5,7 @@ update public.content c
 set value = jsonb_set(c.value, '{projects}', (
       select jsonb_agg(
         case when p->>'slug' = 'games'
-             then jsonb_set(jsonb_set(p, '{subtitle,ja}', '"翻訳からLQA"'), '{role,ja}', '"翻訳者 / ローカライズリード / プロジェクトマネージャー"')
+             then jsonb_set(jsonb_set(p, '{subtitle,ja}', '"翻訳からLQAまで"'), '{role,ja}', '"翻訳者 / ローカライズリード / プロジェクトマネージャー"')
              else p end
         order by p_i)
       from jsonb_array_elements(c.value->'projects') with ordinality as x(p, p_i)

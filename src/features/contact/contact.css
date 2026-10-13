@@ -10,6 +10,11 @@
   white-space: pre-line;
 }
 
+/* Kanji fill the full em box, so the Latin-tuned 0.9 leading makes the two lines touch. */
+.contact-title:lang(ja) {
+  line-height: 1.15;
+}
+
 .contact-row {
   display: grid;
   grid-template-columns: repeat(12, 1fr);

@@ -20,6 +20,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Environment secrets/variables are only visible to jobs that name the environment.
+    environment: github-pages
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -30,8 +32,8 @@ jobs:
       # The site is served from /<repo>/, not the domain root; drop --base if a custom domain is added.
       - run: npm run build -- --base=/${{ github.event.repository.name }}/
         env:
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL || vars.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY || vars.VITE_SUPABASE_ANON_KEY }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
