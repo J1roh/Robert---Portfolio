@@ -1,0 +1,14 @@
+.arrow {
+  width: var(--text-lg);
+  height: var(--text-lg);
+  flex: 0 0 auto;
+}
+
+.arrow path {
+  stroke: currentColor;
+  stroke-width: 1.3;
+}
+
+.arrow-down {
+  transform: rotate(90deg);
+}

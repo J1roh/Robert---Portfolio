@@ -1,0 +1,191 @@
+{
+  "name": "Robert Roy Dela Serna",
+  "nameLines": [
+    "Robert Roy",
+    "Dela Serna"
+  ],
+  "brand": "RRDS",
+  "heroArt": [
+    {
+      "file": "Harmonic Reflections.webp",
+      "focus": "38% 30%"
+    },
+    {
+      "posters": [
+        "portrait/re-zero-s4.webp",
+        "portrait/isekai-quartet-3.webp",
+        "portrait/shiboyugi.webp",
+        "portrait/iruma-kun-s4.webp"
+      ]
+    },
+    {
+      "file": "Kugayama Shiori's.webp",
+      "focus": "68% 35%"
+    }
+  ],
+  "pageTitle": "Robert Roy Dela Serna — Japanese → English Translator",
+  "pageDescription": "Japanese → English Translator and Localization Lead for Games and Anime",
+  "links": {
+    "linkedin": "https://www.linkedin.com/in/robert-roy-dela-serna-7344b5110",
+    "x": "https://x.com/Jchah1",
+    "xLabel": "X / @JCHAH1",
+    "email": ""
+  },
+  "login": {
+    "kicker": "PRIVATE CMS / 管理画面",
+    "heading": "Studio access",
+    "intro": "Enter your credentials to manage portfolio content.",
+    "submit": "Sign in",
+    "back": "← Back to portfolio"
+  },
+  "copy": {
+    "ja": {
+      "navWork": "仕事",
+      "navAbout": "概要",
+      "navContact": "お問い合わせ",
+      "availability": "2019年よりフリーランスとして活動",
+      "eyebrow": "日英翻訳者・ローカライズリード",
+      "intro": "物語を、世界へ",
+      "stats": [
+        {
+          "value": "1,000+",
+          "label": "取引先数"
+        },
+        {
+          "value": "13,000+",
+          "label": "案件実績数"
+        },
+        {
+          "value": "7+",
+          "label": "実務経験年数"
+        }
+      ],
+      "clientRoster": "Muse Asia · Laplacian · TABI NO MICHI · Cynical Honey",
+      "viewWork": "実績",
+      "scroll": "スクロール",
+      "selected": "翻訳・ローカライズ実績",
+      "projectsCount": "PROJECTS",
+      "services": "プロフィール",
+      "servicesNote": "日英翻訳｜2019年より活動中",
+      "approach": "累計案件数13,000件以上\n取引先数1,000社以上",
+      "allTitles": "全タイトル",
+      "about": "日英翻訳｜2019年より活動中",
+      "serviceList": [
+        "アニメ字幕翻訳",
+        "編集・品質管理",
+        "ゲームローカライズ",
+        "ローカライズリード / PM"
+      ],
+      "enquiry": {
+        "eyebrow": "お問い合わせ / PROJECT INQUIRY",
+        "title": [
+          "あなたの​物語を、",
+          "世界へ​届けましょう。"
+        ],
+        "intro": "翻訳、ローカライズ、編集、品質管理について、作品の概要やスケジュールをお聞かせください。",
+        "name": "お名前",
+        "email": "メールアドレス",
+        "company": "会社・団体名",
+        "timeline": "希望スケジュール",
+        "timelinePlaceholder": "例：2026年12月",
+        "message": "プロジェクトについて",
+        "messagePlaceholder": "作品名、文字数または再生時間、対応言語、希望納期",
+        "submit": "送信",
+        "sending": "送信中…",
+        "sent": "送信しました。ありがとうございます。",
+        "alreadySent": "お問い合わせはすでに送信済みです。折り返しご連絡いたします。",
+        "note": "通常2営業日以内に返信します。",
+        "direct": "その他の連絡先",
+        "back": "ポートフォリオへ戻る",
+        "notConfigured": "お問い合わせフォームは現在利用できません。LinkedInまたはXからご連絡ください。"
+      },
+      "contactEyebrow": "お問い合わせ",
+      "contactTitle": "物語を、\n世界へ。",
+      "contactBody": "相談内容をお聞かせください。",
+      "contactCta": "ご相談はこちら",
+      "location": "日本語 → 英語",
+      "role": "役割",
+      "client": "クライアント",
+      "close": "閉じる",
+      "viewProject": "作品を見る",
+      "showImage": "画像を表示",
+      "showVideo": "動画を表示",
+      "languageLabel": "言語",
+      "newTab": "（新しいタブで開きます）"
+    },
+    "en": {
+      "navWork": "Work",
+      "navAbout": "About",
+      "navContact": "Contact",
+      "availability": "Freelance since February 2019",
+      "eyebrow": "Translator & Localization Lead",
+      "intro": "Japanese → English Translator",
+      "stats": [
+        {
+          "value": "1,000+",
+          "label": "Clients Served"
+        },
+        {
+          "value": "13,000+",
+          "label": "Jobs Done"
+        },
+        {
+          "value": "7+",
+          "label": "Years of Experience"
+        }
+      ],
+      "clientRoster": "Muse Asia · Laplacian · TABI NO MICHI · Cynical Honey",
+      "viewWork": "Credited Works",
+      "scroll": "Scroll",
+      "selected": "Translation & Localization",
+      "projectsCount": "Projects",
+      "services": "Profile",
+      "servicesNote": "JP → EN · SINCE 2019",
+      "approach": "13,000+ Projects\n1,000+ Clients",
+      "allTitles": "All Titles",
+      "about": "Freelance Japanese-to-English translator specializing in narrative-driven content. Provides end-to-end localization services, from translation and quality assurance to testing. Currently translates anime subtitles for Muse Asia and serves as Localization Lead for Laplacian's visual novels.",
+      "serviceList": [
+        "Anime Subtitling",
+        "Editing & Quality Checks",
+        "Game Localization",
+        "Localization Lead / Project Manager"
+      ],
+      "enquiry": {
+        "eyebrow": "CONTACT / PROJECT ENQUIRY",
+        "title": [
+          "Let’s take your story",
+          "further."
+        ],
+        "intro": "Tell me more.",
+        "name": "Name",
+        "email": "Email Address",
+        "company": "Company / Studio",
+        "timeline": "Preferred Timeline",
+        "timelinePlaceholder": "e.g. December 2026",
+        "message": "About the Project",
+        "messagePlaceholder": "Title, word count or runtime, languages and deadline",
+        "submit": "Send Inquiry",
+        "sending": "Sending…",
+        "sent": "Sent. Thank you, I will reply soon.",
+        "alreadySent": "You've already sent an inquiry — I'll get back to you soon.",
+        "note": "I usually reply within two working days.",
+        "direct": "Elsewhere",
+        "back": "Back to Portfolio",
+        "notConfigured": "The inquiry form is not available right now. Please reach out on LinkedIn or X."
+      },
+      "contactEyebrow": "Contact Me",
+      "contactTitle": "Take your story further.",
+      "contactBody": "Tell me more.",
+      "contactCta": "Get in Touch",
+      "location": "Japanese → English",
+      "role": "Role",
+      "client": "Client",
+      "close": "Close",
+      "viewProject": "View Project",
+      "showImage": "Show Image",
+      "showVideo": "Show Video",
+      "languageLabel": "Language",
+      "newTab": "(opens in a new tab)"
+    }
+  }
+}

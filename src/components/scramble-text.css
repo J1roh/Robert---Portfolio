@@ -1,0 +1,16 @@
+/* Keeps a scrambling line exactly the size of its final text, so the page never jumps. */
+.scramble {
+  position: relative;
+  display: block;
+  overflow: clip;
+  overflow-clip-margin: 0.15em;
+}
+
+.scramble-ghost {
+  color: transparent;
+}
+
+.scramble-frame {
+  position: absolute;
+  inset: 0;
+}

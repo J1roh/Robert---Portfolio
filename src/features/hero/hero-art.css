@@ -1,0 +1,121 @@
+.hero-art,
+.hero-slide,
+.hero-slide > img {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-art {
+  z-index: -2;
+  overflow: hidden;
+  /* Hero art opacity per theme: 1 = full, 0 = hidden (fades toward the hero background). */
+  --art-opacity-dark: 0.25;
+  --art-opacity-light: 0.5;
+  opacity: var(--art-opacity-dark);
+}
+
+/* Light mode: chosen by the visitor, or the system preference when they haven't chosen. */
+:root[data-theme="light"] .hero-art {
+  opacity: var(--art-opacity-light);
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .hero-art {
+    opacity: var(--art-opacity-light);
+  }
+}
+
+.hero-slide {
+  opacity: 0;
+  transition: opacity 1.9s ease-in-out;
+}
+
+.hero-slide.is-active {
+  opacity: 1;
+}
+
+.hero-slide > img {
+  width: 100%;
+  height: 100%;
+}
+
+/* Blurred, dimmed copy fills the hero so every slide is full-bleed whatever its shape. */
+.hero-slide-fill {
+  object-fit: cover;
+  filter: blur(2.5rem) brightness(0.45);
+  transform: scale(1.15);
+}
+
+/* The real image, uncropped, below the fixed header. */
+.hero-slide-image {
+  padding-top: var(--space-9);
+  object-fit: contain;
+  object-position: right center;
+  transition: transform 1.9s ease-in-out;
+}
+
+/* Motion from the owner's zip: key art pushes in slowly while shown, eases back as it fades out. */
+.hero-slide.is-active .hero-slide-image {
+  transform: scale(1.025);
+  transition-duration: 8s;
+}
+
+/* Portrait posters side by side, each shown whole (logo and printed copyright line visible). */
+.hero-wall {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-4);
+  padding: var(--space-9) var(--gutter) var(--space-7);
+  transform: translateX(-0.75rem);
+  transition: transform 1.9s ease-in-out;
+}
+
+/* Posters slide in from the right and leave to the left. Entry is an animation: with two slides the
+   inactive one is both the next and the previous, so a transition can't give two directions. */
+.hero-slide.is-active .hero-wall {
+  transform: none;
+  animation: wall-in 1.9s ease-out;
+}
+
+@keyframes wall-in {
+  from {
+    transform: translateX(1.125rem);
+  }
+}
+
+.hero-wall-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: poster-in 1.2s ease-in-out;
+}
+
+@keyframes poster-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Portrait screens (phones, and iPads held upright, which are wider than the old 800px cut-off): shown whole,
+   wide key art would be a thin strip in a tall hero, so it fills the hero instead, cropped around the slide's
+   focal point (--focus from content/site.json) so the character stays in frame. Picked by shape, not width. */
+@media (orientation: portrait) {
+  .hero-slide-image {
+    object-fit: cover;
+    object-position: var(--focus, 50% 50%);
+  }
+
+  .hero-wall {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Each poster leans toward the wall's centre, so the four read as one group rather than drifting to the
+     corners of tiles that are a different shape from the posters. */
+  .hero-wall-poster:nth-child(1) { object-position: right bottom; }
+  .hero-wall-poster:nth-child(2) { object-position: left bottom; }
+  .hero-wall-poster:nth-child(3) { object-position: right top; }
+  .hero-wall-poster:nth-child(4) { object-position: left top; }
+}

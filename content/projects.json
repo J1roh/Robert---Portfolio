@@ -1,0 +1,278 @@
+[
+  {
+    "slug": "anime",
+    "category": "ANIME",
+    "title": "Anime Subtitles",
+    "label": {
+      "ja": "アニメ字幕翻訳",
+      "en": "Anime Subtitle Translation"
+    },
+    "subtitle": {
+      "ja": "シリーズ・映画の英語字幕",
+      "en": "English Subtitles for Series and Films"
+    },
+    "client": "Muse Asia",
+    "role": {
+      "ja": "翻訳 / 編集",
+      "en": "Translator / Editor"
+    },
+    "wide": true,
+    "allTitles": [
+      "Re:Zero S3 & S4",
+      "Welcome to Demon School! Iruma-kun S4 (translator Ep. 1–14, editor from Ep. 15)",
+      "Shiboyugi: Playing Death Games to Put Food on the Table, incl. the movie \"44: Cloudy Beach\"",
+      "Agents of the Four Seasons: Dance of Spring (except opening/ending songs)",
+      "Wind Breaker S2 (except opening/ending songs)",
+      "A Sign of Affection (except opening song)",
+      "A Nobody's Way Up to an Exploration Hero (except trailers)",
+      "Isekai Quartet 3",
+      "The Fated Magical Princess",
+      "My Status as an Assassin Obviously Exceeds the Hero's",
+      "Apocalypse Bringer Mynoghra",
+      "Demon Lord 2099",
+      "I Parry Everything",
+      "Jellyfish Can't Swim in the Night",
+      "Music Girls",
+      "Dorei-ku: The Animation",
+      "CHAOS;CHILD",
+      "Ghost in the Shell",
+      "Shounen Ashibe: Go! Go! Goma-chan S3",
+      "Tenchi Muyo! Ryo-Ohki 4th Season",
+      "Tenchi Muyo! Ryo-Ohki 5th Season (co-translator & editor)",
+      "Shounen Ashibe: Go! Go! Goma-chan S1 & S2 (co-translator & editor)",
+      "Attack on Titan movies: Crimson Bow and Arrow, Wings of Freedom (retranslation)"
+    ],
+    "details": {
+      "Welcome to Demon School! Iruma-kun S4 (translator Ep. 1–14, editor from Ep. 15)": {
+        "video": "https://www.youtube.com/watch?v=cN1bzy5Olik"
+      },
+      "Shiboyugi: Playing Death Games to Put Food on the Table, incl. the movie \"44: Cloudy Beach\"": {
+        "video": "https://www.youtube.com/watch?v=FwFg-yLkOy4",
+        "link": "https://www.youtube.com/watch?v=Z6Px75XDEzw"
+      },
+      "Agents of the Four Seasons: Dance of Spring (except opening/ending songs)": {
+        "video": "https://www.youtube.com/watch?v=mpNqO3FhZqk"
+      },
+      "Wind Breaker S2 (except opening/ending songs)": {
+        "video": "https://www.youtube.com/watch?v=GGdale6NIYo"
+      },
+      "A Sign of Affection (except opening song)": {
+        "link": "https://www.youtube.com/playlist?list=PLwLSw1_eDZl14kD6iz4eILaU9kceG6UZL"
+      },
+      "A Nobody's Way Up to an Exploration Hero (except trailers)": {
+        "video": "https://www.youtube.com/watch?v=z9jF5CzkWiU"
+      },
+      "Isekai Quartet 3": {
+        "video": "https://www.youtube.com/watch?v=llg4gTH16yc"
+      },
+      "The Fated Magical Princess": {
+        "video": "https://www.youtube.com/watch?v=JV4Og5Dyhf0"
+      },
+      "My Status as an Assassin Obviously Exceeds the Hero's": {
+        "video": "https://www.youtube.com/watch?v=h91kJbpqSIk"
+      },
+      "Apocalypse Bringer Mynoghra": {
+        "video": "https://www.youtube.com/watch?v=yrskd694hoI"
+      },
+      "Demon Lord 2099": {
+        "video": "https://www.youtube.com/watch?v=LlTBRwobaLw"
+      },
+      "I Parry Everything": {
+        "video": "https://www.youtube.com/watch?v=AskspVq0HQo"
+      },
+      "Jellyfish Can't Swim in the Night": {
+        "video": "https://www.youtube.com/watch?v=_AqC7_OPDpo"
+      },
+      "Tenchi Muyo! Ryo-Ohki 4th Season": {
+        "video": "https://www.youtube.com/watch?v=kO1qaZ2kslM"
+      },
+      "Tenchi Muyo! Ryo-Ohki 5th Season (co-translator & editor)": {
+        "video": "https://www.youtube.com/watch?v=uHTSh72Y0bs"
+      }
+    }
+  },
+  {
+    "slug": "quality",
+    "category": "QC",
+    "title": "Quality Checks",
+    "label": {
+      "ja": "品質管理",
+      "en": "Quality Checks"
+    },
+    "subtitle": {
+      "ja": "英語・タガログ語字幕の品質管理",
+      "en": "Tagalog Subtitle Quality Control"
+    },
+    "client": "Muse Asia",
+    "role": {
+      "ja": "QC / 品質管理",
+      "en": "QC / Quality Checks"
+    },
+    "wide": false,
+    "allTitles": [
+      "Puella Magi Madoka Magica: Walpurgisnacht: Rising",
+      "Lord of Mysteries S1 (Chinese → English)",
+      "Seven Deadly Sins S1",
+      "Kaguya-sama: The Stairway to Adulthood",
+      "SPY×FAMILY S1 & S2 (Tagalog QC)",
+      "Crayon Shin-chan Movies 32 & 33 (Tagalog QC)",
+      "Kaiju Girl Caramelise (Ep. 8)",
+      "Mushoku Tensei S3 (Ep. 8)",
+      "The World's Strongest Rearguard (Ep. 7)",
+      "The Elusive Samurai S2 (Ep. 5)",
+      "Grow Up Show (Ep. 7)",
+      "The World Is Dancing (Ep. 8)",
+      "Easygoing Territory Defense (Ep. 8)",
+      "Scum of the Brave (Ep. 8)",
+      "Isekai Office Worker (Ep. 9)",
+      "Reincarnated as a Dragon Hatchling (Ep. 8)",
+      "One Punch Man 3 (Ep. 12)",
+      "SPY×FAMILY S3 (Ep. 50)",
+      "Shangri-La Frontier (Ep. 47)",
+      "Beheneko (Ep. 11)",
+      "Even Given the Worthless \"Appraiser\" Class (Ep. 9)",
+      "UniteUp! Uni:Birth (Ep. 8)",
+      "Blue Exorcist S5 (Ep. 10)"
+    ],
+    "details": {
+      "Lord of Mysteries S1 (Chinese → English)": {
+        "video": "https://www.youtube.com/watch?v=qm-qmzKTUX0"
+      },
+      "Seven Deadly Sins S1": {
+        "link": "https://www.youtube.com/playlist?list=PLwLSw1_eDZl3572W1HJjIkZyW-0GGVUVq"
+      },
+      "Kaguya-sama: The Stairway to Adulthood": {
+        "video": "https://www.youtube.com/watch?v=Mu8R6XtDsdU"
+      },
+      "SPY×FAMILY S1 & S2 (Tagalog QC)": {
+        "video": "https://www.youtube.com/watch?v=dGBev16CUFo"
+      },
+      "Kaiju Girl Caramelise (Ep. 8)": {
+        "video": "https://www.youtube.com/watch?v=moEEN9lxDOE"
+      },
+      "Mushoku Tensei S3 (Ep. 8)": {
+        "video": "https://www.youtube.com/watch?v=b9MxZ7rjaGs"
+      },
+      "The World's Strongest Rearguard (Ep. 7)": {
+        "video": "https://www.youtube.com/watch?v=GJTHYFDMU9E"
+      },
+      "Easygoing Territory Defense (Ep. 8)": {
+        "video": "https://www.youtube.com/watch?v=-KDO0piOCEs"
+      },
+      "Scum of the Brave (Ep. 8)": {
+        "video": "https://www.youtube.com/watch?v=JuGnXFKhzqM"
+      },
+      "Isekai Office Worker (Ep. 9)": {
+        "video": "https://www.youtube.com/watch?v=H46WXPKGwuQ"
+      },
+      "One Punch Man 3 (Ep. 12)": {
+        "video": "https://www.youtube.com/watch?v=klax4pvvVBM"
+      },
+      "SPY×FAMILY S3 (Ep. 50)": {
+        "video": "https://www.youtube.com/watch?v=h_tL16PZ0IE"
+      },
+      "Shangri-La Frontier (Ep. 47)": {
+        "video": "https://www.youtube.com/watch?v=WRdgjUG793c"
+      },
+      "Beheneko (Ep. 11)": {
+        "video": "https://www.youtube.com/watch?v=lt4dK8iTFOg"
+      },
+      "Even Given the Worthless \"Appraiser\" Class (Ep. 9)": {
+        "video": "https://www.youtube.com/watch?v=zJ8djL-lYSg"
+      }
+    }
+  },
+  {
+    "slug": "promo",
+    "category": "PROMO",
+    "title": "Promotional Content",
+    "label": {
+      "ja": "プロモーション翻訳",
+      "en": "Promotional Translation"
+    },
+    "subtitle": {
+      "ja": "予告編・特典・プロモーション素材",
+      "en": "Trailers, Bonus, and Promotional Materials"
+    },
+    "client": "Muse Asia / ZOO Digital (Netflix)",
+    "role": {
+      "ja": "翻訳",
+      "en": "Translator"
+    },
+    "wide": false,
+    "allTitles": [
+      "The Apothecary Diaries Movie (Muse Asia)",
+      "Otherworldly Munchkin (Muse Asia)",
+      "The 100 Girlfriends S2 (Muse Asia)",
+      "I Left My A-Rank Party… (Muse Asia)",
+      "Diary of Our Days at the Breakwater (Muse Asia)",
+      "Date A Live III (Muse Asia)",
+      "Grimoire of Zero (Muse Asia)",
+      "Seven Deadly Sins: Imperial Wrath of the Gods, Revival of the Commandments, Signs of Holy War (Muse Asia)",
+      "Fullmetal Alchemist: Sacred Star of Milos, Conqueror of Shamballa (Muse Asia)",
+      "Detective Conan: Black Iron Submarine (Netflix, via ZOO Digital)",
+      "Sakamoto Days (Netflix, via ZOO Digital)",
+      "Devil May Cry (2025) (Netflix, via ZOO Digital)",
+      "The Boyfriend (Netflix, via ZOO Digital)"
+    ],
+    "details": {
+      "I Left My A-Rank Party… (Muse Asia)": {
+        "video": "https://www.youtube.com/watch?v=JkBPYS8e2fQ"
+      },
+      "The Boyfriend (Netflix, via ZOO Digital)": {
+        "video": "https://www.youtube.com/watch?v=S59NnFgnQRc"
+      }
+    }
+  },
+  {
+    "slug": "games",
+    "category": "GAMES",
+    "title": "Games & Visual Novels",
+    "label": {
+      "ja": "ゲームローカライズ",
+      "en": "Game Localization"
+    },
+    "subtitle": {
+      "ja": "翻訳からLQA",
+      "en": "From Translation to LQA"
+    },
+    "client": "Laplacian / TABINOMICHI / Cynical Honey / Level-5 / MangaGamer",
+    "role": {
+      "ja": "翻訳者 / ローカライズリード / プロジェクトマネージャー",
+      "en": "Translator / Localization Lead / Project Manager"
+    },
+    "wide": true,
+    "allTitles": [
+      "Return to Zeroes — Translator, Localization Lead, PM, PR Strategy & Overseas Liaison, QA (TABINOMICHI)",
+      "Kugayama Shiori's Death Diary — Translator, Localization Lead, PM, PR Strategy & Overseas Liaison, Debugging (Laplacian)",
+      "Harmonic Reflections (retranslation) — Translator, Localization Lead, PM, PR Strategy & Overseas Liaison (Laplacian)",
+      "Summer Snow. — Translator, Localization Lead, PM, PR Strategy & Overseas Liaison (Cynical Honey)",
+      "Cyanotype Daydream, Switch version — Translator, new Switch content (Laplacian)",
+      "Inazuma Eleven: Victory Road — Translator, NPC dialogue (Level-5)",
+      "Kenzen 3 (18+) — Translator, credited as \"Jchah\" (MangaGamer)"
+    ],
+    "details": {
+      "Return to Zeroes — Translator, Localization Lead, PM, PR Strategy & Overseas Liaison, QA (TABINOMICHI)": {
+        "link": "https://store.steampowered.com/app/3162900/"
+      },
+      "Kugayama Shiori's Death Diary — Translator, Localization Lead, PM, PR Strategy & Overseas Liaison, Debugging (Laplacian)": {
+        "link": "https://store.steampowered.com/app/4141950/"
+      },
+      "Harmonic Reflections (retranslation) — Translator, Localization Lead, PM, PR Strategy & Overseas Liaison (Laplacian)": {
+        "link": "https://store.steampowered.com/app/3782920/"
+      },
+      "Summer Snow. — Translator, Localization Lead, PM, PR Strategy & Overseas Liaison (Cynical Honey)": {
+        "link": "https://store.steampowered.com/app/4933880/"
+      },
+      "Cyanotype Daydream, Switch version — Translator, new Switch content (Laplacian)": {
+        "link": "https://laplacian.jp/yonagi/en/special"
+      },
+      "Inazuma Eleven: Victory Road — Translator, NPC dialogue (Level-5)": {
+        "link": "https://www.inazuma.jp/victory-road/en/"
+      },
+      "Kenzen 3 (18+) — Translator, credited as \"Jchah\" (MangaGamer)": {
+        "link": "https://mangagamer.org/kenzen3/"
+      }
+    }
+  }
+]

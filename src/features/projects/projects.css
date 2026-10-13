@@ -1,0 +1,713 @@
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5rem var(--space-5);
+}
+
+.project-card.wide {
+  grid-column: 1 / -1;
+}
+
+.project-visual {
+  position: relative;
+  min-height: 32.5rem;
+  overflow: hidden;
+  color: var(--project-fg);
+  background: var(--project-bg);
+}
+
+.project-card:not(.wide) .project-visual {
+  min-height: 38rem;
+}
+
+/* Background posters as a coverflow (after motion.dev's carousel-coverflow example, in CSS), tinted by the card
+   colour so the dark text stays readable. Blend and filter sit on the track so the posters blend with the card. */
+.project-bg-track {
+  position: absolute;
+  inset: 0;
+  perspective: 75rem;
+  /* How strong the image shows: 1 = full, 0 = hidden. */
+  opacity: 0.5;
+  /* Lifted greys: multiply can only tint the card lightly, never darken it toward the text colour.
+     Lower contrast / higher brightness = lighter image. */
+  filter: grayscale(1) contrast(0.55) brightness(1.35);
+  mix-blend-mode: multiply;
+  /* Fades in from the left: transparent at the left edge, full strength from 70% across. */
+  mask-image: linear-gradient(to right, transparent, #000 70%);
+}
+
+/* Anime Subtitles card only: its own image strength, same 0–1 scale. */
+.project-anime .project-bg-track {
+  opacity: 0.35;
+  /* Lighter than other cards so the posters don't fight the dark text on lime. */
+  filter: grayscale(1) contrast(0.45) brightness(1.45);
+}
+
+/* --d = position from the hovered title (negative = left), --a = its distance; both set in Projects.tsx.
+   Centre poster flat and full size; neighbours slide out, turn away and shrink; 3+ away fade out. */
+.project-bg {
+  position: absolute;
+  /* Centre of the flow, across the card. */
+  left: 60%;
+  top: 50%;
+  height: 80%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  opacity: clamp(0, 3 - var(--a), 1);
+  transform:
+    translate(-50%, -50%)
+    /* Spacing between posters, as a share of a poster's width. */
+    translateX(calc(var(--d) * 62%))
+    /* Turn angle of the side posters. */
+    rotateY(calc(clamp(-1, var(--d), 1) * -45deg))
+    /* Side posters' size: 1 - 0.18 = 82%. */
+    scale(calc(1 - min(var(--a), 1) * 0.18));
+  /* 0.7s = slide speed; the curve settles softly like a spring. */
+  transition:
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.7s ease;
+  /* Posters that wrap round the ring remount at their new end; this fades them in there. */
+  animation: project-bg-in 0.5s ease both;
+}
+
+@keyframes project-bg-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-bg {
+    transition: none;
+    animation: none;
+  }
+}
+
+.project-visual::before {
+  position: absolute;
+  content: "";
+  top: -45%;
+  right: -8%;
+  width: 55%;
+  aspect-ratio: 1;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  opacity: 0.25;
+}
+
+.project-anime { --project-bg: var(--project-anime-bg); --project-fg: var(--project-anime-fg); }
+.project-quality { --project-bg: var(--project-quality-bg); --project-fg: var(--project-quality-fg); }
+.project-promo { --project-bg: var(--project-promo-bg); --project-fg: var(--project-promo-fg); }
+.project-games { --project-bg: var(--project-games-bg); --project-fg: var(--project-games-fg); }
+
+.project-number {
+  position: absolute;
+  z-index: 2;
+  top: var(--space-5);
+  left: var(--space-5);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+}
+
+.project-mark {
+  position: absolute;
+  z-index: 1;
+  top: 16%;
+  inset-inline: 8%;
+}
+
+.project-mark p,
+.project-mark small {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.project-mark-title {
+  display: block;
+  max-width: 56rem;
+  margin: var(--space-4) 0 var(--space-5);
+  font-size: clamp(3rem, 7vw, 6.75rem);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+}
+
+.project-card:not(.wide) .project-mark-title {
+  font-size: clamp(2.8rem, 5vw, 4.625rem);
+}
+
+.project-list {
+  position: absolute;
+  z-index: 1;
+  right: 6%;
+  bottom: 8%;
+  width: min(48%, 38rem);
+  padding: 0;
+  border-top: 1px solid currentColor;
+  list-style: none;
+  /* Full credit list; about six rows show, the rest scroll inside the card. */
+  max-height: 17rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: currentColor transparent;
+}
+
+.project-list li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.25rem 1fr;
+  gap: var(--space-3);
+  padding-block: var(--space-3);
+  border-bottom: 1px solid currentColor;
+  font-size: var(--text-xs);
+  opacity: 0.7;
+  transition:
+    opacity 180ms ease,
+    padding 180ms ease,
+    background-color 180ms ease;
+}
+
+/* Highlight bar (owner's Figma Make design): grows from the middle of the row's left edge. */
+.project-list li::before {
+  position: absolute;
+  content: "";
+  inset: 0 auto 0 0;
+  width: 2px;
+  opacity: 0;
+  background: #fff;
+  transform: scaleY(0.25);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+/* The title whose poster is centred in the coverflow (including while it auto-advances) stays at full strength. */
+.project-list li[aria-current="true"] {
+  opacity: 1;
+}
+
+/* Highlight only under the pointer or keyboard focus (owner request): white tint, nudged in, bar at full
+   height. White on every card, as it reads on the light-text Promo and Games cards; --highlight is
+   stronger on the pale cards so it still shows. :focus-visible, not :focus-within: closing the modal hands
+   focus back to the clicked title, and that mouse-driven focus shouldn't leave the row lit. */
+.project-list li:hover,
+.project-list li:has(:focus-visible) {
+  padding-inline: var(--space-3) var(--space-2);
+  opacity: 1;
+  background: color-mix(in srgb, #fff var(--highlight, 14%), transparent);
+}
+
+.project-anime,
+.project-quality {
+  --highlight: 45%;
+}
+
+.project-list li:hover::before,
+.project-list li:has(:focus-visible)::before {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+.project-list li button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+/* Stretches the button's click area over the whole row, number included. */
+.project-list li button::after {
+  position: absolute;
+  content: "";
+  inset: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-list li,
+  .project-list li::before {
+    transition: none;
+  }
+}
+
+/* Title details modal, copied one-to-one from the owner's Figma Make zip (values in px as in the zip).
+   The <dialog> itself is the zip's full-screen .project-modal overlay; a click on it outside the card closes. */
+.project-modal {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 40px;
+  /* safe: a card taller than the screen starts at the top (scrollable) instead of being cut off above it. */
+  place-items: safe center;
+  overflow-y: auto;
+  border: 0;
+  background: color-mix(in srgb, #090a08 86%, transparent);
+  backdrop-filter: blur(12px);
+  color: var(--color-text);
+  animation: modal-backdrop-in 220ms ease both;
+}
+
+/* display: grid would otherwise keep the closed dialog on screen. */
+.project-modal[open] {
+  display: grid;
+}
+
+.project-modal::backdrop {
+  background: transparent;
+}
+
+/* The page behind stays put while the modal is open. */
+html:has(.project-modal[open]) {
+  overflow: hidden;
+}
+
+.project-modal-card {
+  position: relative;
+  display: grid;
+  width: min(100%, 1040px);
+  /* Never taller than the screen (minus the overlay padding); the text column scrolls instead. */
+  min-height: min(610px, calc(100dvh - 80px));
+  max-height: calc(100dvh - 80px);
+  grid-template-columns: minmax(320px, 0.85fr) minmax(380px, 1fr);
+  color: var(--color-text);
+  background: var(--color-surface);
+  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.35);
+  /* Tilt toward the pointer while it is outside the card (--rx/--ry set in Projects.tsx, ±3° max), settling softly.
+     The entrance fills backwards only, so once it ends this transform takes over. */
+  transform: perspective(1200px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+  animation: modal-card-in 260ms ease backwards;
+}
+
+/* Faint highlight that follows the pointer; above the content but never catches clicks. */
+.project-modal-card::after {
+  position: absolute;
+  z-index: 3;
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgb(255 255 255 / 0.06), transparent 60%);
+  transition: opacity 300ms ease;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .project-modal-card:hover::after {
+    opacity: 1;
+  }
+}
+
+.project-modal-close {
+  position: absolute;
+  z-index: 2;
+  top: 18px;
+  right: 18px;
+  display: grid;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  place-items: center;
+  cursor: pointer;
+  color: var(--color-text);
+  background: color-mix(in srgb, var(--color-surface) 75%, transparent);
+  font-size: 19px;
+}
+
+.project-modal-image {
+  position: relative;
+  display: grid;
+  border-right: 1px solid var(--color-border);
+  place-items: center;
+  overflow: hidden;
+  color: var(--color-text-muted);
+  background:
+    linear-gradient(135deg, transparent 49.8%, var(--color-border) 50%, transparent 50.2%),
+    linear-gradient(45deg, transparent 49.8%, var(--color-border) 50%, transparent 50.2%),
+    var(--color-bg);
+}
+
+.project-modal-image > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* The player letterboxes itself, so any panel shape works. */
+.project-modal-image > iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #000;
+}
+
+/* `>` so it outranks the placeholder's `.project-modal-image > div` grid, which stacked the dots. */
+.project-modal-image > .project-modal-dots {
+  position: absolute;
+  z-index: 1;
+  bottom: 14px;
+  left: 50%;
+  display: flex;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-surface) 75%, transparent);
+  transform: translateX(-50%);
+}
+
+.project-modal-dots button {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 1px solid var(--color-text);
+  border-radius: 50%;
+  cursor: pointer;
+  background: transparent;
+}
+
+.project-modal-dots button[aria-pressed="true"] {
+  background: var(--color-text);
+}
+
+.project-modal-image > div {
+  display: grid;
+  gap: 20px;
+  text-align: center;
+}
+
+.project-modal-image span {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.12em;
+}
+
+.project-modal-image strong {
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.project-modal-content {
+  display: flex;
+  padding: 68px 58px 52px;
+  flex-direction: column;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.project-modal-content h2 {
+  margin-top: 20px;
+  font-size: clamp(42px, 5vw, 72px);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.065em;
+  overflow-wrap: anywhere;
+}
+
+.project-modal-content dl {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin: 45px 0 0;
+  padding: 20px 0;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.project-modal-content dt {
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  text-transform: uppercase;
+}
+
+.project-modal-content dd {
+  margin: 7px 0 0;
+  font-size: 11px;
+}
+
+.project-modal-note {
+  margin-top: 16px;
+  color: var(--color-text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.project-modal-summary {
+  margin-top: 34px;
+  color: var(--color-text-muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.project-modal-content > a {
+  display: flex;
+  margin-top: auto;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--color-text);
+  align-items: center;
+  justify-content: space-between;
+  color: inherit;
+  font-size: 11px;
+  text-decoration: none;
+  transition: color 180ms ease, border-color 180ms ease;
+}
+
+.project-modal-content > a:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+@keyframes modal-backdrop-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes modal-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.985);
+  }
+}
+
+@media (max-width: 800px) {
+  .project-modal {
+    padding: 16px;
+  }
+
+  /* Stacked: image on top at a fixed share of the screen, text below scrolls. */
+  .project-modal-card {
+    display: flex;
+    min-height: 0;
+    max-height: calc(100dvh - 32px);
+    flex-direction: column;
+  }
+
+  .project-modal-image {
+    height: min(360px, 40dvh);
+    flex: none;
+    border-right: 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .project-modal-content {
+    min-height: 0;
+    padding: 42px 24px 28px;
+  }
+
+  .project-modal-content h2 {
+    font-size: 46px;
+  }
+
+  .project-modal-content > a {
+    margin-top: 38px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-modal,
+  .project-modal-card {
+    animation: none;
+  }
+
+  .project-modal-card {
+    transform: none;
+    transition: none;
+  }
+}
+
+.project-list li span {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  opacity: 0.8;
+}
+
+.project-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+.project-meta > div > p:first-child,
+.project-meta dt {
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  text-transform: uppercase;
+}
+
+.project-meta h3 {
+  margin-top: var(--space-2);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-snug);
+}
+
+.project-subtitle {
+  margin-top: var(--space-1);
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+
+.project-meta dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+.project-meta dt {
+  margin-bottom: var(--space-2);
+}
+
+.project-meta dd {
+  margin: 0;
+  font-size: var(--text-xs);
+}
+
+.project-all {
+  margin-top: var(--space-4);
+  /* Lets height animate to and from auto (Chrome); other browsers open instantly. */
+  interpolate-size: allow-keywords;
+}
+
+.project-all::details-content {
+  height: 0;
+  overflow: clip;
+  transition:
+    height 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    content-visibility 0.5s allow-discrete;
+}
+
+.project-all[open]::details-content {
+  height: auto;
+}
+
+.project-all summary {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  text-transform: uppercase;
+  cursor: pointer;
+  list-style: none;
+  transition: color var(--transition-fast);
+}
+
+.project-all summary::-webkit-details-marker {
+  display: none;
+}
+
+.project-all summary:hover {
+  color: var(--color-accent);
+}
+
+/* "+" turns into "×" when open. */
+.project-all-icon {
+  display: inline-block;
+  font-size: var(--text-sm);
+  line-height: 1;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project-all[open] .project-all-icon {
+  transform: rotate(45deg);
+}
+
+/* Titles cascade in on open; --i (set in Projects.tsx) staggers them, capped so long lists finish in ~0.5s. */
+.project-all[open] li {
+  animation: project-title-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: min(calc(var(--i, 0) * 25ms), 300ms);
+}
+
+@keyframes project-title-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-all::details-content,
+  .project-all-icon {
+    transition: none;
+  }
+
+  .project-all[open] li {
+    animation: none;
+  }
+}
+
+.project-all ul {
+  columns: 2 18rem;
+  column-gap: var(--space-5);
+  margin-top: var(--space-3);
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-xs);
+}
+
+.project-all li {
+  break-inside: avoid;
+  padding-block: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Up to 1024px (every iPad held upright): one card per row. Two side by side leave each title list ~170–235px
+   wide, so titles wrap over four lines; one per row gives the list the room the wide cards get. */
+@media (max-width: 64rem) {
+  .project-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 50rem) {
+  .project-grid {
+    gap: var(--space-8);
+  }
+
+  .project-visual,
+  .project-card:not(.wide) .project-visual {
+    min-height: 35rem;
+  }
+
+  .project-mark {
+    top: 11%;
+    inset-inline: 7%;
+  }
+
+  .project-mark-title,
+  .project-card:not(.wide) .project-mark-title {
+    font-size: 2.875rem;
+  }
+
+  .project-list {
+    right: 7%;
+    bottom: 7%;
+    width: 86%;
+    /* About four rows on phones so the list doesn't cover the card art. */
+    max-height: 10.5rem;
+  }
+
+  .project-meta {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

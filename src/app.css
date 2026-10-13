@@ -1,0 +1,35 @@
+/* Styles shared by several features, tokens only. */
+
+main:focus {
+  outline: none;
+}
+
+.kicker,
+.section-heading > p {
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-regular);
+  line-height: 1.5;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.section-heading {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-8);
+}
+
+.section-heading > p {
+  font-size: var(--text-2xs);
+}
+
+.project-meta dd,
+.about-copy,
+.contact-row > p {
+  overflow-wrap: anywhere;
+}

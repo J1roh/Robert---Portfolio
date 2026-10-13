@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <title>Robert Roy Dela Serna — Japanese → English Translator</title>
+    <meta name="description" content="Japanese → English Translator and Localization Lead for Games and Anime. 日英翻訳者・ローカライズリード（アニメ・ゲーム）。">
+    <!-- TODO before launch: add og:url, og:image (1200×630) and <link rel="canonical"> once the domain is chosen. -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Robert Roy Dela Serna — Japanese → English Translator">
+    <meta property="og:description" content="Japanese → English Translator and Localization Lead for Games and Anime">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Robert Roy Dela Serna",
+        "jobTitle": "Japanese → English Translator and Localization Lead",
+        "knowsLanguage": ["ja", "en"],
+        "sameAs": ["https://www.linkedin.com/in/robert-roy-dela-serna-7344b5110", "https://x.com/Jchah1"]
+      }
+    </script>
+    <!-- First hero slide: fetch while the JS loads. Keep in sync with heroArt[0] in content/site.json. -->
+    <link rel="preload" as="image" href="/assets/hero/Harmonic Reflections.webp" fetchpriority="high">
+    <!-- Fonts: Decision D9 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Loaded without blocking the first paint; display=swap shows system fonts until these arrive. -->
+    <link rel="preload" as="style" onload="this.rel='stylesheet'" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;600&display=swap">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;600&display=swap"></noscript>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <p class="container">This site needs JavaScript to load its content.</p>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

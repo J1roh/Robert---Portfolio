@@ -1,0 +1,1417 @@
+/* Ported from the owner's "Parallax Scrolling Website" CMS design (Figma Make zip, src/index.css).
+   The CMS keeps that design's own light palette in every site theme, so its colors live here as local tokens. */
+.cms-page {
+  --cms-bg: #eeeee8;
+  --cms-panel: #f7f7f2;
+  --cms-field: #fff;
+  --cms-active: #e9e9e2;
+  --cms-ink: #1b1d18;
+  --cms-ink-soft: #272923;
+  --cms-muted: #74786f;
+  --cms-faint: #91948d;
+  --cms-line: #d0d1c9;
+  --cms-line-strong: #c9cbc2;
+  --cms-side: #171917;
+  --cms-side-ink: #efefe8;
+  --cms-side-muted: #8f938a;
+  --cms-side-line: #33362f;
+  --cms-acid: #dfff42;
+  --cms-ok: #527339;
+  --cms-ok-ink: #47632f;
+  --cms-ok-bg: #e2eed7;
+  --cms-draft-ink: #7a5a12;
+  --cms-draft-bg: #f3e7c6;
+  --cms-danger: #a53d31;
+
+  color-scheme: light;
+  display: grid;
+  min-height: 100svh;
+  grid-template-columns: 15rem minmax(0, 1fr);
+  color: var(--cms-ink);
+  background: var(--cms-bg);
+  font-family: var(--font-body);
+}
+
+.cms-page button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.cms-page :focus-visible {
+  outline: 2px solid var(--cms-ink);
+  outline-offset: 2px;
+}
+
+.cms-sidebar :focus-visible {
+  outline-color: var(--cms-acid);
+}
+
+/* Sidebar */
+.cms-sidebar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  height: 100svh;
+  padding: 1.875rem 1.5rem;
+  flex-direction: column;
+  color: var(--cms-side-ink);
+  background: var(--cms-side);
+}
+
+.cms-brand {
+  color: inherit;
+  font-size: 1.25rem;
+  font-weight: var(--weight-bold);
+  letter-spacing: -0.06em;
+  text-decoration: none;
+}
+
+.cms-brand span {
+  color: var(--cms-acid);
+  font-size: 0.5em;
+  vertical-align: super;
+}
+
+.cms-sidebar nav {
+  display: grid;
+  gap: 0.3rem;
+  margin-top: 5rem;
+}
+
+.cms-sidebar nav button,
+.cms-sidebar nav a {
+  display: grid;
+  grid-template-columns: 1.75rem 1fr auto;
+  padding: 0.8rem 0.75rem;
+  border-radius: 3px;
+  color: var(--cms-side-muted);
+  text-align: left;
+  font-size: 0.8rem;
+  /* The Enquiries item is a link; match the button items. */
+  text-decoration: none;
+}
+
+.cms-sidebar nav button span,
+.cms-sidebar nav a span {
+  align-self: center;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+}
+
+.cms-sidebar nav button[aria-current="true"],
+.cms-sidebar nav a[aria-current="page"] {
+  color: var(--cms-side);
+  background: var(--cms-acid);
+}
+
+.cms-user {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.7rem;
+  margin-top: auto;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--cms-side-line);
+  align-items: center;
+}
+
+.cms-user > span {
+  display: grid;
+  width: 2.125rem;
+  height: 2.125rem;
+  border-radius: 50%;
+  place-items: center;
+  color: var(--cms-side);
+  background: var(--cms-acid);
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+}
+
+.cms-user div {
+  display: grid;
+  gap: 2px;
+}
+
+.cms-user strong {
+  font-size: 0.7rem;
+  font-weight: var(--weight-medium);
+}
+
+.cms-user small {
+  color: var(--cms-side-muted);
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+}
+
+.cms-user button {
+  grid-column: 1 / -1;
+  justify-self: start;
+  color: var(--cms-side-muted);
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  text-transform: uppercase;
+}
+
+.cms-user button:hover {
+  color: var(--cms-side-ink);
+}
+
+/* Main column */
+.cms-main {
+  min-width: 0;
+  padding: 2.25rem 2.75rem 5rem;
+}
+
+.cms-main:focus {
+  outline: none;
+}
+
+.cms-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.cms-header p,
+.cms-block-heading p,
+.cms-overview span {
+  color: var(--cms-muted);
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.cms-header h1 {
+  margin-top: 0.5rem;
+  font-size: 2.25rem;
+  font-weight: var(--weight-medium);
+  letter-spacing: -0.05em;
+}
+
+.cms-header-actions {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.cms-page .cms-header-actions a,
+.cms-page .cms-header-actions button {
+  padding: 0.75rem 1.05rem;
+  border: 1px solid var(--cms-line-strong);
+  border-radius: 2px;
+  color: var(--cms-ink);
+  font-size: 0.65rem;
+  text-decoration: none;
+}
+
+.cms-page .cms-header-actions button {
+  min-width: 6.9rem;
+  border-color: var(--cms-ink);
+  color: #eff2e8;
+  background: var(--cms-ink);
+}
+
+.cms-page .cms-header-actions button.saved {
+  border-color: var(--cms-ok);
+  background: var(--cms-ok);
+}
+
+.cms-header-actions button:disabled {
+  cursor: default;
+}
+
+.cms-error {
+  margin-top: 1.25rem;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid var(--cms-danger);
+  color: var(--cms-danger);
+  background: var(--cms-panel);
+  font-size: 0.75rem;
+}
+
+/* Overview numbers */
+.cms-overview {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 2.4rem;
+  border: 1px solid var(--cms-line);
+  background: var(--cms-panel);
+}
+
+.cms-overview > * {
+  display: grid;
+  gap: 0.6rem;
+  padding: 1.5rem;
+}
+
+.cms-overview > * + * {
+  border-left: 1px solid var(--cms-line);
+}
+
+.cms-overview input {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  color: var(--cms-ink);
+  background: transparent;
+  font-size: 1.7rem;
+  font-weight: var(--weight-medium);
+  letter-spacing: -0.05em;
+}
+
+.cms-overview .cms-client-roster {
+  display: flex;
+  grid-column: 1 / -1;
+  align-items: center;
+  gap: 1.5rem;
+  border-top: 1px solid var(--cms-line);
+  border-left: 0;
+}
+
+.cms-client-roster span {
+  flex: none;
+}
+
+.cms-client-roster input {
+  color: var(--cms-ink-soft);
+  font-size: 0.7rem;
+  letter-spacing: 0;
+}
+
+/* Categories + editor */
+.cms-workspace {
+  display: grid;
+  grid-template-columns: minmax(13.75rem, 0.34fr) minmax(0, 1fr);
+  margin-top: 1.5rem;
+  border: 1px solid var(--cms-line);
+  background: var(--cms-panel);
+}
+
+.category-list {
+  padding: 1.5rem 1.1rem;
+  border-right: 1px solid var(--cms-line);
+}
+
+.cms-block-heading {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cms-page .cms-block-heading > button:not(.add-project) {
+  display: grid;
+  flex: none;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 1px solid var(--cms-line-strong);
+  border-radius: 50%;
+  place-items: center;
+  font-size: 1rem;
+}
+
+.cms-page .category-list > button {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1.75rem 1fr auto;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+  padding: 0.8rem 0.6rem;
+  border-left: 2px solid transparent;
+  align-items: center;
+  color: #62665e;
+  text-align: left;
+}
+
+.category-list > .cms-block-heading + button {
+  margin-top: 1.25rem;
+}
+
+.category-list > button > span:first-child {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+}
+
+.category-list > button > span:nth-child(2) {
+  display: grid;
+  gap: 3px;
+}
+
+.category-list > button strong {
+  color: var(--cms-ink-soft);
+  font-size: 0.7rem;
+  font-weight: var(--weight-medium);
+}
+
+.category-list > button small {
+  color: #8b8e86;
+  font-size: 0.5rem;
+}
+
+.category-list > button i {
+  font-style: normal;
+}
+
+.cms-page .category-list > button[aria-current="true"] {
+  border-left-color: var(--cms-ink);
+  background: var(--cms-active);
+}
+
+.cms-editor {
+  padding: 1.75rem 2rem 2.25rem;
+}
+
+.cms-editor .cms-block-heading h2 {
+  margin-top: 0.45rem;
+  font-size: 1.5rem;
+  font-weight: var(--weight-medium);
+  letter-spacing: -0.04em;
+}
+
+.cms-editor-actions {
+  display: flex;
+  flex: none;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+/* EN / JP switch for the translated fields: a two-segment pill, the active side filled. */
+.cms-lang-toggle {
+  display: inline-flex;
+  flex: none;
+  padding: 2px;
+  border: 1px solid var(--cms-line-strong);
+  border-radius: 2px;
+  background: var(--cms-field);
+}
+
+.cms-page .cms-lang-toggle button {
+  min-width: 2.25rem;
+  padding: 0.4rem 0.55rem;
+  border: 0;
+  border-radius: 1px;
+  color: var(--cms-muted);
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+}
+
+.cms-page .cms-lang-toggle button:hover {
+  color: var(--cms-ink);
+}
+
+.cms-page .cms-lang-toggle button[aria-pressed="true"] {
+  color: #f2f3ec;
+  background: var(--cms-ink);
+}
+
+.status-pill {
+  flex: none;
+  padding: 0.45rem 0.6rem;
+  border-radius: 1.25rem;
+  color: var(--cms-ok-ink);
+  background: var(--cms-ok-bg);
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  text-transform: uppercase;
+}
+
+.status-pill.is-draft {
+  color: var(--cms-draft-ink);
+  background: var(--cms-draft-bg);
+}
+
+.editor-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.1rem;
+  margin-top: 1.75rem;
+}
+
+.editor-fields label {
+  display: grid;
+  gap: 0.5rem;
+  color: var(--cms-muted);
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  text-transform: uppercase;
+}
+
+.editor-fields label.full-field {
+  grid-column: 1 / -1;
+}
+
+.editor-fields input:not([type="checkbox"]) {
+  min-width: 0;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid #cccec5;
+  border-radius: 2px;
+  color: var(--cms-ink);
+  background: var(--cms-field);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  text-transform: none;
+}
+
+.editor-fields input:focus {
+  border-color: var(--cms-ink);
+  outline: none;
+}
+
+/* Folded extras: Japanese text and card settings */
+.cms-more {
+  margin-top: 1.25rem;
+}
+
+.cms-more summary {
+  color: var(--cms-muted);
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.cms-more .editor-fields {
+  margin-top: 1.1rem;
+}
+
+.editor-fields .cms-check {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.cms-page .cms-danger {
+  justify-self: end;
+  align-self: center;
+  color: var(--cms-danger);
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  text-transform: uppercase;
+}
+
+/* Project titles */
+.project-editor {
+  margin-top: 2.4rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--cms-line);
+}
+
+.cms-block-heading small {
+  display: block;
+  margin-top: 0.3rem;
+  color: var(--cms-faint);
+  font-size: 0.55rem;
+}
+
+.cms-page .add-project {
+  flex: none;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--cms-ink);
+  border-radius: 2px;
+  color: #f1f2eb;
+  background: var(--cms-ink);
+  font-size: 0.55rem;
+}
+
+/* Scrolling frame: about 8 rows show, long lists (e.g. 23 anime titles) scroll inside it. */
+.project-rows {
+  max-height: 464px;
+  margin-top: 1.1rem;
+  padding: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 1px solid var(--cms-line);
+  background: var(--cms-panel);
+  list-style: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--cms-line-strong) transparent;
+}
+
+.project-rows .project-row:last-child {
+  border-bottom: 0;
+}
+
+.project-row {
+  display: grid;
+  grid-template-columns: 24px 34px minmax(0, 1fr) 30px;
+  align-items: center;
+  min-height: 58px;
+  border-bottom: 1px solid var(--cms-line);
+  background: var(--cms-panel);
+}
+
+.project-row.is-dragging {
+  opacity: 0.5;
+}
+
+.cms-page .drag-handle {
+  color: #a6a9a1;
+  cursor: grab;
+}
+
+.row-number {
+  color: #898c84;
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+}
+
+/* Title rows open the "Edit project" modal (owner's Figma Make zip v2; px values as in the zip). */
+.cms-page .project-row button.project-edit-trigger {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  padding: 10px 6px;
+  color: var(--cms-ink-soft);
+  text-align: left;
+}
+
+.project-edit-trigger span {
+  overflow: hidden;
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.project-edit-trigger small {
+  color: #93968e;
+  font-family: var(--font-mono);
+  font-size: 7px;
+  text-transform: uppercase;
+}
+
+.cms-page .project-row button.project-edit-trigger:hover span {
+  text-decoration: underline;
+}
+
+/* Delete confirmation, copied from the owner's Figma Make zip (v2); the <dialog> is the overlay. */
+.confirm-modal {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 24px;
+  place-items: center;
+  border: 0;
+  background: rgba(12, 13, 11, 0.72);
+  backdrop-filter: blur(8px);
+  color-scheme: light;
+}
+
+.confirm-modal[open] {
+  display: grid;
+}
+
+.confirm-modal::backdrop {
+  background: transparent;
+}
+
+.confirm-modal-card {
+  width: min(100%, 460px);
+  padding: 34px;
+  color: #20221d;
+  background: #f7f7f2;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+}
+
+.confirm-modal-card > p {
+  color: #a34b40;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+}
+
+.confirm-modal-card h2 {
+  margin: 16px 0 0;
+  font-size: 25px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+}
+
+.confirm-modal-card > span {
+  display: block;
+  margin-top: 14px;
+  color: #777b72;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.confirm-modal-card > div {
+  display: flex;
+  gap: 9px;
+  margin-top: 30px;
+  justify-content: flex-end;
+}
+
+.confirm-modal-card button {
+  padding: 11px 14px;
+  border: 1px solid #c9cbc2;
+  border-radius: 2px;
+  cursor: pointer;
+  color: #20221d;
+  background: transparent;
+  font-size: 9px;
+}
+
+.confirm-modal-card button.confirm-delete {
+  border-color: #a34b40;
+  color: #fff;
+  background: #a34b40;
+}
+
+/* "Restored unsaved changes" bar above the editor. */
+.cms-restored {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--cms-draft-ink);
+  color: var(--cms-draft-ink);
+  background: var(--cms-draft-bg);
+  font-size: 0.7rem;
+}
+
+.cms-page .cms-restored button {
+  flex: none;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  color: inherit;
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+/* Unread count on the sidebar's Enquiries link. */
+.cms-sidebar nav a .cms-badge {
+  grid-column: 3;
+  align-self: center;
+  min-width: 1.25rem;
+  padding: 0.1rem 0.35rem;
+  border-radius: var(--radius-full);
+  color: var(--cms-side);
+  background: var(--cms-acid);
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* The <dialog> is the zip's full-screen .cms-project-modal overlay. */
+.cms-project-modal {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 30px;
+  place-items: center;
+  overflow-y: auto;
+  border: 0;
+  background: rgba(12, 13, 11, 0.72);
+  backdrop-filter: blur(8px);
+  color-scheme: light;
+}
+
+.cms-project-modal[open] {
+  display: grid;
+}
+
+/* The CMS behind stays put while the edit or delete modal is open (the modal itself still scrolls if tall). */
+html:has(.cms-project-modal[open], .confirm-modal[open]) {
+  overflow: hidden;
+}
+
+.cms-project-modal::backdrop {
+  background: transparent;
+}
+
+.cms-project-modal-card {
+  width: min(100%, 860px);
+  color: #20221d;
+  background: var(--cms-panel);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.28);
+}
+
+.cms-project-modal-header {
+  display: flex;
+  min-height: 92px;
+  padding: 22px 28px;
+  border-bottom: 1px solid var(--cms-line);
+  justify-content: space-between;
+}
+
+.cms-project-modal-header p {
+  color: #858980;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.08em;
+}
+
+.cms-project-modal-header h2 {
+  margin: 7px 0 0;
+  font-size: 25px;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+}
+
+.cms-project-modal-actions {
+  display: flex;
+  flex: none;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.cms-project-modal-actions > button {
+  display: grid;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--cms-line-strong);
+  border-radius: 50%;
+  place-items: center;
+  cursor: pointer;
+  color: inherit;
+  background: transparent;
+  font-size: 18px;
+}
+
+.cms-project-modal-body {
+  display: grid;
+  grid-template-columns: minmax(250px, 0.8fr) minmax(0, 1.2fr);
+  gap: 28px;
+  padding: 28px;
+}
+
+.modal-image-editor {
+  position: relative;
+  display: grid;
+  min-height: 350px;
+  border: 1px dashed #aeb1a7;
+  place-items: center;
+  overflow: hidden;
+  cursor: pointer;
+  background:
+    linear-gradient(135deg, transparent 49.8%, #dedfd8 50%, transparent 50.2%),
+    linear-gradient(45deg, transparent 49.8%, #dedfd8 50%, transparent 50.2%),
+    #eeeee9;
+}
+
+.modal-image-editor > input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+/* The file input is hidden, so show its keyboard focus on the drop area. */
+.modal-image-editor:focus-within {
+  outline: 2px solid var(--cms-ink);
+  outline-offset: 2px;
+}
+
+.modal-image-editor > div {
+  display: grid;
+  gap: 7px;
+  place-items: center;
+  color: #767a71;
+}
+
+.modal-image-editor > div strong {
+  font-size: 28px;
+  font-weight: 400;
+}
+
+.modal-image-editor span,
+.modal-image-editor small {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  text-transform: uppercase;
+}
+
+.modal-image-editor small {
+  color: #a0a39b;
+  font-size: 7px;
+}
+
+.modal-image-editor.has-image {
+  border-style: solid;
+}
+
+.modal-image-editor > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal-image-editor.has-image > span {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  padding: 7px 9px;
+  color: #f4f4ed;
+  background: rgba(18, 19, 16, 0.78);
+}
+
+.modal-project-fields {
+  display: grid;
+  gap: 18px;
+  align-content: start;
+}
+
+.modal-project-fields label {
+  display: grid;
+  gap: 8px;
+  color: #878b82;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  text-transform: uppercase;
+}
+
+.modal-project-fields input,
+.modal-project-fields textarea {
+  width: 100%;
+  min-width: 0;
+  padding: 11px 12px;
+  border: 1px solid #d2d3cc;
+  border-radius: 2px;
+  outline: 0;
+  resize: vertical;
+  color: #252820;
+  background: #fff;
+  font-family: var(--font-body);
+  font-size: 10px;
+  line-height: 1.5;
+  text-transform: none;
+}
+
+.modal-project-fields input:focus,
+.modal-project-fields textarea:focus {
+  border-color: var(--cms-ink);
+}
+
+.modal-project-fields .modal-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.modal-project-fields .modal-check input {
+  width: auto;
+  accent-color: var(--cms-ink);
+}
+
+.modal-image-reset {
+  justify-self: start;
+  padding: 0;
+  border: 0;
+  color: var(--cms-muted);
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  text-decoration: underline;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.cms-project-modal-footer {
+  display: flex;
+  gap: 9px;
+  padding: 18px 28px;
+  border-top: 1px solid var(--cms-line);
+  justify-content: flex-end;
+}
+
+.cms-project-modal-footer button {
+  padding: 11px 15px;
+  border: 1px solid var(--cms-line-strong);
+  border-radius: 2px;
+  cursor: pointer;
+  color: var(--cms-ink);
+  background: transparent;
+  font-size: 9px;
+}
+
+.cms-project-modal-footer button.save-project {
+  border-color: var(--cms-ink);
+  color: #f2f3ec;
+  background: var(--cms-ink);
+}
+
+@media (max-width: 800px) {
+  .cms-project-modal {
+    padding: 14px;
+    place-items: start center;
+  }
+
+  .cms-project-modal-header {
+    padding: 18px;
+  }
+
+  .cms-project-modal-body {
+    grid-template-columns: 1fr;
+    padding: 18px;
+  }
+
+  .modal-image-editor {
+    min-height: 280px;
+  }
+
+  .cms-project-modal-footer {
+    padding: 16px 18px;
+  }
+}
+
+.cms-page .project-row button:last-child {
+  color: #989b93;
+  font-size: 1.1rem;
+}
+
+.cms-page .project-row button:last-child:hover {
+  color: var(--cms-danger);
+}
+
+.cms-socials {
+  margin-top: 1.5rem;
+  padding: 1.75rem 2rem 2.1rem;
+  border: 1px solid var(--cms-line);
+  background: var(--cms-panel);
+}
+
+/* Enquiries page (#/cms/enquiries): sizes copied 1:1 from the owner's design (.enquiry-* in the Figma Make zip),
+   colours mapped to the CMS tokens above. Scoped to .enquiries-main so the contact page's .enquiry-* classes never clash. */
+.enquiries-main {
+  display: flex;
+  flex-direction: column;
+}
+
+.enquiry-header-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.cms-page .enquiry-refresh {
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--cms-line-strong);
+  border-radius: 2px;
+  color: var(--cms-ink);
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.enquiries-main .enquiry-summary {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  color: var(--cms-muted);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  text-transform: uppercase;
+}
+
+.enquiries-main .enquiry-summary span {
+  display: grid;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  place-items: center;
+  color: var(--cms-side);
+  background: var(--cms-acid);
+  font-size: 9px;
+}
+
+.enquiries-main .enquiry-tabs {
+  display: flex;
+  gap: 26px;
+  margin-top: 35px;
+  border-bottom: 1px solid var(--cms-line-strong);
+}
+
+.cms-page .enquiry-tabs button {
+  display: flex;
+  gap: 8px;
+  padding: 0 1px 13px;
+  border-bottom: 2px solid transparent;
+  align-items: center;
+  cursor: pointer;
+  color: var(--cms-muted);
+  font-size: 10px;
+}
+
+.enquiries-main .enquiry-tabs button span {
+  display: grid;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 10px;
+  place-items: center;
+  background: #dddeda;
+  font-family: var(--font-mono);
+  font-size: 8px;
+}
+
+.cms-page .enquiry-tabs button[aria-pressed="true"] {
+  border-bottom-color: var(--cms-ink);
+  color: var(--cms-ink);
+}
+
+.enquiries-main .enquiry-workspace {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.38fr) minmax(0, 1fr);
+  min-height: 580px;
+  margin-top: 22px;
+  border: 1px solid var(--cms-line);
+  background: var(--cms-panel);
+}
+
+.enquiries-main .enquiry-list {
+  border-right: 1px solid var(--cms-line);
+}
+
+.enquiries-main .enquiry-list-heading {
+  display: flex;
+  min-height: 48px;
+  padding: 0 18px;
+  border-bottom: 1px solid var(--cms-line);
+  align-items: center;
+  justify-content: space-between;
+  color: #858980;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  text-transform: uppercase;
+}
+
+.cms-page .enquiry-list > button {
+  position: relative;
+  display: grid;
+  width: 100%;
+  grid-template-columns: 8px 1fr;
+  gap: 8px;
+  padding: 18px;
+  border-bottom: 1px solid #dedfd8;
+  cursor: pointer;
+  color: var(--cms-ink-soft);
+  text-align: left;
+}
+
+.cms-page .enquiry-list > button:hover,
+.cms-page .enquiry-list > button.active {
+  background: #ebebe5;
+}
+
+.enquiries-main .enquiry-list > button.active::after {
+  position: absolute;
+  content: "";
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  background: var(--cms-ink);
+}
+
+.enquiries-main .enquiry-list > button > i {
+  width: 6px;
+  height: 6px;
+  margin-top: 5px;
+  border-radius: 50%;
+}
+
+.enquiries-main .enquiry-list > button.unread > i {
+  background: #86a328;
+}
+
+.enquiries-main .enquiry-sender {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.enquiries-main .enquiry-sender strong {
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.enquiries-main .enquiry-list > button.unread .enquiry-sender strong {
+  font-weight: 700;
+}
+
+.enquiries-main .enquiry-sender time {
+  color: var(--cms-faint);
+  font-family: var(--font-mono);
+  font-size: 7px;
+}
+
+.enquiries-main .enquiry-list > button p {
+  margin: 4px 0 9px;
+  color: var(--cms-muted);
+  font-size: 9px;
+}
+
+.enquiries-main .enquiry-list > button div > span {
+  display: inline-block;
+  padding: 5px 7px;
+  border-radius: 2px;
+  color: #5f6459;
+  background: #e2e3dc;
+  font-family: var(--font-mono);
+  font-size: 7px;
+  text-transform: uppercase;
+}
+
+.enquiries-main .enquiry-detail {
+  min-width: 0;
+}
+
+.enquiries-main .enquiry-actions {
+  display: flex;
+  min-height: 48px;
+  padding: 0 22px;
+  border-bottom: 1px solid var(--cms-line);
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.cms-page .enquiry-actions button {
+  padding: 7px 10px;
+  border: 1px solid var(--cms-line-strong);
+  border-radius: 2px;
+  cursor: pointer;
+  color: #555950;
+  font-size: 8px;
+}
+
+.cms-page .enquiry-actions button:hover {
+  border-color: var(--cms-ink);
+  color: var(--cms-ink);
+}
+
+.cms-page .enquiry-actions button.delete-action:hover {
+  border-color: var(--cms-danger);
+  color: var(--cms-danger);
+}
+
+.enquiries-main .enquiry-detail-body {
+  max-width: 760px;
+  padding: 58px 7vw 70px;
+}
+
+.enquiries-main .enquiry-service {
+  color: #72766d;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.enquiries-main .enquiry-detail-body h2 {
+  margin: 12px 0 0;
+  color: var(--cms-ink);
+  font-size: 38px;
+  font-weight: 500;
+  letter-spacing: -0.05em;
+}
+
+.enquiries-main .enquiry-contact-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-top: 16px;
+  color: #767a71;
+  font-size: 9px;
+}
+
+.enquiries-main .enquiry-contact-meta a {
+  color: var(--cms-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.enquiries-main .enquiry-message {
+  margin-top: 46px;
+  color: #454840;
+  font-size: 13px;
+  line-height: 1.9;
+  white-space: pre-wrap;
+}
+
+.enquiries-main .reply-button {
+  display: flex;
+  width: min(100%, 260px);
+  margin-top: 48px;
+  padding: 14px 16px;
+  align-items: center;
+  justify-content: space-between;
+  color: #f0f1ea;
+  background: var(--cms-ink);
+  font-size: 10px;
+  text-decoration: none;
+}
+
+.enquiries-main .empty-enquiries {
+  display: grid;
+  min-height: 180px;
+  padding: 30px;
+  place-content: center;
+  text-align: center;
+}
+
+.enquiries-main .empty-enquiries strong {
+  color: #44473f;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.enquiries-main .empty-enquiries p {
+  margin-top: 6px;
+  color: #8c9087;
+  font-size: 9px;
+}
+
+.enquiries-main .detail-empty {
+  min-height: 520px;
+}
+
+/* Signed out: the site's login form on its own page */
+.cms-signed-out {
+  min-height: 100svh;
+}
+
+/* Up to 1024px (phones and iPads held upright): the sidebar moves on top and the two-pane areas stack.
+   Side by side, sidebar + category list + editor left the editor's fields truncated and the status pill
+   spilling out of its panel at iPad widths. */
+@media (max-width: 64rem) {
+  .cms-page {
+    display: block;
+  }
+
+  .cms-sidebar {
+    position: relative;
+    height: auto;
+    padding: 1.25rem;
+  }
+
+  /* As many columns as fit: 4 in a row on iPads, 2 × 2 on phones; never a sideways-scrolling strip. */
+  .cms-sidebar nav {
+    grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+    gap: 0.4rem;
+    margin-top: 1.5rem;
+  }
+
+  .cms-sidebar nav button,
+  .cms-sidebar nav a {
+    padding: 0.65rem 0.6rem;
+    font-size: 0.75rem;
+  }
+
+  /* Kept (the design hides it) so Sign out stays reachable. */
+  .cms-user {
+    margin-top: 1.25rem;
+  }
+
+  .cms-workspace {
+    display: block;
+  }
+
+  .category-list {
+    border-right: 0;
+    border-bottom: 1px solid var(--cms-line);
+  }
+
+  .enquiries-main .enquiry-workspace {
+    display: block;
+  }
+
+  .enquiries-main .enquiry-list {
+    border-right: 0;
+  }
+
+  .enquiries-main .enquiry-detail {
+    border-top: 1px solid var(--cms-line);
+  }
+}
+
+@media (max-width: 50rem) {
+  /* Label above the field: side by side, the client list was cut off. */
+  .cms-overview .cms-client-roster {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .cms-main {
+    padding: 1.75rem 1rem 3.75rem;
+  }
+
+  .cms-header {
+    display: block;
+  }
+
+  .cms-header-actions {
+    margin-top: 1.4rem;
+  }
+
+  .cms-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .cms-overview > * + * {
+    border-top: 1px solid var(--cms-line);
+    border-left: 0;
+  }
+
+  .cms-editor,
+  .cms-socials {
+    padding: 1.5rem 1.1rem;
+  }
+
+  .editor-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .editor-fields label.full-field {
+    grid-column: auto;
+  }
+}
+
+/* Enquiries page on phones, from the design's 800px rules. */
+@media (max-width: 50rem) {
+  .enquiries-main .enquiry-tabs {
+    gap: 12px;
+    overflow-x: auto;
+  }
+
+  .cms-page .enquiry-tabs button {
+    min-width: max-content;
+  }
+
+  .enquiries-main .enquiry-actions {
+    padding: 10px 12px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .enquiries-main .enquiry-detail-body {
+    padding: 42px 22px 56px;
+  }
+}

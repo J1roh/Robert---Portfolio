@@ -1,0 +1,10 @@
+# Supabase CLI settings for deploying supabase/functions (not used by the website build).
+project_id = "mkegxlfhigkvdjtosovh"
+
+# Called by a Database Webhook, not a signed-in user; it checks its own x-webhook-secret header instead.
+[functions.notify-enquiry]
+verify_jwt = false
+
+# Called by visitors (not signed in); Cloudflare Turnstile is its gate, plus an origin allow-list.
+[functions.submit-enquiry]
+verify_jwt = false

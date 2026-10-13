@@ -1,0 +1,74 @@
+/* Base UI select (Select.tsx). Shape from motion.dev's base-select example, colours from site tokens.
+   The trigger inherits size and borders from where it is used (e.g. .enquiry-form). */
+.select-trigger {
+  display: inline-flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  cursor: pointer;
+  color: var(--color-text);
+  background: transparent;
+  text-align: left;
+}
+
+.select-placeholder {
+  color: var(--color-text-muted);
+}
+
+.select-icon {
+  display: flex;
+  color: var(--color-text-muted);
+  transition: transform var(--transition-fast);
+}
+
+.select-trigger[data-popup-open] .select-icon {
+  transform: rotate(180deg);
+}
+
+.select-positioner {
+  z-index: 50;
+  /* Popup matches the trigger's width. */
+  width: var(--anchor-width);
+}
+
+.select-popup {
+  overflow: hidden;
+  padding: 5px;
+  border: 1px solid var(--color-border);
+  border-radius: 5px;
+  color: var(--color-text);
+  background: var(--color-surface);
+  transform-origin: var(--transform-origin);
+}
+
+.select-item {
+  display: flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 25px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 12px;
+  user-select: none;
+  transition: color 0.1s linear, background-color 0.1s linear;
+}
+
+/* Hover and keyboard highlight share one look, like the example's hover colours. */
+.select-item[data-highlighted] {
+  outline: none;
+  color: var(--color-accent-contrast);
+  background: var(--color-accent);
+}
+
+.select-item[data-selected] {
+  font-weight: var(--weight-medium);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .select-icon,
+  .select-item {
+    transition: none;
+  }
+}

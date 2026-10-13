@@ -1,0 +1,45 @@
+/* Shared layout primitives. Media queries cannot read custom properties,
+   so breakpoints live in layout and feature CSS only: sm = 50rem (800px), lg = 64rem (1024px). */
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  position: relative;
+  z-index: 1;
+  padding: var(--space-9) var(--gutter);
+  border-top: 1px solid var(--color-border);
+  background: color-mix(in srgb, var(--color-bg) 94%, transparent);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+
+@media (max-width: 50rem) {
+  :root {
+    --gutter: var(--space-5);
+  }
+
+  .section {
+    padding-block: var(--space-8);
+  }
+}
+
+@media (min-width: 48rem) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 64rem) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

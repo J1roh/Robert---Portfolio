@@ -1,0 +1,23 @@
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  gap: var(--space-4);
+  place-content: center;
+  justify-items: center;
+  background: var(--color-bg);
+  color: var(--color-text);
+  transition: opacity var(--transition-fast);
+}
+
+.loader.is-done {
+  opacity: 0;
+}
+
+.loader-word {
+  font-size: var(--text-display);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+}

@@ -1,0 +1,41 @@
+.rolling-number {
+  position: relative;
+  white-space: nowrap;
+  /* Equal-width digits, so a column is exactly one digit wide. */
+  font-variant-numeric: tabular-nums;
+}
+
+.rolling-text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+/* A window one line tall onto a column of 0–9 twice; bottom-aligned so the digits sit on the text's baseline. */
+.rolling-digit {
+  display: inline-block;
+  height: 1lh;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+/* --n = the row to show (10 + digit after the turn), --i = its position (set in RollingNumber.tsx); later digits start a little later. */
+.rolling-digit > span {
+  display: block;
+  transform: translateY(calc(var(--n) * -5%));
+  transition: transform 1.6s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--i) * 60ms);
+}
+
+.rolling-digit > span > span {
+  display: block;
+  height: 1lh;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rolling-digit > span {
+    transition: none;
+  }
+}

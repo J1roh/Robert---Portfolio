@@ -1,0 +1,94 @@
+/* Sole source of design values. Themes change values here only (DESIGN.md §6). */
+/* Palette and fonts from the owner's "Parallax Scrolling Website" design (Decision D9). */
+
+/* .scheme-dark re-declares the tokens so light-dark() resolves dark inside it (e.g. the hero over black key art). */
+:root,
+.scheme-dark {
+  color-scheme: light dark;
+
+  /* Color: light-dark(light value, dark value), resolved by color-scheme */
+  --color-bg: light-dark(#ecebe5, #101110);
+  --color-surface: light-dark(#e2e0d8, #171917);
+  --color-text: light-dark(#151713, #ecece5);
+  --color-text-muted: light-dark(#60645c, #979b93);
+  /* Light accent darkened from the design's #dfff42, which is 1.05:1 on the light background */
+  --color-accent: light-dark(#4f5e00, #dfff42);
+  --color-accent-contrast: light-dark(#ecebe5, #11130e);
+  --color-border: light-dark(#c4c5bd, #343731);
+  --color-focus: var(--color-accent);
+  --color-danger: light-dark(#b91c1c, #fca5a5);
+
+  /* Project card palettes (same in both themes; each pair passes AA) */
+  --project-anime-bg: #c9ed42;
+  --project-anime-fg: #17200c;
+  --project-quality-bg: #d8d4c6;
+  --project-quality-fg: #2c2c26;
+  /* Darkened from the design's #bc4937 (4.2:1) to pass AA for small text */
+  --project-promo-bg: #a93f2f;
+  --project-promo-fg: #f4e8db;
+  --project-games-bg: #254d68;
+  --project-games-fg: #e8eee9;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 7rem;
+  --space-10: 9rem;
+
+  /* Typography */
+  --font-body: "Manrope", "Noto Sans JP", system-ui, sans-serif;
+  --font-heading: var(--font-body);
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+  --text-2xs: 0.625rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.75rem;
+  --text-2xl: clamp(1.5rem, 3.2vw, 3rem);
+  --text-3xl: clamp(2.75rem, 6vw, 5.625rem);
+  --text-display: clamp(3.125rem, 8.7vw, 8.625rem);
+  --leading-display: 0.92;
+  --leading-tight: 1.1;
+  --leading-normal: 1.7;
+  --tracking-display: -0.07em;
+  --tracking-snug: -0.04em;
+  --tracking-label: 0.08em;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-bold: 600;
+
+  /* Other */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-full: 999px;
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.08);
+  --shadow-md: 0 4px 12px rgb(0 0 0 / 0.12);
+  --container-max: 90rem;
+  --gutter: var(--space-7);
+  --focus-width: 3px;
+  --transition-fast: 180ms ease;
+}
+
+/* Visitor override saved by src/lib/use-stored-choice.ts; absent means follow the system */
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"],
+.scheme-dark {
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: 0s;
+  }
+}
