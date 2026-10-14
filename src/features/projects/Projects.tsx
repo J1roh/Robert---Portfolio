@@ -7,6 +7,9 @@ import Arrow from '../../components/Arrow.tsx'
 import './projects.css'
 
 const pad = (n: number) => String(n).padStart(2, '0')
+// The title as shown: its JP name in JP when the CMS has one, else the EN title (which stays the key).
+const display = (project: Project, title: string, language: Language) =>
+  (language === 'ja' && project.details?.[title]?.jaTitle) || title
 
 
 type Props = { copy: Copy; language: Language; projects: Project[] }
@@ -51,7 +54,7 @@ export default function Projects({ copy, language, projects }: Props) {
                 </summary>
                 <ul>
                   {project.allTitles.map((title, j) => (
-                    <li key={title} style={{ '--i': j } as CSSProperties}>{title}</li>
+                    <li key={title} style={{ '--i': j } as CSSProperties}>{display(project, title, language)}</li>
                   ))}
                 </ul>
               </details>
@@ -80,8 +83,9 @@ function WorkDialog({ work, copy, language, onClose }: { work: Work; copy: Copy;
   const current = slides[slide]
   // The heading is the work's name; its credit note ("— Translator, PM, …" or "(except opening song)") goes below,
   // so long credit lines don't blow the heading up past the screen.
-  const name = titleName(title)
-  const note = title.slice(name.length).trim().replace(/^— /, '')
+  const shown = display(project, title, language)
+  const name = titleName(shown)
+  const note = shown.slice(name.length).trim().replace(/^— /, '')
 
   useEffect(() => ref.current?.showModal(), [])
 
@@ -237,7 +241,7 @@ function ProjectVisual({ project, number, language, onOpen }: VisualProps) {
         {project.allTitles.map((title, j) => (
           <li key={title} aria-current={j === shown || undefined} onMouseEnter={() => show(j)}>
             <span aria-hidden="true">{pad(j + 1)}</span>
-            <button type="button" onFocus={() => show(j)} onClick={() => onOpen(title)}>{title}</button>
+            <button type="button" onFocus={() => show(j)} onClick={() => onOpen(title)}>{display(project, title, language)}</button>
           </li>
         ))}
       </ol>

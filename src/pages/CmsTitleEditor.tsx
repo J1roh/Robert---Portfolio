@@ -19,6 +19,7 @@ type Props = {
 export default function CmsTitleEditor({ number, title, details, lang, onLang, onSave, onClose }: Props) {
   const ref = useRef<HTMLDialogElement>(null)
   const [draftTitle, setDraftTitle] = useState(title)
+  const [jaTitle, setJaTitle] = useState(details?.jaTitle ?? '')
   const [summary, setSummary] = useState(details?.summary ?? { en: '', ja: '' })
   const [link, setLink] = useState(details?.link ?? '')
   const [image, setImage] = useState(details?.image ?? '')
@@ -41,6 +42,7 @@ export default function CmsTitleEditor({ number, title, details, lang, onLang, o
 
   function save() {
     onSave(draftTitle.trim() || title, {
+      ...(jaTitle.trim() ? { jaTitle: jaTitle.trim() } : {}),
       ...(summary.en || summary.ja ? { summary } : {}),
       ...(link ? { link } : {}),
       ...(image ? { image } : {}),
@@ -86,8 +88,12 @@ export default function CmsTitleEditor({ number, title, details, lang, onLang, o
           </label>
           <div className="modal-project-fields">
             <label>
-              Project title
-              <input value={draftTitle} onChange={(e) => setDraftTitle(e.target.value)} />
+              Project title ({lang === 'ja' ? 'JP' : 'EN'})
+              {lang === 'ja' ? (
+                <input lang="ja" value={jaTitle} placeholder={draftTitle} onChange={(e) => setJaTitle(e.target.value)} />
+              ) : (
+                <input value={draftTitle} onChange={(e) => setDraftTitle(e.target.value)} />
+              )}
             </label>
             <label>
               Short description ({lang === 'ja' ? 'JP' : 'EN'})
