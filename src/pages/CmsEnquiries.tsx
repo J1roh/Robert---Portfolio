@@ -4,7 +4,7 @@ import { formatEnquiryDate } from '../lib/enquiry-date.ts'
 import Arrow from '../components/Arrow.tsx'
 
 // CMS Enquiries page (#/cms/enquiries), after the owner's design: Inbox / Archive / Recently deleted folders,
-// a message list and a reading pane. Only the admin can read or change enquiries (RLS).
+// a message list and a reading pane. Only signed-in CMS users can read or change enquiries (RLS, mitigations/12).
 const folders: { status: EnquiryStatus; label: string; heading: string }[] = [
   { status: 'inbox', label: 'Inbox', heading: 'Inbox messages' },
   { status: 'archived', label: 'Archive', heading: 'Archived messages' },

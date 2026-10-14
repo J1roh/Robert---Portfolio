@@ -24,7 +24,7 @@ const readDraft = (): { savedAt: number; draft: Content } | null => {
   }
 }
 const same = (a: Content, b: Content) => JSON.stringify(a) === JSON.stringify(b)
-// Errors meaning the login no longer allows writing (expired session, or an account that isn't the admin).
+// Errors meaning the login no longer allows writing (expired session, or an account that can't publish).
 const AUTH_ERROR = /jwt|row-level security|permission denied|not authori[sz]ed|401|403/i
 
 // Layout follows the owner's "Parallax Scrolling Website" CMS design (Figma Make zip).
