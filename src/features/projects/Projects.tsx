@@ -10,6 +10,9 @@ const pad = (n: number) => String(n).padStart(2, '0')
 // The title as shown: its JP name in JP when the CMS has one, else the EN title (which stays the key).
 const display = (project: Project, title: string, language: Language) =>
   (language === 'ja' && project.details?.[title]?.jaTitle) || title
+// The category's title and client in the current language, same fallback.
+const categoryTitle = (project: Project, language: Language) => (language === 'ja' && project.jaTitle) || project.title
+const client = (project: Project, language: Language) => (language === 'ja' && project.jaClient) || project.client
 
 
 type Props = { copy: Copy; language: Language; projects: Project[] }
@@ -30,14 +33,13 @@ export default function Projects({ copy, language, projects }: Props) {
             <ProjectVisual project={project} number={i + 1} language={language} onOpen={(title) => setWork({ project, title })} />
             <div className="project-meta">
               <div>
-                <p>{project.category}</p>
-                <h3>{project.title}</h3>
+                <h3>{categoryTitle(project, language)}</h3>
                 <p className="project-subtitle">{project.subtitle[language]}</p>
               </div>
               <dl>
                 <div>
                   <dt>{copy.client}</dt>
-                  <dd>{project.client}</dd>
+                  <dd>{client(project, language)}</dd>
                 </div>
                 <div>
                   <dt>{copy.role}</dt>
@@ -139,17 +141,17 @@ function WorkDialog({ work, copy, language, onClose }: { work: Work; copy: Copy;
           )}
         </div>
         <div className="project-modal-content">
-          <p className="kicker">{project.title}</p>
+          <p className="kicker">{categoryTitle(project, language)}</p>
           <h2 id="project-modal-title">{name}</h2>
           {note && <p className="project-modal-note">{note}</p>}
           <dl>
             <div>
               <dt>{copy.client}</dt>
-              <dd>{project.client}</dd>
+              <dd>{client(project, language)}</dd>
             </div>
             <div>
               <dt>{copy.role}</dt>
-              <dd>{project.role[language]}</dd>
+              <dd>{details?.role?.[language] || project.role[language]}</dd>
             </div>
           </dl>
           {/* The zip shows placeholder text when empty; visitors shouldn't see that, so it's left out. */}
@@ -234,7 +236,7 @@ function ProjectVisual({ project, number, language, onOpen }: VisualProps) {
       {/* Decorative repeat of the title below; hidden so screen readers hear it once */}
       <div className="project-mark" aria-hidden="true">
         <p>{project.label[language]}</p>
-        <span className="project-mark-title">{project.title}</span>
+        <span className="project-mark-title">{categoryTitle(project, language)}</span>
         <small>日本語 → ENGLISH</small>
       </div>
       <ol className="project-list" ref={list}>

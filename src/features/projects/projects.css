@@ -544,7 +544,6 @@ html:has(.project-modal[open]) {
   border-top: 1px solid var(--color-border);
 }
 
-.project-meta > div > p:first-child,
 .project-meta dt {
   color: var(--color-text-muted);
   font-family: var(--font-mono);
@@ -553,7 +552,6 @@ html:has(.project-modal[open]) {
 }
 
 .project-meta h3 {
-  margin-top: var(--space-2);
   font-size: var(--text-xl);
   font-weight: var(--weight-medium);
   letter-spacing: var(--tracking-snug);

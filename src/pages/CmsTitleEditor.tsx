@@ -8,6 +8,7 @@ type Props = {
   number: string
   title: string
   details: WorkDetails | undefined
+  categoryRole: string
   lang: Language
   onLang: (lang: Language) => void
   onSave: (title: string, details: WorkDetails) => void
@@ -16,10 +17,11 @@ type Props = {
 
 // "Edit project" modal, copied from the owner's Figma Make zip (v2). Edits a local copy;
 // Save project hands it to the CMS draft, which still needs "Save changes" to publish.
-export default function CmsTitleEditor({ number, title, details, lang, onLang, onSave, onClose }: Props) {
+export default function CmsTitleEditor({ number, title, details, categoryRole, lang, onLang, onSave, onClose }: Props) {
   const ref = useRef<HTMLDialogElement>(null)
   const [draftTitle, setDraftTitle] = useState(title)
   const [jaTitle, setJaTitle] = useState(details?.jaTitle ?? '')
+  const [role, setRole] = useState(details?.role ?? { en: '', ja: '' })
   const [summary, setSummary] = useState(details?.summary ?? { en: '', ja: '' })
   const [link, setLink] = useState(details?.link ?? '')
   const [image, setImage] = useState(details?.image ?? '')
@@ -43,6 +45,7 @@ export default function CmsTitleEditor({ number, title, details, lang, onLang, o
   function save() {
     onSave(draftTitle.trim() || title, {
       ...(jaTitle.trim() ? { jaTitle: jaTitle.trim() } : {}),
+      ...(role.en || role.ja ? { role } : {}),
       ...(summary.en || summary.ja ? { summary } : {}),
       ...(link ? { link } : {}),
       ...(image ? { image } : {}),
@@ -94,6 +97,10 @@ export default function CmsTitleEditor({ number, title, details, lang, onLang, o
               ) : (
                 <input value={draftTitle} onChange={(e) => setDraftTitle(e.target.value)} />
               )}
+            </label>
+            <label>
+              Role ({lang === 'ja' ? 'JP' : 'EN'})
+              <input lang={lang} value={role[lang]} placeholder={categoryRole} onChange={(e) => setRole({ ...role, [lang]: e.target.value })} />
             </label>
             <label>
               Short description ({lang === 'ja' ? 'JP' : 'EN'})

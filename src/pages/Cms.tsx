@@ -375,15 +375,24 @@ export default function Cms({ content, onSaved, page }: Props) {
               </div>
 
               <div className="editor-fields">
+                {/* Every text field is translated: the EN / JP toggle above picks which language it edits.
+                    Title and client keep EN in title/client and JP in jaTitle/jaClient (empty JP shows EN). */}
                 <label>
-                  Category title
-                  <input value={project.title} onChange={(e) => editProject({ title: e.target.value })} />
+                  Category title ({langLabel})
+                  {lang === 'ja' ? (
+                    <input lang="ja" value={project.jaTitle ?? ''} placeholder={project.title} onChange={(e) => editProject({ jaTitle: e.target.value })} />
+                  ) : (
+                    <input value={project.title} onChange={(e) => editProject({ title: e.target.value })} />
+                  )}
                 </label>
                 <label>
-                  Client
-                  <input value={project.client} onChange={(e) => editProject({ client: e.target.value })} />
+                  Client ({langLabel})
+                  {lang === 'ja' ? (
+                    <input lang="ja" value={project.jaClient ?? ''} placeholder={project.client} onChange={(e) => editProject({ jaClient: e.target.value })} />
+                  ) : (
+                    <input value={project.client} onChange={(e) => editProject({ client: e.target.value })} />
+                  )}
                 </label>
-                {/* Translated fields: the EN / JP toggle above picks which language they edit. */}
                 <label className="full-field">
                   Role ({langLabel})
                   <input lang={lang} value={project.role[lang]} onChange={(e) => editProject({ role: { ...project.role, [lang]: e.target.value } })} />
@@ -398,14 +407,10 @@ export default function Cms({ content, onSaved, page }: Props) {
                 </label>
               </div>
 
-              {/* Card tag, width and delete, folded away to keep the design's layout. */}
+              {/* Card width and delete, folded away to keep the design's layout. */}
               <details className="cms-more">
                 <summary>Card details</summary>
                 <div className="editor-fields">
-                  <label>
-                    Card tag
-                    <input value={project.category} onChange={(e) => editProject({ category: e.target.value })} />
-                  </label>
                   <label className="cms-check">
                     <input type="checkbox" checked={project.wide} onChange={(e) => editProject({ wide: e.target.checked })} />
                     Wide card
@@ -460,6 +465,7 @@ export default function Cms({ content, onSaved, page }: Props) {
                   number={pad(editing + 1)}
                   title={project.allTitles[editing]}
                   details={project.details?.[project.allTitles[editing]]}
+                  categoryRole={project.role[lang]}
                   lang={lang}
                   onLang={setLang}
                   onSave={(title, details) => saveTitle(editing, title, details)}
