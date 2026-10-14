@@ -7,11 +7,20 @@ import './enquiry.css'
 
 // Contact page (#/contact), after the owner's "Parallax Scrolling Website" design. Enquiries are saved to Supabase
 // and read in the CMS. Max lengths match the table's checks in supabase/mitigations/02_create_enquiries_table.sql.
-// Set after a successful send. The server refuses a repeat within 24 hours anyway (supabase/mitigations/05);
+// Send times on this browser. The server refuses a 4th within 2 days anyway (supabase/mitigations/13);
 // this just shows the "already sent" note up front instead of letting the visitor fill the form in vain.
-const SENT_KEY = 'enquiry-sent-at'
-const DAY_MS = 864e5
-const sentRecently = () => Date.now() - Number(localStorage.getItem(SENT_KEY) ?? 0) < DAY_MS
+const SENT_KEY = 'enquiry-sent-times'
+const LIMIT = 3
+const WINDOW_MS = 2 * 864e5
+const recentSends = (): number[] => {
+  try {
+    const saved: unknown = JSON.parse(localStorage.getItem(SENT_KEY) ?? '[]')
+    return Array.isArray(saved) ? saved.filter((t) => typeof t === 'number' && Date.now() - t < WINDOW_MS) : []
+  } catch {
+    return []
+  }
+}
+const sentRecently = () => recentSends().length >= LIMIT
 
 export default function Enquiry({ copy, links }: { copy: Copy; links: Links }) {
   const text = copy.enquiry
@@ -46,7 +55,7 @@ export default function Enquiry({ copy, links }: { copy: Copy; links: Links }) {
       return
     }
     if (result === 'sent') {
-      localStorage.setItem(SENT_KEY, String(Date.now()))
+      localStorage.setItem(SENT_KEY, JSON.stringify([...recentSends(), Date.now()]))
       setFormKey((k) => k + 1)
     }
     setStatus(result)
