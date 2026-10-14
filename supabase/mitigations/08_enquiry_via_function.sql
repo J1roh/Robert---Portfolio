@@ -1,6 +1,7 @@
 -- 08: enquiries can only be saved through the submit-enquiry Edge Function (Turnstile + email checks).
 -- Run ONLY after submit-enquiry is deployed with its TURNSTILE_SECRET and the site sends enquiries to it;
 -- before that, this would switch the contact form off. Safe to re-run.
+-- NOTE: 12 re-adds the public insert policy because the site still inserts directly; re-run this file after switching.
 
 -- Close direct public inserts: the function inserts as the service role, which bypasses row-level security.
 drop policy if exists "anyone sends enquiries" on public.enquiries;

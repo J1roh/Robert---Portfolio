@@ -37,3 +37,10 @@ create policy "admin updates enquiries" on public.enquiries
 create policy "admin uploads posters" on storage.objects
   for insert to authenticated
   with check (bucket_id = 'posters' and public.is_cms_user());
+
+-- The contact form still inserts directly (src/lib/enquiries.ts) and submit-enquiry isn't deployed, so undo
+-- 08's removal of this policy (same as 03). The 05/08 trigger still allows one per email/IP per 24 hours.
+drop policy if exists "anyone sends enquiries" on public.enquiries;
+create policy "anyone sends enquiries" on public.enquiries
+  for insert to anon, authenticated
+  with check (status = 'inbox' and read = false and deleted_at is null);
