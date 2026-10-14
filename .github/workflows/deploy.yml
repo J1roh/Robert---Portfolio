@@ -1,6 +1,5 @@
 # Builds the Vite site and publishes dist/ to GitHub Pages on every push to main.
-# One-time setup: Settings → Pages → Source: "GitHub Actions"; Settings → Secrets and variables → Actions:
-# add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY (without them the site still loads, from bundled content).
+# One-time setup: Settings → Pages → Source: "GitHub Actions". The Supabase URL and anon key are set below.
 name: Deploy to GitHub Pages
 
 on:
@@ -31,9 +30,10 @@ jobs:
       - run: npm ci
       # Served from the custom domain root (jiroh.works), so Vite's default base '/' applies.
       - run: npm run build
+        # The client's Supabase project. Both values are public (they ship in the site's JS); RLS guards the data.
         env:
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL || vars.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY || vars.VITE_SUPABASE_ANON_KEY }}
+          VITE_SUPABASE_URL: https://kadytgyfsfrdzztsqrqv.supabase.co
+          VITE_SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImthZHl0Z3lmc2ZyZHp6dHNxcnF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE5ODExMzYsImV4cCI6MjEwNzU1NzEzNn0.Zp0AZGJieMB1bYAP-nrf8xvzYH-JEIWkws_JSHg43Tc
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

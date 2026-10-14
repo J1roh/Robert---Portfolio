@@ -2,8 +2,8 @@
 // stores it. Order: honeypot → field limits → Cloudflare Turnstile (human check) → email domain (not disposable,
 // can receive mail) → insert. The 05 trigger then enforces one per email/IP per 24 hours, and 07 emails the owner.
 //
-// Setup: npx supabase secrets set --project-ref mkegxlfhigkvdjtosovh TURNSTILE_SECRET=<Turnstile secret key>
-//        npx supabase functions deploy submit-enquiry --use-api --project-ref mkegxlfhigkvdjtosovh
+// Setup: npx supabase secrets set --project-ref kadytgyfsfrdzztsqrqv TURNSTILE_SECRET=<Turnstile secret key>
+//        npx supabase functions deploy submit-enquiry --use-api --project-ref kadytgyfsfrdzztsqrqv
 // SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are provided to every function automatically.
 // disposable.json: github.com/disposable-email-domains/disposable-email-domains (disposable_email_blocklist.conf,
 // one domain per line, converted to a JSON array). Refresh it the same way now and then.

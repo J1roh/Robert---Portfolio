@@ -5,15 +5,15 @@
 //   1. Sign up at https://resend.com with bontilaojiroh@gmail.com; API Keys > Create (Sending access).
 //      Without your own domain, Resend only delivers to the address you signed up with, which is all we need.
 //   2. npx supabase login
-//   3. npx supabase functions deploy notify-enquiry --use-api --project-ref mkegxlfhigkvdjtosovh
+//   3. npx supabase functions deploy notify-enquiry --use-api --project-ref kadytgyfsfrdzztsqrqv
 //      (--use-api: no Docker needed. JWT check is off via supabase/config.toml; the secret header protects it.)
 //   4. In your own terminal, so the key never lands in a chat or log:
-//      npx supabase secrets set --project-ref mkegxlfhigkvdjtosovh RESEND_API_KEY=re_... WEBHOOK_SECRET=<long random text>
+//      npx supabase secrets set --project-ref kadytgyfsfrdzztsqrqv RESEND_API_KEY=re_... WEBHOOK_SECRET=<long random text>
 //      Once the site is live (GitHub Pages): also SITE_URL=https://<user>.github.io/<repo> for the "Open in CMS" button.
 //      Optional: NOTIFY_TO=<another inbox> (defaults to bontilaojiroh@gmail.com).
 //   5. Supabase dashboard > Database > Webhooks > Create: table public.enquiries, event Insert only,
 //      type Supabase Edge Functions > notify-enquiry, POST, timeout 5000, HTTP header x-webhook-secret: <same random text>.
-//   Test without the database:  curl -X POST https://mkegxlfhigkvdjtosovh.supabase.co/functions/v1/notify-enquiry
+//   Test without the database:  curl -X POST https://kadytgyfsfrdzztsqrqv.supabase.co/functions/v1/notify-enquiry
 //     -H "x-webhook-secret: <secret>" -H "Content-Type: application/json"
 //     -d "{\"type\":\"INSERT\",\"record\":{\"name\":\"Test Client\",\"email\":\"test@example.com\",\"message\":\"Hello\"}}"
 //   Logs: Supabase > Edge Functions > notify-enquiry > Logs (403 = secret mismatch, 502 = Resend error).

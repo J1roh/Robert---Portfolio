@@ -1,5 +1,5 @@
 # Supabase CLI settings for deploying supabase/functions (not used by the website build).
-project_id = "mkegxlfhigkvdjtosovh"
+project_id = "kadytgyfsfrdzztsqrqv"
 
 # Called by a Database Webhook, not a signed-in user; it checks its own x-webhook-secret header instead.
 [functions.notify-enquiry]

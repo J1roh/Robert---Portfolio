@@ -20,7 +20,7 @@ begin
 
   -- Queued and sent in the background, so the visitor's submit never waits on the email.
   perform net.http_post(
-    url := 'https://mkegxlfhigkvdjtosovh.supabase.co/functions/v1/notify-enquiry',
+    url := 'https://kadytgyfsfrdzztsqrqv.supabase.co/functions/v1/notify-enquiry',
     headers := jsonb_build_object('Content-Type', 'application/json', 'x-webhook-secret', secret),
     body := jsonb_build_object('type', 'INSERT', 'table', 'enquiries', 'record', to_jsonb(new) - 'ip_hash'),
     timeout_milliseconds := 5000
