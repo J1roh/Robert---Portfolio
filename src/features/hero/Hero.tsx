@@ -45,7 +45,7 @@ function useHeroParallax() {
 }
 
 export default function Hero({ copy, language }: { copy: Copy; language: Language }) {
-  const [first, last] = site.nameLines
+  const [first, last] = language === 'ja' ? site.nameLinesJa : site.nameLines
   const ref = useHeroParallax()
 
   return (

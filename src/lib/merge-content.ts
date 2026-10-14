@@ -1,7 +1,7 @@
 const isObj = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v)
 
 type Stat = { value: string }
-type Shape = { projects: unknown[]; stats: { en: Stat[]; ja: Stat[] }; clientRoster: string; links: Record<string, string> }
+type Shape = { projects: unknown[]; stats: { en: Stat[]; ja: Stat[] }; clientRoster: { en: string; ja: string }; links: Record<string, string> }
 
 // The CMS only edits stat values, so the list, labels and notes come from the defaults; saved values apply by position.
 const mergeStats = <S extends Stat>(saved: unknown, defaults: S[]): S[] =>
@@ -17,6 +17,14 @@ const mergeProject = (p: Record<string, unknown>, defaults: unknown[]) => {
   return empty && Array.isArray(p.works) ? { ...merged, allTitles: p.works } : merged
 }
 
+// Rows saved before the roster was translated hold one string, used for both languages.
+const mergeRoster = (saved: unknown, defaults: { en: string; ja: string }) => {
+  if (typeof saved === 'string') return { en: saved, ja: saved }
+  if (!isObj(saved)) return defaults
+  const pick = (lang: 'en' | 'ja') => (typeof saved[lang] === 'string' ? saved[lang] : defaults[lang])
+  return { en: pick('en'), ja: pick('ja') }
+}
+
 // The saved row comes from the network, so check its shape; any missing or malformed part keeps its default.
 export function mergeContent<T extends Shape>(saved: unknown, defaults: T): T {
   if (!isObj(saved)) return defaults
@@ -28,7 +36,7 @@ export function mergeContent<T extends Shape>(saved: unknown, defaults: T): T {
       en: mergeStats(stats.en, defaults.stats.en),
       ja: mergeStats(stats.ja, defaults.stats.ja),
     },
-    clientRoster: typeof saved.clientRoster === 'string' ? saved.clientRoster : defaults.clientRoster,
+    clientRoster: mergeRoster(saved.clientRoster, defaults.clientRoster),
     links: isObj(saved.links) ? { ...defaults.links, ...saved.links } : defaults.links,
   } as T
 }

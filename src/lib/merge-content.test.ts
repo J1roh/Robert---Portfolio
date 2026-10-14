@@ -6,7 +6,7 @@ import { mergeContent } from './merge-content.ts'
 const defaults = {
   projects: [{ slug: 'a' }],
   stats: { en: [{ value: '1', label: 'x' }], ja: [{ value: '1', label: 'y' }] },
-  clientRoster: 'A · B',
+  clientRoster: { en: 'A · B', ja: 'A・B' },
   links: { linkedin: 'L', x: 'X', xLabel: 'XL' },
 }
 
@@ -30,8 +30,12 @@ test('stats added to defaults survive an older saved row', () => {
   assert.deepEqual(out.stats.en, [{ value: '2', label: 'x' }, { value: '7+', label: 'new' }])
 })
 
-test('saved client roster overrides the default', () => {
-  assert.equal(mergeContent({ clientRoster: 'C · D' }, defaults).clientRoster, 'C · D')
+test('saved client roster overrides the default per language', () => {
+  assert.deepEqual(mergeContent({ clientRoster: { en: 'C · D', ja: 3 } }, defaults).clientRoster, { en: 'C · D', ja: 'A・B' })
+})
+
+test('an older single-string roster applies to both languages', () => {
+  assert.deepEqual(mergeContent({ clientRoster: 'C · D' }, defaults).clientRoster, { en: 'C · D', ja: 'C · D' })
 })
 
 test('saved projects keep new default fields, matched by slug', () => {

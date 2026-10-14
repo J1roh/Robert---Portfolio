@@ -21,13 +21,13 @@ export type Links = typeof site.links
 export type Stat = Copy['stats'][number]
 
 // The CMS-editable slice of the site; saved as one row (key 'site') in the Supabase `content` table.
-export type Content = { projects: Project[]; stats: Record<Language, Stat[]>; clientRoster: string; links: Links }
+export type Content = { projects: Project[]; stats: Record<Language, Stat[]>; clientRoster: Record<Language, string>; links: Links }
 
 export const defaults: Content = {
   // Cast: TS infers each project's details as a union of its literal title keys, not a Record.
   projects: projects as unknown as Project[],
   stats: { en: site.copy.en.stats, ja: site.copy.ja.stats },
-  clientRoster: site.copy.en.clientRoster,
+  clientRoster: { en: site.copy.en.clientRoster, ja: site.copy.ja.clientRoster },
   links: site.links,
 }
 

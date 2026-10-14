@@ -335,10 +335,12 @@ export default function Cms({ content, onSaved, page }: Props) {
               <input value={stat.value} onChange={(e) => editStat(i, e.target.value)} />
             </label>
           ))}
-          <label className="cms-client-roster">
-            <span>Selected clients</span>
-            <input value={draft.clientRoster} onChange={(e) => edit({ ...draft, clientRoster: e.target.value })} />
-          </label>
+          {languages.map((l) => (
+            <label key={l} className="cms-client-roster">
+              <span>Subheader ({l === 'ja' ? 'JP' : 'EN'})</span>
+              <input lang={l} value={draft.clientRoster[l]} onChange={(e) => edit({ ...draft, clientRoster: { ...draft.clientRoster, [l]: e.target.value } })} />
+            </label>
+          ))}
         </section>
 
         <div className="cms-workspace" id="cms-portfolio">

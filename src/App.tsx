@@ -37,7 +37,7 @@ export default function App() {
   const lang = language ?? 'en'
   const [content, setContent] = useState(defaults)
   // Memoized: ScrambleText re-animates whenever the copy object's identity changes.
-  const copy = useMemo(() => ({ ...site.copy[lang], stats: content.stats[lang], clientRoster: content.clientRoster }),[lang, content])
+  const copy = useMemo(() => ({ ...site.copy[lang], stats: content.stats[lang], clientRoster: content.clientRoster[lang] }),[lang, content])
   const mainRef = useRef<HTMLElement>(null)
   const shownRoute = useRef(route)
 
