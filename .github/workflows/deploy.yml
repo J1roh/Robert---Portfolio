@@ -28,8 +28,10 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      # Served from the custom domain root (jiroh.works), so Vite's default base '/' applies.
-      - run: npm run build
+      # Pages reports where this repo's site lives: '' on a custom domain (jiroh.works), '/<repo>' on <user>.github.io.
+      - id: pages
+        uses: actions/configure-pages@v5
+      - run: npm run build -- --base=${{ steps.pages.outputs.base_path }}/
         # The client's Supabase project. Both values are public (they ship in the site's JS); RLS guards the data.
         env:
           VITE_SUPABASE_URL: https://kadytgyfsfrdzztsqrqv.supabase.co
