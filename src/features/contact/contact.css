@@ -22,13 +22,6 @@
   margin: 80px 0 160px;
 }
 
-.contact-row > p {
-  grid-column: 2 / span 4;
-  color: var(--color-text-muted);
-  font-size: 14px;
-  line-height: 1.8;
-}
-
 .contact-row > a {
   grid-column: 9 / span 4;
   display: flex;
@@ -54,7 +47,6 @@
     margin: 56px 0 100px;
   }
 
-  .contact-row > p,
   .contact-row > a {
     grid-column: auto;
   }

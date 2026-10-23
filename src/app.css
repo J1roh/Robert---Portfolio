@@ -29,7 +29,6 @@ main:focus {
 }
 
 .project-meta dd,
-.about-copy,
-.contact-row > p {
+.about-copy {
   overflow-wrap: anywhere;
 }

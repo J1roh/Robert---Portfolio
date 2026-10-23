@@ -9,7 +9,6 @@ export default function Contact({ copy, links }: { copy: Copy; links: Links }) {
       <h2 id="contact-heading" className="kicker">03 / {copy.contactEyebrow}</h2>
       <p className="contact-title"><ScrambleText text={copy.contactTitle} /></p>
       <div className="contact-row">
-        <p>{copy.contactBody}</p>
         <a href="#/contact">
           <span>{copy.contactCta}</span>
           <Arrow />

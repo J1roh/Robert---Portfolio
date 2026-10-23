@@ -76,7 +76,6 @@ export default function Enquiry({ copy, links }: { copy: Copy; links: Links }) {
               <span key={line}>{line}</span>
             ))}
           </h1>
-          <p className="enquiry-intro-copy">{text.intro}</p>
           <div className="enquiry-direct">
             <p>{text.direct}</p>
             {elsewhere.map(({ href, label }) => (
