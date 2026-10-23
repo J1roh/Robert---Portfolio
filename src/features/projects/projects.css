@@ -545,18 +545,8 @@ html:has(.project-modal[open]) {
 }
 
 .project-meta {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-5);
   padding-top: var(--space-4);
   border-top: 1px solid var(--color-border);
-}
-
-.project-meta dt {
-  color: var(--color-text-muted);
-  font-family: var(--font-mono);
-  font-size: var(--text-2xs);
-  text-transform: uppercase;
 }
 
 .project-meta h3 {
@@ -568,21 +558,6 @@ html:has(.project-modal[open]) {
 .project-subtitle {
   margin-top: var(--space-1);
   color: var(--color-text-muted);
-  font-size: var(--text-xs);
-}
-
-.project-meta dl {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-5);
-}
-
-.project-meta dt {
-  margin-bottom: var(--space-2);
-}
-
-.project-meta dd {
-  margin: 0;
   font-size: var(--text-xs);
 }
 
@@ -711,9 +686,5 @@ html:has(.project-modal[open]) {
     width: 86%;
     /* About four rows on phones so the list doesn't cover the card art. */
     max-height: 10.5rem;
-  }
-
-  .project-meta {
-    grid-template-columns: minmax(0, 1fr);
   }
 }

@@ -31,21 +31,10 @@ export default function Projects({ copy, language, projects }: Props) {
         {projects.map((project, i) => (
           <article className={project.wide ? 'project-card wide' : 'project-card'} key={project.slug}>
             <ProjectVisual project={project} number={i + 1} language={language} onOpen={(title) => setWork({ project, title })} />
+            {/* Client and role are per title now (shown in the title's popup), not per category. */}
             <div className="project-meta">
-              <div>
-                <h3>{categoryTitle(project, language)}</h3>
-                <p className="project-subtitle">{project.subtitle[language]}</p>
-              </div>
-              <dl>
-                <div>
-                  <dt>{copy.client}</dt>
-                  <dd>{client(project, language)}</dd>
-                </div>
-                <div>
-                  <dt>{copy.role}</dt>
-                  <dd>{project.role[language]}</dd>
-                </div>
-              </dl>
+              <h3>{categoryTitle(project, language)}</h3>
+              <p className="project-subtitle">{project.subtitle[language]}</p>
             </div>
             {/* Full credit list; the card art shows a selection. `?.` covers CMS-added categories saved without one. */}
             {project.allTitles?.length > 0 && (
@@ -147,7 +136,7 @@ function WorkDialog({ work, copy, language, onClose }: { work: Work; copy: Copy;
           <dl>
             <div>
               <dt>{copy.client}</dt>
-              <dd>{client(project, language)}</dd>
+              <dd>{details?.client?.[language] || client(project, language)}</dd>
             </div>
             <div>
               <dt>{copy.role}</dt>

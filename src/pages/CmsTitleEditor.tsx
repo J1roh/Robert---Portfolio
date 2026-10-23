@@ -8,6 +8,7 @@ type Props = {
   number: string
   title: string
   details: WorkDetails | undefined
+  categoryClient: string
   categoryRole: string
   lang: Language
   onLang: (lang: Language) => void
@@ -17,10 +18,11 @@ type Props = {
 
 // "Edit project" modal, copied from the owner's Figma Make zip (v2). Edits a local copy;
 // Save project hands it to the CMS draft, which still needs "Save changes" to publish.
-export default function CmsTitleEditor({ number, title, details, categoryRole, lang, onLang, onSave, onClose }: Props) {
+export default function CmsTitleEditor({ number, title, details, categoryClient, categoryRole, lang, onLang, onSave, onClose }: Props) {
   const ref = useRef<HTMLDialogElement>(null)
   const [draftTitle, setDraftTitle] = useState(title)
   const [jaTitle, setJaTitle] = useState(details?.jaTitle ?? '')
+  const [client, setClient] = useState(details?.client ?? { en: '', ja: '' })
   const [role, setRole] = useState(details?.role ?? { en: '', ja: '' })
   const [summary, setSummary] = useState(details?.summary ?? { en: '', ja: '' })
   const [link, setLink] = useState(details?.link ?? '')
@@ -45,6 +47,7 @@ export default function CmsTitleEditor({ number, title, details, categoryRole, l
   function save() {
     onSave(draftTitle.trim() || title, {
       ...(jaTitle.trim() ? { jaTitle: jaTitle.trim() } : {}),
+      ...(client.en || client.ja ? { client } : {}),
       ...(role.en || role.ja ? { role } : {}),
       ...(summary.en || summary.ja ? { summary } : {}),
       ...(link ? { link } : {}),
@@ -97,6 +100,10 @@ export default function CmsTitleEditor({ number, title, details, categoryRole, l
               ) : (
                 <input value={draftTitle} onChange={(e) => setDraftTitle(e.target.value)} />
               )}
+            </label>
+            <label>
+              Client ({lang === 'ja' ? 'JP' : 'EN'})
+              <input lang={lang} value={client[lang]} placeholder={categoryClient} onChange={(e) => setClient({ ...client, [lang]: e.target.value })} />
             </label>
             <label>
               Role ({lang === 'ja' ? 'JP' : 'EN'})

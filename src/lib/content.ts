@@ -9,8 +9,8 @@ const client = () => import('./supabase.ts').then((m) => m.supabase)
 export type Language = keyof typeof site.copy
 export type Copy = (typeof site.copy)[Language]
 // Per-title extras edited in the CMS, keyed by the title text in allTitles.
-// jaTitle: the title's JP display name; the EN text in allTitles stays the key. role overrides the category's role.
-export type WorkDetails = { jaTitle?: string; role?: Record<Language, string>; summary?: Record<Language, string>; link?: string; image?: string; video?: string; videoFirst?: boolean }
+// jaTitle: the title's JP display name; the EN text in allTitles stays the key. client and role override the category's.
+export type WorkDetails = { jaTitle?: string; client?: Record<Language, string>; role?: Record<Language, string>; summary?: Record<Language, string>; link?: string; image?: string; video?: string; videoFirst?: boolean }
 export type Project = Omit<(typeof projects)[number], 'details'> & {
   details?: Record<string, WorkDetails>
   // JP versions of the category's title and client; empty falls back to the EN value.

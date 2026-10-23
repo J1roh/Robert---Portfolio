@@ -387,8 +387,9 @@ export default function Cms({ content, onSaved, page }: Props) {
                     <input value={project.title} onChange={(e) => editProject({ title: e.target.value })} />
                   )}
                 </label>
+                {/* Client and role no longer show on the card; they're the fallback for titles without their own. */}
                 <label>
-                  Client ({langLabel})
+                  Default client ({langLabel})
                   {lang === 'ja' ? (
                     <input lang="ja" value={project.jaClient ?? ''} placeholder={project.client} onChange={(e) => editProject({ jaClient: e.target.value })} />
                   ) : (
@@ -396,7 +397,7 @@ export default function Cms({ content, onSaved, page }: Props) {
                   )}
                 </label>
                 <label className="full-field">
-                  Role ({langLabel})
+                  Default role ({langLabel})
                   <input lang={lang} value={project.role[lang]} onChange={(e) => editProject({ role: { ...project.role, [lang]: e.target.value } })} />
                 </label>
                 <label>
@@ -467,6 +468,7 @@ export default function Cms({ content, onSaved, page }: Props) {
                   number={pad(editing + 1)}
                   title={project.allTitles[editing]}
                   details={project.details?.[project.allTitles[editing]]}
+                  categoryClient={(lang === 'ja' && project.jaClient) || project.client}
                   categoryRole={project.role[lang]}
                   lang={lang}
                   onLang={setLang}
