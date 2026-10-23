@@ -1,9 +1,7 @@
-/* Enquiry form in the Contact section: sizes copied 1:1 from the owner's design (.contact-page* in the Figma Make zip), colours from site tokens. */
+/* Enquiry form in the Contact section: sizes copied 1:1 from the owner's design (.contact-page* in the Figma Make zip), colours from site tokens.
+   Stacked here; the wide-screen layout (form beside the title) lives in contact.css. */
 .enquiry-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(420px, 0.65fr);
-  gap: 9vw;
-  margin: 80px 0 160px;
+  margin: 56px 0 100px;
 }
 
 .enquiry-direct {
@@ -40,6 +38,7 @@
   display: grid;
   gap: 26px;
   align-self: start;
+  margin-top: 42px;
   padding: 34px;
   border: 1px solid var(--color-border);
   background: color-mix(in srgb, var(--color-surface) 92%, transparent);
@@ -154,13 +153,7 @@
 }
 
 @media (max-width: 800px) {
-  .enquiry-grid {
-    display: block;
-    margin: 56px 0 100px;
-  }
-
   .enquiry-form {
-    margin-top: 42px;
     padding: 24px 18px;
   }
 

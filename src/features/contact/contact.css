@@ -14,3 +14,36 @@
 .contact-title:lang(ja) {
   line-height: 1.15;
 }
+
+/* Wide screens: the form's top lines up with the big title's; the Elsewhere links sit under the title.
+   The form's wrapper (.enquiry-grid) dissolves into this grid. Below 1200px the title column gets too narrow
+   for 物語を、 at full size, so narrower screens keep the stacked layout (enquiry.css). */
+@media (min-width: 1200px) {
+  .contact {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(420px, 0.65fr);
+    /* Kicker, title, links; the 1fr row takes the form's extra height so the links stay right under the title. */
+    grid-template-rows: auto auto 1fr;
+    column-gap: 9vw;
+    align-items: start;
+  }
+
+  .contact > .kicker {
+    grid-column: 1 / -1;
+  }
+
+  .contact .enquiry-grid {
+    display: contents;
+  }
+
+  .contact .enquiry-direct {
+    grid-column: 1;
+    margin-top: 80px;
+  }
+
+  .contact .enquiry-form {
+    grid-column: 2;
+    grid-row: 2 / span 2;
+    margin: 52px 0 160px;
+  }
+}
