@@ -47,3 +47,5 @@ data/skills/
 graphify-out/
 Screenshot*.png
 landing-translations.txt
+# Supabase CLI cache (linked project ref)
+supabase/.temp/

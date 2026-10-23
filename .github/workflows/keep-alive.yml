@@ -1,0 +1,20 @@
+# Free-tier Supabase projects pause after 7 days without requests; one small read every 3 days keeps the CMS and enquiry form up.
+# GitHub stops scheduled workflows after 60 days without commits; re-enable it from the Actions tab if that happens.
+name: Keep Supabase awake
+
+on:
+  schedule:
+    - cron: '17 3 */3 * *'
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      # Same public anon key as deploy.yml; RLS lets it read the `content` row the site loads on every visit.
+      - run: >
+          curl --fail --silent --show-error -o /dev/null
+          "https://kadytgyfsfrdzztsqrqv.supabase.co/rest/v1/content?select=key&limit=1"
+          -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImthZHl0Z3lmc2ZyZHp6dHNxcnF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE5ODExMzYsImV4cCI6MjEwNzU1NzEzNn0.Zp0AZGJieMB1bYAP-nrf8xvzYH-JEIWkws_JSHg43Tc"
