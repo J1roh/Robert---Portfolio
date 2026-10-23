@@ -5,7 +5,7 @@ import type { Copy, Links } from '../lib/content.ts'
 import Arrow from '../components/Arrow.tsx'
 import './enquiry.css'
 
-// Contact page (#/contact), after the owner's "Parallax Scrolling Website" design. Enquiries are saved to Supabase
+// Enquiry form in the landing page's Contact section, after the owner's "Parallax Scrolling Website" design. Enquiries are saved to Supabase
 // and read in the CMS. Max lengths match the table's checks in supabase/mitigations/02_create_enquiries_table.sql.
 // Send times on this browser. The server refuses a 4th within 2 days anyway (supabase/mitigations/13);
 // this just shows the "already sent" note up front instead of letting the visitor fill the form in vain.
@@ -67,81 +67,67 @@ export default function Enquiry({ copy, links }: { copy: Copy; links: Links }) {
   ]
 
   return (
-    <div className="enquiry-page">
-      <section className="enquiry-grid" aria-labelledby="enquiry-heading">
-        <div className="enquiry-intro">
-          <p className="kicker">{text.eyebrow}</p>
-          <h1 id="enquiry-heading">
-            {text.title.map((line) => (
-              <span key={line}>{line}</span>
-            ))}
-          </h1>
-          <div className="enquiry-direct">
-            <p>{text.direct}</p>
-            {elsewhere.map(({ href, label }) => (
-              <a key={href} href={href} target="_blank" rel="noopener noreferrer">
-                {label}
-                <span aria-hidden="true">↗</span>
-                <span className="visually-hidden"> {copy.newTab}</span>
-              </a>
-            ))}
-            {links.email && (
-              <a href={`mailto:${links.email}`}>
-                {links.email}
-                <span aria-hidden="true">↗</span>
-              </a>
-            )}
-          </div>
-        </div>
-
-        {!supabase ? (
-          <p className="enquiry-form" role="alert">{text.notConfigured}</p>
-        ) : status === 'duplicate' ? (
-          <p className="enquiry-form enquiry-already" role="status">{text.alreadySent}</p>
-        ) : (
-          <form key={formKey} className="enquiry-form" onSubmit={onSubmit}>
-            <div className="enquiry-form-row">
-              <label>
-                {text.name}
-                <input name="name" required maxLength={200} autoComplete="name" />
-              </label>
-              <label>
-                {text.email}
-                <input name="email" type="email" required maxLength={320} autoComplete="email" />
-              </label>
-            </div>
-            <label>
-              {text.company}
-              <input name="company" maxLength={200} autoComplete="organization" />
-            </label>
-            <label>
-              {text.timeline}
-              <input name="timeline" maxLength={200} placeholder={text.timelinePlaceholder} />
-            </label>
-            <label>
-              {text.message}
-              <textarea name="message" required maxLength={5000} rows={5} placeholder={text.messagePlaceholder} />
-            </label>
-            <label className="enquiry-trap" aria-hidden="true">
-              Website
-              <input name="website" tabIndex={-1} autoComplete="off" />
-            </label>
-            <div className="enquiry-submit-row">
-              <p>{text.note}</p>
-              <button type="submit" disabled={status === 'sending'}>
-                <span>{status === 'sending' ? text.sending : text.submit}</span>
-                <Arrow />
-              </button>
-            </div>
-            <p className="enquiry-status" role="status">{status === 'sent' ? text.sent : ''}</p>
-            {error && <p className="enquiry-error" role="alert">{error}</p>}
-          </form>
+    <div className="enquiry-grid">
+      <div className="enquiry-direct">
+        <p>{text.direct}</p>
+        {elsewhere.map(({ href, label }) => (
+          <a key={href} href={href} target="_blank" rel="noopener noreferrer">
+            {label}
+            <span aria-hidden="true">↗</span>
+            <span className="visually-hidden"> {copy.newTab}</span>
+          </a>
+        ))}
+        {links.email && (
+          <a href={`mailto:${links.email}`}>
+            {links.email}
+            <span aria-hidden="true">↗</span>
+          </a>
         )}
-      </section>
+      </div>
 
-      <p className="enquiry-back">
-        <a href="#/">← {text.back}</a>
-      </p>
+      {!supabase ? (
+        <p className="enquiry-form" role="alert">{text.notConfigured}</p>
+      ) : status === 'duplicate' ? (
+        <p className="enquiry-form enquiry-already" role="status">{text.alreadySent}</p>
+      ) : (
+        <form key={formKey} className="enquiry-form" onSubmit={onSubmit}>
+          <div className="enquiry-form-row">
+            <label>
+              {text.name}
+              <input name="name" required maxLength={200} autoComplete="name" />
+            </label>
+            <label>
+              {text.email}
+              <input name="email" type="email" required maxLength={320} autoComplete="email" />
+            </label>
+          </div>
+          <label>
+            {text.company}
+            <input name="company" maxLength={200} autoComplete="organization" />
+          </label>
+          <label>
+            {text.timeline}
+            <input name="timeline" maxLength={200} placeholder={text.timelinePlaceholder} />
+          </label>
+          <label>
+            {text.message}
+            <textarea name="message" required maxLength={5000} rows={5} placeholder={text.messagePlaceholder} />
+          </label>
+          <label className="enquiry-trap" aria-hidden="true">
+            Website
+            <input name="website" tabIndex={-1} autoComplete="off" />
+          </label>
+          <div className="enquiry-submit-row">
+            <p>{text.note}</p>
+            <button type="submit" disabled={status === 'sending'}>
+              <span>{status === 'sending' ? text.sending : text.submit}</span>
+              <Arrow />
+            </button>
+          </div>
+          <p className="enquiry-status" role="status">{status === 'sent' ? text.sent : ''}</p>
+          {error && <p className="enquiry-error" role="alert">{error}</p>}
+        </form>
+      )}
     </div>
   )
 }

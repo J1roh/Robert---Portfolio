@@ -1,47 +1,15 @@
-/* Contact page: sizes copied 1:1 from the owner's design (.contact-page* in the Figma Make zip), colours from site tokens. */
-.enquiry-page {
-  min-height: 100svh;
-  background: radial-gradient(circle at 12% 68%, color-mix(in srgb, var(--color-accent) 8%, transparent), transparent 28%);
-}
-
+/* Enquiry form in the Contact section: sizes copied 1:1 from the owner's design (.contact-page* in the Figma Make zip), colours from site tokens. */
 .enquiry-grid {
   display: grid;
   grid-template-columns: minmax(0, 0.9fr) minmax(420px, 0.65fr);
   gap: 9vw;
-  /* The design's 86px header + 100px; the site header is fixed, so it sits inside this padding. */
-  padding: 186px 8vw 120px;
-}
-
-.enquiry-intro h1 {
-  margin-top: 34px;
-  font-size: clamp(56px, 7vw, 108px);
-  font-weight: 500;
-  line-height: 0.92;
-  letter-spacing: -0.07em;
-}
-
-.enquiry-intro h1 span {
-  display: block;
-}
-
-/* Japanese phrases are longer than the English words: size the heading from its column so the longest,
-   届けましょう。 (~6.5em), always fits on one line. :lang(ja) also outranks the mobile 56px rule. */
-.enquiry-intro:lang(ja) {
-  container-type: inline-size;
-}
-
-.enquiry-intro:lang(ja) h1 {
-  font-size: min(14cqi, 96px);
-}
-
-.enquiry-intro h1 span:last-child {
-  color: var(--color-accent);
+  margin: 80px 0 160px;
 }
 
 .enquiry-direct {
   display: grid;
   max-width: 420px;
-  margin-top: 70px;
+  align-self: start;
   border-top: 1px solid var(--color-border);
 }
 
@@ -185,32 +153,14 @@
   color: var(--color-danger);
 }
 
-.enquiry-back {
-  margin: 0 42px;
-  padding: 26px 0 34px;
-}
-
-.enquiry-back a {
-  color: var(--color-text);
-}
-
 @media (max-width: 800px) {
   .enquiry-grid {
     display: block;
-    /* The design's 72px mobile header + 76px. */
-    padding: 148px 20px 80px;
-  }
-
-  .enquiry-intro h1 {
-    font-size: 56px;
-  }
-
-  .enquiry-direct {
-    margin-top: 42px;
+    margin: 56px 0 100px;
   }
 
   .enquiry-form {
-    margin-top: 70px;
+    margin-top: 42px;
     padding: 24px 18px;
   }
 
@@ -226,10 +176,6 @@
 
   .enquiry-submit-row button {
     width: 100%;
-  }
-
-  .enquiry-back {
-    margin: 0 20px;
   }
 }
 

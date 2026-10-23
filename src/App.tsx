@@ -3,7 +3,6 @@ import Landing from './pages/Landing.tsx'
 // Loaded on demand: only visitors who open these pages download them (keeps the landing page's first paint fast).
 const Login = lazy(() => import('./pages/Login.tsx'))
 const Cms = lazy(() => import('./pages/Cms.tsx'))
-const Enquiry = lazy(() => import('./pages/Enquiry.tsx'))
 import Loader from './features/loader/Loader.tsx'
 import SiteHeader from './features/site-header/SiteHeader.tsx'
 import SiteFooter from './features/site-footer/SiteFooter.tsx'
@@ -14,9 +13,14 @@ import { useStoredChoice } from './lib/use-stored-choice.ts'
 // Route hashes start with "#/"; plain hashes ("#work", "#main") are in-page anchors.
 const LOGIN = '#/login'
 const CMS = '#/cms'
-const CONTACT = '#/contact'
 const CMS_ENQUIRIES = '#/cms/enquiries'
-const pageRoute = (hash: string) => ([LOGIN, CMS, CMS_ENQUIRIES, CONTACT].includes(hash) ? hash : null)
+const pageRoute = (hash: string) => ([LOGIN, CMS, CMS_ENQUIRIES].includes(hash) ? hash : null)
+// The contact form moved from its own page (#/contact) into the landing page's Contact section; old links land there.
+const redirectOldContact = () => {
+  // A real hash navigation (not history.replaceState), so the browser keeps scrolling to it while the page loads.
+  if (location.hash === '#/contact') location.replace('#contact')
+}
+redirectOldContact()
 
 function routeFor(hash: string, current: string) {
   const page = pageRoute(hash)
@@ -46,13 +50,16 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    const onHash = () => setRoute((current) => routeFor(location.hash, current))
+    const onHash = () => {
+      redirectOldContact()
+      setRoute((current) => routeFor(location.hash, current))
+    }
     addEventListener('hashchange', onHash)
     return () => removeEventListener('hashchange', onHash)
   }, [])
 
   useEffect(() => {
-    document.title = route === LOGIN ? `${site.login.heading} — ${site.name}` : route === CMS ? `CMS — ${site.name}` : route === CMS_ENQUIRIES ? `Enquiries — CMS — ${site.name}` : route === CONTACT ? `Contact — ${site.name}` : site.pageTitle
+    document.title = route === LOGIN ? `${site.login.heading} — ${site.name}` : route === CMS ? `CMS — ${site.name}` : route === CMS_ENQUIRIES ? `Enquiries — CMS — ${site.name}` : site.pageTitle
     // Deep links (or nav clicks from another page) to a section scroll there once the page renders.
     const target = location.hash.startsWith('#/') ? null : document.getElementById(location.hash.slice(1))
     if (target) target.scrollIntoView({ behavior: 'instant' })
@@ -101,10 +108,6 @@ export default function App() {
         {route === LOGIN ? (
           <Suspense fallback={null}>
             <Login />
-          </Suspense>
-        ) : route === CONTACT ? (
-          <Suspense fallback={null}>
-            <Enquiry copy={copy} links={content.links} />
           </Suspense>
         ) : (
           <Landing copy={copy} language={lang} content={content} />

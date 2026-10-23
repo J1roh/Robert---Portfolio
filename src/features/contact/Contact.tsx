@@ -1,25 +1,19 @@
+import { lazy, Suspense } from 'react'
 import ScrambleText from '../../components/ScrambleText.tsx'
-import Arrow from '../../components/Arrow.tsx'
 import type { Copy, Links } from '../../lib/content.ts'
 import './contact.css'
+
+// Loaded after first paint: the form pulls in the Supabase client.
+const Enquiry = lazy(() => import('../../pages/Enquiry.tsx'))
 
 export default function Contact({ copy, links }: { copy: Copy; links: Links }) {
   return (
     <section className="section contact" id="contact" aria-labelledby="contact-heading">
       <h2 id="contact-heading" className="kicker">03 / {copy.contactEyebrow}</h2>
       <p className="contact-title"><ScrambleText text={copy.contactTitle} /></p>
-      <div className="contact-row">
-        <a href="#/contact">
-          <span>{copy.contactCta}</span>
-          <Arrow />
-        </a>
-        {links.email && (
-          <a href={`mailto:${links.email}`}>
-            <span>{links.email}</span>
-            <Arrow />
-          </a>
-        )}
-      </div>
+      <Suspense fallback={null}>
+        <Enquiry copy={copy} links={links} />
+      </Suspense>
     </section>
   )
 }
