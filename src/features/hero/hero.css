@@ -53,7 +53,8 @@
   grid-template-columns: auto auto;
   justify-content: space-between;
   column-gap: 0.3em;
-  margin: var(--space-6) calc(100% / 12) 0;
+  /* Extra room above and below so the headline stands apart from the services line and the name (owner request). */
+  margin: var(--space-8) calc(100% / 12) 0;
   font-size: clamp(3.125rem, 9.6vw, 9.375rem);
   font-weight: var(--weight-medium);
   line-height: var(--leading-display);
@@ -83,7 +84,7 @@
 }
 
 .hero-name {
-  margin-top: var(--space-5);
+  margin-top: var(--space-7);
   font-size: var(--text-2xl);
   font-weight: var(--weight-medium);
   line-height: var(--leading-tight);
