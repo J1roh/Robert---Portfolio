@@ -47,8 +47,9 @@
 }
 
 /* --d = position from the hovered title (negative = left), --a = its distance; both set in Projects.tsx.
-   Wide cards show five (Figma mockup): centre flat, sharp and full size; neighbours slide out, turn away, shrink,
-   dim (80%, then 40%) and blur (2px, then 4px) so the centre stands out; 3+ away fade out.
+   Wide cards show five (Figma mockup): centre flat, bright and full size; neighbours slide out, turn away, shrink
+   and fade into darkness (darker the further out, melting into the panel toward their outer edge) so the centre
+   stands out; 3+ away fade out.
    --size (height) and --step (spacing) follow the panel width (cqw); half cards and phones override them. */
 .project-bg {
   position: absolute;
@@ -62,7 +63,14 @@
   border-radius: var(--radius-sm);
   object-fit: cover;
   opacity: clamp(0, 1.2 - var(--a) * 0.4, 1);
-  filter: blur(calc(min(var(--a), 2) * 2px));
+  /* Version B, fade to dark (owner request 2026-10-26; Version A blurred the sides instead). */
+  filter: brightness(calc(1 - min(var(--a), 2) * 0.3));
+  /* Fades each side poster out toward its outer edge (the sign of --d picks the side); the centre is unmasked. */
+  mask-image: linear-gradient(
+    calc(clamp(-1, var(--d), 1) * 90deg),
+    rgb(0 0 0 / calc(1 - min(var(--a), 2) * 0.25)) 20%,
+    rgb(0 0 0 / calc(1 - min(var(--a), 1))) 100%
+  );
   transform:
     translate(-50%, -50%)
     /* Spacing between posters: a share of a poster's width, tighter when the panel is narrow. */
