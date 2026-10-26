@@ -46,10 +46,12 @@
 
 /* The service is the largest text on the page; the name supports it. */
 .hero-headline {
-  /* A block as wide as its longest line, with the two lines centred on each other (owner request). */
+  /* Staggered pair like the old name treatment, but compact: the lime line starts where the first line ends,
+     and the group sits in the middle of the hero (owner request). */
+  display: grid;
+  grid-template-columns: auto auto;
   width: fit-content;
-  margin-top: var(--space-6);
-  text-align: center;
+  margin: var(--space-6) auto 0;
   font-size: clamp(3.125rem, 9.6vw, 9.375rem);
   font-weight: var(--weight-medium);
   line-height: var(--leading-display);
@@ -58,7 +60,12 @@
 
 .hero-headline span,
 .hero-headline em {
-  display: block;
+  white-space: nowrap;
+}
+
+.hero-headline em {
+  /* Second row, starting where the first line ends. */
+  grid-area: 2 / 2;
 }
 
 /* Second line in lime, like the old "Robert Roy / Dela Serna" name treatment. */
@@ -188,8 +195,19 @@
     margin-top: var(--space-8);
   }
 
+  /* Too narrow for the two lines side by side: stack them, with the lime line stepped in. */
   .hero-headline {
+    display: block;
     font-size: clamp(3.125rem, 15vw, 5.125rem);
+  }
+
+  .hero-headline span,
+  .hero-headline em {
+    display: block;
+  }
+
+  .hero-headline em {
+    margin-left: 1.6em;
   }
 
   .hero-bottom {
@@ -225,8 +243,9 @@
 /* iPads held upright get the desktop layout but a tall, narrow screen: size the type from the width they
    have so the hero isn't a shrunken desktop band in the middle, and give the message more of the row. */
 @media (min-width: 50.0625rem) and (orientation: portrait) {
+  /* 11vw keeps the side-by-side pair on one line each down to the narrowest upright iPad. */
   .hero-headline {
-    font-size: clamp(5rem, 12vw, 8.625rem);
+    font-size: clamp(4rem, 11vw, 8.625rem);
   }
 
   .hero-message {
