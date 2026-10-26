@@ -75,6 +75,12 @@
   font-style: normal;
 }
 
+/* Services line and name start on the same column as the headline and the first stat (owner request). */
+.hero > .kicker,
+.hero-name {
+  margin-left: calc(100% / 12);
+}
+
 .hero-name {
   margin-top: var(--space-5);
   font-size: var(--text-2xl);
@@ -196,6 +202,11 @@
     margin-top: var(--space-8);
   }
 
+  .hero > .kicker,
+  .hero-name {
+    margin-left: 0;
+  }
+
   /* Too narrow for the two lines side by side: stack them, with the lime line stepped in. */
   .hero-headline {
     display: block;
@@ -247,6 +258,11 @@
 @media (min-width: 50.0625rem) and (orientation: portrait) {
   /* The stats start at the left edge here (.hero-message spans from column 1), so the headline does too.
      10.5vw keeps each line on one line, inside the content edge, down to the narrowest upright iPad. */
+  .hero > .kicker,
+  .hero-name {
+    margin-left: 0;
+  }
+
   .hero-headline {
     margin-left: 0;
     font-size: clamp(4rem, 10.5vw, 8.625rem);
