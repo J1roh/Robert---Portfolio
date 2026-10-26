@@ -58,11 +58,12 @@
   display: block;
 }
 
-/* Second line in lime, pushed right, like the old "Robert Roy / Dela Serna" name treatment. */
+/* Second line in lime, stepped in under the arrow, like the old "Robert Roy / Dela Serna" name treatment
+   but kept as one compact block (owner request). */
 .hero-headline em {
+  margin-left: 1.6em;
   color: var(--color-accent);
   font-style: normal;
-  text-align: right;
 }
 
 .hero-name {
@@ -191,7 +192,7 @@
   }
 
   .hero-headline em {
-    text-align: left;
+    margin-left: 0;
   }
 
   .hero-bottom {
