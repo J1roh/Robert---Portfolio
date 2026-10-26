@@ -47,22 +47,26 @@
 }
 
 /* --d = position from the hovered title (negative = left), --a = its distance; both set in Projects.tsx.
-   Five show (Figma mockup): centre flat and full size; neighbours slide out, turn away, shrink and dim
-   (80%, then 40%); 3+ away fade out. */
+   Wide cards show five (Figma mockup): centre flat, sharp and full size; neighbours slide out, turn away, shrink,
+   dim (80%, then 40%) and blur (2px, then 4px) so the centre stands out; 3+ away fade out.
+   --size (height) and --step (spacing) follow the panel width (cqw); half cards and phones override them. */
 .project-bg {
   position: absolute;
   /* Centre of the flow, across the panel. */
   left: 50%;
   top: 50%;
-  height: min(88%, 62cqw);
+  --size: min(88%, 62cqw);
+  --step: min(62%, 17cqw);
+  height: var(--size);
   aspect-ratio: 2 / 3;
   border-radius: var(--radius-sm);
   object-fit: cover;
   opacity: clamp(0, 1.2 - var(--a) * 0.4, 1);
+  filter: blur(calc(min(var(--a), 2) * 2px));
   transform:
     translate(-50%, -50%)
     /* Spacing between posters: a share of a poster's width, tighter when the panel is narrow. */
-    translateX(calc(var(--d) * min(62%, 17cqw)))
+    translateX(calc(var(--d) * var(--step)))
     /* Turn angle of the side posters. */
     rotateY(calc(clamp(-1, var(--d), 1) * -45deg))
     /* Side posters' size: 1 - 0.18 = 82%. */
@@ -70,24 +74,23 @@
   /* 0.7s = slide speed; the curve settles softly like a spring. */
   transition:
     transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.7s ease;
+    opacity 0.7s ease,
+    filter 0.7s ease;
   /* Posters that wrap round the ring remount at their new end; this fades them in there. */
   animation: project-bg-in 0.5s ease both;
 }
 
-/* Half-width cards: a narrow panel, so the panel hugs a tighter, larger fan instead of leaving tall black margins. */
+/* Half-width cards share a row, so their narrow panel shows three (centre + one each side) on a square panel
+   that hugs the posters. Phones get the same three on every card (see the 50rem query). */
 .project-card:not(.wide) .project-bg-track {
   align-self: center;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 1;
 }
 
 .project-card:not(.wide) .project-bg {
-  height: min(88%, 95cqw);
-  transform:
-    translate(-50%, -50%)
-    translateX(calc(var(--d) * min(62%, 12cqw)))
-    rotateY(calc(clamp(-1, var(--d), 1) * -45deg))
-    scale(calc(1 - min(var(--a), 1) * 0.18));
+  --size: min(88%, 80cqw);
+  --step: min(62%, 30cqw);
+  opacity: clamp(0, 1.6 - var(--a) * 0.8, 1);
 }
 
 @keyframes project-bg-in {
@@ -667,6 +670,13 @@ html:has(.project-modal[open]) {
     height: 18rem;
     /* Full card width on phones; the half-card panel shape is for the two-up desktop grid only. */
     aspect-ratio: auto;
+  }
+
+  .project-bg,
+  .project-card:not(.wide) .project-bg {
+    --size: min(88%, 85cqw);
+    --step: min(62%, 32cqw);
+    opacity: clamp(0, 1.6 - var(--a) * 0.8, 1);
   }
 
   .project-mark-title,
