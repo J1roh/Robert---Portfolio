@@ -61,6 +61,12 @@
   letter-spacing: -0.065em;
 }
 
+/* フリーランス / 日英翻訳者 is eleven full-width characters, much wider than the EN pair: smaller so it fits
+   between the same indents. */
+.hero-headline:lang(ja) {
+  font-size: clamp(2.5rem, 7vw, 8.625rem);
+}
+
 .hero-headline span,
 .hero-headline em {
   white-space: nowrap;
@@ -227,6 +233,10 @@
     display: block;
   }
 
+  .hero-headline:lang(ja) {
+    font-size: clamp(2.5rem, 12.5vw, 4.5rem);
+  }
+
   .hero-headline em {
     margin-left: 1.6em;
   }
@@ -282,6 +292,10 @@
   .hero-headline {
     margin-inline: 0;
     font-size: clamp(4rem, 10.5vw, 8.625rem);
+  }
+
+  .hero-headline:lang(ja) {
+    font-size: clamp(3rem, 7.6vw, 8rem);
   }
 
   .hero-message {

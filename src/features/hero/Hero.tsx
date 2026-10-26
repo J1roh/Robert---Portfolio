@@ -46,7 +46,8 @@ function useHeroParallax() {
 
 export default function Hero({ copy, language }: { copy: Copy; language: Language }) {
   const [first, last] = language === 'ja' ? site.nameLinesJa : site.nameLines
-  // Two lines like the old name treatment: JP splits after 、 (物語を、/ 世界へ), EN before its last word (JP → EN / Translator).
+  // Two lines like the old name treatment, split before the last word: JP → EN / Translator, フリーランス / 日英翻訳者
+  // (a 、 also splits, kept on the first line).
   const [lead, tail] = (copy.intro.match(/^(.*、)(.+)$/) ?? copy.intro.match(/^(.*\S)\s+(\S+)$/))?.slice(1) ?? [copy.intro, '']
   const ref = useHeroParallax()
 
