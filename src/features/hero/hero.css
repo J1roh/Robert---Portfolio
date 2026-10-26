@@ -26,8 +26,8 @@
 .availability {
   position: absolute;
   top: 8rem;
-  /* One column in from the right (of the 12 across the content), mirroring the left indent. */
-  right: calc(var(--gutter) + (100% - 2 * var(--gutter)) / 12);
+  /* Half a column in from the right (of the 12 across the content), mirroring the left indent. */
+  right: calc(var(--gutter) + (100% - 2 * var(--gutter)) / 24);
   display: flex;
   align-items: center;
   gap: var(--space-2);
@@ -54,7 +54,7 @@
   justify-content: space-between;
   column-gap: 0.3em;
   /* Extra room above and below so the headline stands apart from the services line and the name (owner request). */
-  margin: var(--space-8) calc(100% / 12) 0;
+  margin: var(--space-8) calc(100% / 24) 0;
   font-size: clamp(3.125rem, 9.6vw, 9.375rem);
   font-weight: var(--weight-medium);
   line-height: var(--leading-display);
@@ -80,7 +80,7 @@
 /* Services line and name start on the same column as the headline and the first stat (owner request). */
 .hero > .kicker,
 .hero-name {
-  margin-left: calc(100% / 12);
+  margin-left: calc(100% / 24);
 }
 
 .hero-name {
@@ -96,10 +96,12 @@
   grid-template-columns: repeat(12, 1fr);
   align-items: end;
   margin-top: var(--space-7);
+  /* Same half-column indent as the headline, so the stats and the circle line up with it on both sides. */
+  padding-inline: calc(100% / 24);
 }
 
 .hero-message {
-  grid-column: 2 / span 6;
+  grid-column: 1 / span 6;
 }
 
 .hero-stats {
@@ -143,7 +145,7 @@
 }
 
 .circle-link {
-  grid-column: 9 / span 3;
+  grid-column: 10 / span 3;
   justify-self: end;
   display: flex;
   width: 8.25rem;
@@ -209,6 +211,10 @@
     margin-left: 0;
   }
 
+  .hero-bottom {
+    padding-inline: 0;
+  }
+
   /* Too narrow for the two lines side by side: stack them, with the lime line stepped in. */
   .hero-headline {
     display: block;
@@ -269,8 +275,8 @@
     right: var(--gutter);
   }
 
-  .circle-link {
-    grid-column: 10 / span 3;
+  .hero-bottom {
+    padding-inline: 0;
   }
 
   .hero-headline {
