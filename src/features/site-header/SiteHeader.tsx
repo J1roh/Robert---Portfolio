@@ -2,14 +2,10 @@ import { useEffect, useState } from 'react'
 import { site, type Copy, type Language } from '../../lib/content.ts'
 import './site-header.css'
 
-type Theme = 'light' | 'dark'
-
 type Props = {
   copy: Copy
   language: Language
   onLanguage: (language: Language) => void
-  theme: Theme
-  onTheme: (theme: Theme) => void
 }
 
 const languages: { code: Language; label: string }[] = [
@@ -17,8 +13,7 @@ const languages: { code: Language; label: string }[] = [
   { code: 'en', label: 'EN' },
 ]
 
-export default function SiteHeader({ copy, language, onLanguage, theme, onTheme }: Props) {
-  const other = theme === 'dark' ? 'light' : 'dark'
+export default function SiteHeader({ copy, language, onLanguage }: Props) {
   const [hidden, setHidden] = useState(false)
 
   // After motion.dev's scroll-hide-header: hides on scroll down past 150px, returns on any scroll up.
@@ -53,15 +48,6 @@ export default function SiteHeader({ copy, language, onLanguage, theme, onTheme 
             </span>
           ))}
         </div>
-        <button
-          type="button"
-          className={`theme-toggle is-${theme}`}
-          aria-label={`${theme} theme, switch to ${other}`}
-          onClick={() => onTheme(other)}
-        >
-          <span>{theme.toUpperCase()}</span>
-          <i aria-hidden="true" />
-        </button>
       </div>
     </header>
   )

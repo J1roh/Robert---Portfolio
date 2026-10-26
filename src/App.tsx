@@ -32,7 +32,6 @@ function routeFor(hash: string, current: string) {
 
 export default function App() {
   const [route, setRoute] = useState(() => pageRoute(location.hash) ?? '#/')
-  const [theme, setTheme] = useStoredChoice('theme', ['light', 'dark'], () => 'dark')
   const [language, setLanguage] = useStoredChoice(
     'language',
     Object.keys(site.copy) as Language[],
@@ -71,10 +70,6 @@ export default function App() {
   }, [route])
 
   useEffect(() => {
-    if (theme) document.documentElement.dataset.theme = theme
-  }, [theme])
-
-  useEffect(() => {
     document.documentElement.lang = lang
   }, [lang])
 
@@ -97,13 +92,7 @@ export default function App() {
     <>
       {skipLink}
       <Loader />
-      <SiteHeader
-        copy={copy}
-        language={lang}
-        onLanguage={setLanguage}
-        theme={theme ?? 'dark'}
-        onTheme={setTheme}
-      />
+      <SiteHeader copy={copy} language={lang} onLanguage={setLanguage} />
       <main id="main" tabIndex={-1} ref={mainRef}>
         {route === LOGIN ? (
           <Suspense fallback={null}>

@@ -8,52 +8,54 @@
   grid-column: 1 / -1;
 }
 
+/* Two columns on the dark surface (designer review 2026-10-26): name and scrollable title list on the left,
+   the poster coverflow on the right. Nothing is drawn over an image. */
 .project-visual {
-  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+  gap: var(--space-8);
   min-height: 32.5rem;
-  overflow: hidden;
-  color: var(--project-fg);
-  background: var(--project-bg);
+  padding: var(--space-7);
+  background: var(--color-surface);
 }
 
 .project-card:not(.wide) .project-visual {
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: var(--space-5);
   min-height: 38rem;
+  padding: var(--space-6);
 }
 
-/* Background posters as a coverflow (after motion.dev's carousel-coverflow example, in CSS), tinted by the card
-   colour so the dark text stays readable. Blend and filter sit on the track so the posters blend with the card. */
+.project-text {
+  /* Left column, though the poster track comes first in the markup (it stacks on top on phones). */
+  order: -1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  min-width: 0;
+}
+
+/* Poster coverflow (after motion.dev's carousel-coverflow example, in CSS), full colour on its own panel. */
 .project-bg-track {
-  position: absolute;
-  inset: 0;
+  position: relative;
+  overflow: hidden;
   perspective: 75rem;
-  /* How strong the image shows: 1 = full, 0 = hidden. */
-  opacity: 0.5;
-  /* Lifted greys: multiply can only tint the card lightly, never darken it toward the text colour.
-     Lower contrast / higher brightness = lighter image. */
-  filter: grayscale(1) contrast(0.55) brightness(1.35);
-  mix-blend-mode: multiply;
-  /* Fades in from the left: transparent at the left edge, full strength from 70% across. */
-  mask-image: linear-gradient(to right, transparent, #000 70%);
-}
-
-/* Anime Subtitles card only: its own image strength, same 0–1 scale. */
-.project-anime .project-bg-track {
-  opacity: 0.35;
-  /* Lighter than other cards so the posters don't fight the dark text on lime. */
-  filter: grayscale(1) contrast(0.45) brightness(1.45);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
 }
 
 /* --d = position from the hovered title (negative = left), --a = its distance; both set in Projects.tsx.
-   Centre poster flat and full size; neighbours slide out, turn away and shrink; 3+ away fade out. */
+   Centre poster flat and full size; neighbours slide out, turn away, shrink and dim; 3+ away fade out. */
 .project-bg {
   position: absolute;
-  /* Centre of the flow, across the card. */
-  left: 60%;
+  /* Centre of the flow, across the panel. */
+  left: 50%;
   top: 50%;
   height: 80%;
   aspect-ratio: 2 / 3;
+  border-radius: var(--radius-sm);
   object-fit: cover;
-  opacity: clamp(0, 3 - var(--a), 1);
+  opacity: clamp(0, 1 - var(--a) * 0.55, 1);
   transform:
     translate(-50%, -50%)
     /* Spacing between posters, as a share of a poster's width. */
@@ -83,42 +85,17 @@
   }
 }
 
-.project-visual::before {
-  position: absolute;
-  content: "";
-  top: -45%;
-  right: -8%;
-  width: 55%;
-  aspect-ratio: 1;
-  border: 1px solid currentColor;
-  border-radius: 50%;
-  opacity: 0.25;
-}
-
-.project-anime { --project-bg: var(--project-anime-bg); --project-fg: var(--project-anime-fg); }
-.project-quality { --project-bg: var(--project-quality-bg); --project-fg: var(--project-quality-fg); }
-.project-promo { --project-bg: var(--project-promo-bg); --project-fg: var(--project-promo-fg); }
-.project-games { --project-bg: var(--project-games-bg); --project-fg: var(--project-games-fg); }
-
 .project-number {
-  position: absolute;
-  z-index: 2;
-  top: var(--space-5);
-  left: var(--space-5);
-  font-family: var(--font-mono);
-  font-size: var(--text-2xs);
+  margin-right: var(--space-4);
 }
 
 .project-mark {
-  position: absolute;
-  z-index: 1;
-  top: 16%;
-  inset-inline: 8%;
   container-type: inline-size;
 }
 
 .project-mark p,
 .project-mark small {
+  color: var(--color-text-muted);
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
   letter-spacing: 0.12em;
@@ -127,9 +104,9 @@
 
 .project-mark-title {
   display: block;
-  max-width: 56rem;
-  margin: var(--space-4) 0 var(--space-5);
-  --mark-size: clamp(3rem, 7vw, 6.75rem);
+  margin: var(--space-4) 0 var(--space-3);
+  --mark-size: clamp(3rem, 6vw, 5.25rem);
+  color: var(--color-accent);
   font-size: var(--mark-size);
   font-weight: var(--weight-medium);
   line-height: var(--leading-display);
@@ -137,30 +114,26 @@
 }
 
 .project-card:not(.wide) .project-mark-title {
-  --mark-size: clamp(2.8rem, 5vw, 4.625rem);
+  --mark-size: clamp(2.5rem, 3.6vw, 3.25rem);
 }
 
-/* JP titles stay on one line (プロモーション関連 is 9 full-width chars): shrink to fit the card art width when needed. */
+/* JP titles stay on one line (プロモーション関連 is 9 full-width chars): shrink to fit the column when needed. */
 .project-mark-title:lang(ja) {
   white-space: nowrap;
   font-size: min(var(--mark-size), 10.5cqi);
 }
 
 .project-list {
-  position: absolute;
-  z-index: 1;
-  right: 6%;
-  bottom: 8%;
-  width: min(48%, 38rem);
+  margin: 0;
   padding: 0;
-  border-top: 1px solid currentColor;
+  border-top: 1px solid var(--color-border);
   list-style: none;
   /* Full credit list; about six rows show, the rest scroll inside the card. */
-  max-height: 17rem;
+  max-height: 20rem;
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: thin;
-  scrollbar-color: currentColor transparent;
+  scrollbar-color: var(--color-border) transparent;
 }
 
 .project-list li {
@@ -169,11 +142,10 @@
   grid-template-columns: 2.25rem 1fr;
   gap: var(--space-3);
   padding-block: var(--space-3);
-  border-bottom: 1px solid currentColor;
-  font-size: var(--text-xs);
-  opacity: 0.7;
+  border-bottom: 1px solid var(--color-border);
+  font-size: var(--text-sm);
   transition:
-    opacity 180ms ease,
+    color 180ms ease,
     padding 180ms ease,
     background-color 180ms ease;
 }
@@ -185,32 +157,26 @@
   inset: 0 auto 0 0;
   width: 2px;
   opacity: 0;
-  background: #fff;
+  background: var(--color-accent);
   transform: scaleY(0.25);
   transition:
     opacity 180ms ease,
     transform 180ms ease;
 }
 
-/* The title whose poster is centred in the coverflow (including while it auto-advances) stays at full strength. */
+/* The title whose poster is centred in the coverflow (including while it auto-advances) shows in lime. */
 .project-list li[aria-current="true"] {
-  opacity: 1;
+  color: var(--color-accent);
 }
 
-/* Highlight only under the pointer or keyboard focus (owner request): white tint, nudged in, bar at full
-   height. White on every card, as it reads on the light-text Promo and Games cards; --highlight is
-   stronger on the pale cards so it still shows. :focus-visible, not :focus-within: closing the modal hands
-   focus back to the clicked title, and that mouse-driven focus shouldn't leave the row lit. */
+/* Highlight only under the pointer or keyboard focus (owner request): faint lime tint, nudged in, bar at full
+   height. :focus-visible, not :focus-within: closing the modal hands focus back to the clicked title, and that
+   mouse-driven focus shouldn't leave the row lit. */
 .project-list li:hover,
 .project-list li:has(:focus-visible) {
   padding-inline: var(--space-3) var(--space-2);
-  opacity: 1;
-  background: color-mix(in srgb, #fff var(--highlight, 14%), transparent);
-}
-
-.project-anime,
-.project-quality {
-  --highlight: 45%;
+  color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 8%, transparent);
 }
 
 .project-list li:hover::before,
@@ -539,9 +505,9 @@ html:has(.project-modal[open]) {
 }
 
 .project-list li span {
+  color: var(--color-text-muted);
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
-  opacity: 0.8;
 }
 
 .project-meta {
@@ -665,26 +631,29 @@ html:has(.project-modal[open]) {
     gap: var(--space-8);
   }
 
+  /* Stacked: posters on top at a fixed height, name and list below. */
   .project-visual,
   .project-card:not(.wide) .project-visual {
-    min-height: 35rem;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-5);
+    min-height: 0;
+    padding: var(--space-4);
   }
 
-  .project-mark {
-    top: 11%;
-    inset-inline: 7%;
+  .project-text {
+    order: 0;
+  }
+
+  .project-bg-track {
+    height: 18rem;
   }
 
   .project-mark-title,
   .project-card:not(.wide) .project-mark-title {
-    --mark-size: 2.875rem;
+    --mark-size: 2.75rem;
   }
 
   .project-list {
-    right: 7%;
-    bottom: 7%;
-    width: 86%;
-    /* About four rows on phones so the list doesn't cover the card art. */
-    max-height: 10.5rem;
+    max-height: 16rem;
   }
 }

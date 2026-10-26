@@ -28,7 +28,7 @@ export default function Loader() {
 
   if (phase === 'gone') return null
   return (
-    <div className={phase === 'done' ? 'loader scheme-dark is-done' : 'loader scheme-dark'} aria-hidden="true">
+    <div className={phase === 'done' ? 'loader is-done' : 'loader'} aria-hidden="true">
       <p className="loader-word" lang={phase === 'from' ? 'ja' : 'en'}>
         <ScrambleText text={phase === 'from' ? FROM : TO} />
       </p>

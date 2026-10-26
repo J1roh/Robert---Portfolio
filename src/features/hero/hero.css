@@ -7,7 +7,6 @@
   flex-direction: column;
   justify-content: center;
   overflow: hidden;
-  /* Always dark (see .scheme-dark in Hero.tsx): the key art is on black. */
   color: var(--color-text);
   background: var(--color-bg);
 }
@@ -45,23 +44,28 @@
   box-shadow: 0 0 12px var(--color-accent);
 }
 
-.hero-name {
+/* The service is the largest text on the page; the name supports it. */
+.hero-headline {
+  /* Breaks after the arrow in EN ("Japanese →" / "English Translator"); JP fits on one line. */
+  max-width: 9em;
   margin-top: var(--space-6);
-  font-size: var(--text-display);
+  font-size: clamp(3.125rem, 9.6vw, 9.375rem);
   font-weight: var(--weight-medium);
   line-height: var(--leading-display);
-  letter-spacing: -0.075em;
+  letter-spacing: -0.065em;
 }
 
-.hero-name span,
-.hero-name em {
-  display: block;
+.hero-name {
+  margin-top: var(--space-5);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-snug);
 }
 
 .hero-name em {
   color: var(--color-accent);
   font-style: normal;
-  text-align: right;
 }
 
 .hero-bottom {
@@ -75,17 +79,9 @@
   grid-column: 2 / span 6;
 }
 
-.hero-intro {
-  max-width: 41rem;
-  font-size: var(--text-2xl);
-  line-height: var(--leading-tight);
-  letter-spacing: -0.045em;
-}
-
 .hero-stats {
   display: flex;
   gap: var(--space-8);
-  margin-top: var(--space-6);
 }
 
 .hero-client-roster {
@@ -103,7 +99,7 @@
 .hero-stats dd {
   margin: 0;
   color: var(--color-accent);
-  font-size: var(--text-lg);
+  font-size: var(--text-xl);
   font-weight: var(--weight-medium);
   letter-spacing: var(--tracking-snug);
 }
@@ -130,7 +126,7 @@
   width: 8.25rem;
   height: 8.25rem;
   padding: var(--space-5);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-accent);
   border-radius: 50%;
   align-items: center;
   justify-content: space-between;
@@ -185,12 +181,8 @@
     margin-top: var(--space-8);
   }
 
-  .hero-name {
-    font-size: clamp(3.125rem, 16vw, 5.125rem);
-  }
-
-  .hero-name em {
-    text-align: left;
+  .hero-headline {
+    font-size: clamp(3.125rem, 15vw, 5.125rem);
   }
 
   .hero-bottom {
@@ -199,12 +191,16 @@
     gap: var(--space-4);
   }
 
-  .hero-intro {
-    font-size: var(--text-xl);
+  .hero-name {
+    font-size: var(--text-lg);
   }
 
   .hero-stats {
     gap: var(--space-5);
+  }
+
+  .hero-stats dd {
+    font-size: var(--text-lg);
   }
 
   .circle-link {
@@ -222,7 +218,7 @@
 /* iPads held upright get the desktop layout but a tall, narrow screen: size the type from the width they
    have so the hero isn't a shrunken desktop band in the middle, and give the message more of the row. */
 @media (min-width: 50.0625rem) and (orientation: portrait) {
-  .hero-name {
+  .hero-headline {
     font-size: clamp(5rem, 12vw, 8.625rem);
   }
 
@@ -230,7 +226,7 @@
     grid-column: 1 / span 8;
   }
 
-  .hero-intro {
+  .hero-name {
     font-size: clamp(1.75rem, 3.6vw, 2.75rem);
   }
 
@@ -247,6 +243,7 @@
   transform: translateY(calc(var(--hero-progress, 0) * 35%));
 }
 
+.hero-headline,
 .hero-name {
   transform: translateY(calc(var(--hero-progress, 0) * -20vh));
   opacity: calc(1 - var(--hero-progress, 0));

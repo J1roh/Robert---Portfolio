@@ -1,12 +1,10 @@
 import './backdrop.css'
 
-// Decorative film grain and parallax rings; motion is pure CSS (see backdrop.css).
+// Decorative film grain. The parallax rings were removed (designer review: distracting).
 export default function Backdrop() {
   return (
     <div aria-hidden="true">
       <div className="grain" />
-      <div className="parallax-orb" />
-      <div className="parallax-orb orb-two" />
     </div>
   )
 }

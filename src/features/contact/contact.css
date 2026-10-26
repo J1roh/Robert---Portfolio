@@ -3,7 +3,8 @@
   max-width: 1050px;
   margin-top: 52px;
   color: var(--color-accent);
-  font-size: clamp(62px, 10vw, 148px);
+  /* Below the hero headline: the service stays the largest text on the page (designer review). */
+  font-size: clamp(2.75rem, 7.5vw, 7rem);
   font-weight: var(--weight-medium);
   line-height: 0.9;
   letter-spacing: -0.075em;

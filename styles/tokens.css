@@ -1,33 +1,20 @@
 /* Sole source of design values. Themes change values here only (DESIGN.md §6). */
 /* Palette and fonts from the owner's "Parallax Scrolling Website" design (Decision D9). */
 
-/* .scheme-dark re-declares the tokens so light-dark() resolves dark inside it (e.g. the hero over black key art). */
-:root,
-.scheme-dark {
-  color-scheme: light dark;
+/* One dark scheme, no light theme (designer review 2026-10-26; Figma "Robert Portfolio — Redesign v2").
+   60-30-10: bg is the 60, surface + text the 30, lime accent the 10. */
+:root {
+  color-scheme: dark;
 
-  /* Color: light-dark(light value, dark value), resolved by color-scheme */
-  --color-bg: light-dark(#ecebe5, #101110);
-  --color-surface: light-dark(#e2e0d8, #171917);
-  --color-text: light-dark(#151713, #ecece5);
-  --color-text-muted: light-dark(#60645c, #979b93);
-  /* Light accent darkened from the design's #dfff42, which is 1.05:1 on the light background */
-  --color-accent: light-dark(#4f5e00, #dfff42);
-  --color-accent-contrast: light-dark(#ecebe5, #11130e);
-  --color-border: light-dark(#c4c5bd, #343731);
+  --color-bg: #0b0c0a;
+  --color-surface: #161814;
+  --color-text: #ecece5;
+  --color-text-muted: #a3a89a;
+  --color-accent: #d4ff3a;
+  --color-accent-contrast: #0b0c0a;
+  --color-border: #2a2d26;
   --color-focus: var(--color-accent);
-  --color-danger: light-dark(#b91c1c, #fca5a5);
-
-  /* Project card palettes (same in both themes; each pair passes AA) */
-  --project-anime-bg: #c9ed42;
-  --project-anime-fg: #17200c;
-  --project-quality-bg: #d8d4c6;
-  --project-quality-fg: #2c2c26;
-  /* Darkened from the design's #bc4937 (4.2:1) to pass AA for small text */
-  --project-promo-bg: #a93f2f;
-  --project-promo-fg: #f4e8db;
-  --project-games-bg: #254d68;
-  --project-games-fg: #e8eee9;
+  --color-danger: #fca5a5;
 
   /* Spacing */
   --space-1: 0.25rem;
@@ -75,16 +62,6 @@
   --gutter: var(--space-7);
   --focus-width: 3px;
   --transition-fast: 180ms ease;
-}
-
-/* Visitor override saved by src/lib/use-stored-choice.ts; absent means follow the system */
-:root[data-theme="light"] {
-  color-scheme: light;
-}
-
-:root[data-theme="dark"],
-.scheme-dark {
-  color-scheme: dark;
 }
 
 @media (prefers-reduced-motion: reduce) {

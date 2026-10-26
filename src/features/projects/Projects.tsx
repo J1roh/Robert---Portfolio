@@ -156,7 +156,7 @@ function WorkDialog({ work, copy, language, onClose }: { work: Work; copy: Copy;
   )
 }
 
-// The card's coloured panel; the background shows the image of the last hovered title (first title until then).
+// The card: title list on one side, a coverflow of the hovered title's poster on the other (first title until then).
 // Circular distance from `from` to `j` in a ring of n posters: -half…(n - 1 - half), so posters wrap around both sides.
 const ringOffset = (j: number, from: number, n: number) => {
   const half = Math.floor(n / 2)
@@ -221,21 +221,23 @@ function ProjectVisual({ project, number, language, onOpen }: VisualProps) {
           })}
         </div>
       )}
-      <span className="project-number" aria-hidden="true">{pad(number)}</span>
-      {/* Decorative repeat of the title below; hidden so screen readers hear it once */}
-      <div className="project-mark" aria-hidden="true">
-        <p>{project.label[language]}</p>
-        <span className="project-mark-title">{categoryTitle(project, language)}</span>
-        <small>日本語 → ENGLISH</small>
+      {/* Text and list in their own column, beside the posters: nothing is drawn over an image (designer review). */}
+      <div className="project-text">
+        {/* Decorative repeat of the title below; hidden so screen readers hear it once */}
+        <div className="project-mark" aria-hidden="true">
+          <p><span className="project-number">{pad(number)}</span>{project.label[language]}</p>
+          <span className="project-mark-title">{categoryTitle(project, language)}</span>
+          <small>日本語 → ENGLISH</small>
+        </div>
+        <ol className="project-list" ref={list}>
+          {project.allTitles.map((title, j) => (
+            <li key={title} aria-current={j === shown || undefined} onMouseEnter={() => show(j)}>
+              <span aria-hidden="true">{pad(j + 1)}</span>
+              <button type="button" onFocus={() => show(j)} onClick={() => onOpen(title)}>{display(project, title, language)}</button>
+            </li>
+          ))}
+        </ol>
       </div>
-      <ol className="project-list" ref={list}>
-        {project.allTitles.map((title, j) => (
-          <li key={title} aria-current={j === shown || undefined} onMouseEnter={() => show(j)}>
-            <span aria-hidden="true">{pad(j + 1)}</span>
-            <button type="button" onFocus={() => show(j)} onClick={() => onOpen(title)}>{display(project, title, language)}</button>
-          </li>
-        ))}
-      </ol>
     </div>
   )
 }

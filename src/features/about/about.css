@@ -15,21 +15,22 @@
 }
 
 .about-number {
+  color: var(--color-accent);
   white-space: nowrap;
 }
 
 .about-copy {
-  grid-column: 9 / span 4;
+  grid-column: 8 / span 5;
 }
 
+/* Bio read right after the stats (designer review): body size, full-strength text. */
 .about-copy > p {
-  color: var(--color-text-muted);
-  font-size: var(--text-sm);
-  line-height: 1.8;
+  font-size: var(--text-lg);
+  line-height: 1.6;
 }
 
 .about-copy ul {
-  margin-top: var(--space-8);
+  margin-top: var(--space-7);
   padding: 0;
   list-style: none;
 }
@@ -40,7 +41,7 @@
   gap: var(--space-6);
   padding-block: var(--space-4);
   border-top: 1px solid var(--color-border);
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
 }
 
 .about-copy li:last-child {
@@ -48,7 +49,7 @@
 }
 
 .about-copy li span {
-  color: var(--color-text-muted);
+  color: var(--color-accent);
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
 }

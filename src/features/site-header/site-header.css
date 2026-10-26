@@ -54,8 +54,7 @@ html {
 }
 
 .site-nav a,
-.language-switch,
-.theme-toggle {
+.language-switch {
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
   letter-spacing: var(--tracking-label);
@@ -81,8 +80,7 @@ html {
   color: var(--color-text-muted);
 }
 
-.language-switch button,
-.theme-toggle {
+.language-switch button {
   padding: var(--space-1);
   border: 0;
   background: transparent;
@@ -92,40 +90,8 @@ html {
 
 .language-switch button[aria-pressed="true"],
 .site-nav a:hover,
-.language-switch button:hover,
-.theme-toggle:hover {
+.language-switch button:hover {
   color: var(--color-accent);
-}
-
-.theme-toggle {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-}
-
-.theme-toggle i {
-  position: relative;
-  display: block;
-  width: 1.75rem;
-  height: 0.875rem;
-  border: 1px solid var(--color-text-muted);
-  border-radius: var(--radius-full);
-}
-
-.theme-toggle i::after {
-  position: absolute;
-  content: "";
-  top: 2px;
-  left: 2px;
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 50%;
-  background: var(--color-accent);
-  transition: transform var(--transition-fast);
-}
-
-.theme-toggle.is-light i::after {
-  transform: translateX(0.875rem);
 }
 
 /* Small screens: nav moves to its own row instead of disappearing */

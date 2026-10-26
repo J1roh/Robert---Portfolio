@@ -56,12 +56,13 @@ export default function Hero({ copy, language }: { copy: Copy; language: Languag
         {copy.availability}
       </p>
       <p className="kicker">{copy.eyebrow}</p>
-      <h1 id="hero-heading" className="hero-name">
-        <span><ScrambleText text={first} trigger={language} /></span> <em><ScrambleText text={last} trigger={language} /></em>
-      </h1>
+      {/* Service first, name second (designer review): the headline is what the client is hiring. */}
+      <h1 id="hero-heading" className="hero-headline"><ScrambleText text={copy.intro} /></h1>
+      <p className="hero-name">
+        <ScrambleText text={first} trigger={language} /> <em><ScrambleText text={last} trigger={language} /></em>
+      </p>
       <div className="hero-bottom">
         <div className="hero-message">
-          <p className="hero-intro"><ScrambleText text={copy.intro} /></p>
           <dl className="hero-stats">
             {copy.stats.map((stat) => (
               <div key={stat.label}>

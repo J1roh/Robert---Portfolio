@@ -8,21 +8,8 @@
 .hero-art {
   z-index: -2;
   overflow: hidden;
-  /* Hero art opacity per theme: 1 = full, 0 = hidden (fades toward the hero background). */
-  --art-opacity-dark: 0.25;
-  --art-opacity-light: 0.5;
-  opacity: var(--art-opacity-dark);
-}
-
-/* Light mode: chosen by the visitor, or the system preference when they haven't chosen. */
-:root[data-theme="light"] .hero-art {
-  opacity: var(--art-opacity-light);
-}
-
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme="dark"]) .hero-art {
-    opacity: var(--art-opacity-light);
-  }
+  /* Kept faint so the headline over it stays readable (designer review 2026-10-26). */
+  opacity: 0.16;
 }
 
 .hero-slide {
