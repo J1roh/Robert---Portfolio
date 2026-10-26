@@ -47,9 +47,8 @@
 }
 
 /* --d = position from the hovered title (negative = left), --a = its distance; both set in Projects.tsx.
-   Wide cards show five (Figma mockup): centre flat, bright and full size; neighbours slide out, turn away, shrink
-   and fade into darkness (darker the further out, melting into the panel toward their outer edge) so the centre
-   stands out; 3+ away fade out.
+   Wide cards show five (Figma mockup): centre flat and full size; neighbours slide out, turn away and shrink,
+   at full strength (owner request: no blur, no darkening); 3+ away fade out.
    --size (height) and --step (spacing) follow the panel width (cqw); half cards and phones override them. */
 .project-bg {
   position: absolute;
@@ -62,15 +61,8 @@
   aspect-ratio: 2 / 3;
   border-radius: var(--radius-sm);
   object-fit: cover;
-  opacity: clamp(0, 1.2 - var(--a) * 0.4, 1);
-  /* Version B, fade to dark (owner request 2026-10-26; Version A blurred the sides instead). */
-  filter: brightness(calc(1 - min(var(--a), 2) * 0.3));
-  /* Fades each side poster out toward its outer edge (the sign of --d picks the side); the centre is unmasked. */
-  mask-image: linear-gradient(
-    calc(clamp(-1, var(--d), 1) * 90deg),
-    rgb(0 0 0 / calc(1 - min(var(--a), 2) * 0.25)) 20%,
-    rgb(0 0 0 / calc(1 - min(var(--a), 1))) 100%
-  );
+  /* Shown (1) up to two away, hidden (0) from three away. */
+  opacity: clamp(0, 3 - var(--a), 1);
   transform:
     translate(-50%, -50%)
     /* Spacing between posters: a share of a poster's width, tighter when the panel is narrow. */
@@ -82,8 +74,7 @@
   /* 0.7s = slide speed; the curve settles softly like a spring. */
   transition:
     transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.7s ease,
-    filter 0.7s ease;
+    opacity 0.7s ease;
   /* Posters that wrap round the ring remount at their new end; this fades them in there. */
   animation: project-bg-in 0.5s ease both;
 }
@@ -98,7 +89,7 @@
 .project-card:not(.wide) .project-bg {
   --size: min(88%, 80cqw);
   --step: min(62%, 30cqw);
-  opacity: clamp(0, 1.6 - var(--a) * 0.8, 1);
+  opacity: clamp(0, 2 - var(--a), 1);
 }
 
 @keyframes project-bg-in {
@@ -684,7 +675,7 @@ html:has(.project-modal[open]) {
   .project-card:not(.wide) .project-bg {
     --size: min(88%, 85cqw);
     --step: min(62%, 32cqw);
-    opacity: clamp(0, 1.6 - var(--a) * 0.8, 1);
+    opacity: clamp(0, 2 - var(--a), 1);
   }
 
   .project-mark-title,
