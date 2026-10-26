@@ -64,7 +64,8 @@ export default function Hero({ copy, language }: { copy: Copy; language: Languag
         <span><ScrambleText text={lead} /></span> {tail && <em><ScrambleText text={tail} /></em>}
       </h1>
       <p className="hero-name">
-        <ScrambleText text={first} trigger={language} /> <ScrambleText text={last} trigger={language} />
+        {/* JP: a plain space is too narrow in the JP font (ロイ デラ read as one word), so use ・ like the rest of the name. */}
+        <ScrambleText text={first} trigger={language} />{language === 'ja' ? '・' : ' '}<ScrambleText text={last} trigger={language} />
       </p>
       <div className="hero-bottom">
         <div className="hero-message">
