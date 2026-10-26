@@ -46,14 +46,13 @@
 
 /* The service is the largest text on the page; the name supports it. */
 .hero-headline {
-  /* Staggered pair like the old name treatment, but compact: the lime line starts where the first line ends,
-     and the group sits in the middle of the hero (owner request). */
+  /* Staggered pair like the old name treatment: "JP → EN" starts in line with the first stat (1,000+, column 2
+     of the 12-column .hero-bottom grid) and the lime line ends at the right edge (owner request). */
   display: grid;
   grid-template-columns: auto auto;
-  /* Space between where the first line ends and the lime line starts. */
+  justify-content: space-between;
   column-gap: 0.5em;
-  width: fit-content;
-  margin: var(--space-6) auto 0;
+  margin: var(--space-6) 0 0 calc(100% / 12);
   font-size: clamp(3.125rem, 9.6vw, 9.375rem);
   font-weight: var(--weight-medium);
   line-height: var(--leading-display);
@@ -66,7 +65,7 @@
 }
 
 .hero-headline em {
-  /* Second row, starting where the first line ends. */
+  /* Second row, in the right-hand column. */
   grid-area: 2 / 2;
 }
 
@@ -200,6 +199,7 @@
   /* Too narrow for the two lines side by side: stack them, with the lime line stepped in. */
   .hero-headline {
     display: block;
+    margin-left: 0;
     font-size: clamp(3.125rem, 15vw, 5.125rem);
   }
 
@@ -245,9 +245,11 @@
 /* iPads held upright get the desktop layout but a tall, narrow screen: size the type from the width they
    have so the hero isn't a shrunken desktop band in the middle, and give the message more of the row. */
 @media (min-width: 50.0625rem) and (orientation: portrait) {
-  /* 11vw keeps the side-by-side pair on one line each down to the narrowest upright iPad. */
+  /* The stats start at the left edge here (.hero-message spans from column 1), so the headline does too.
+     10.5vw keeps each line on one line, inside the content edge, down to the narrowest upright iPad. */
   .hero-headline {
-    font-size: clamp(4rem, 11vw, 8.625rem);
+    margin-left: 0;
+    font-size: clamp(4rem, 10.5vw, 8.625rem);
   }
 
   .hero-message {
