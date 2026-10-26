@@ -39,27 +39,30 @@
 .project-bg-track {
   position: relative;
   overflow: hidden;
+  /* Poster size and spacing follow the panel's width (cqw), so all five fit on narrower panels too. */
+  container-type: size;
   perspective: 75rem;
   border-radius: var(--radius-sm);
   background: var(--color-bg);
 }
 
 /* --d = position from the hovered title (negative = left), --a = its distance; both set in Projects.tsx.
-   Centre poster flat and full size; neighbours slide out, turn away, shrink and dim; 3+ away fade out. */
+   Five show (Figma mockup): centre flat and full size; neighbours slide out, turn away, shrink and dim
+   (80%, then 40%); 3+ away fade out. */
 .project-bg {
   position: absolute;
   /* Centre of the flow, across the panel. */
   left: 50%;
   top: 50%;
-  height: 80%;
+  height: min(88%, 62cqw);
   aspect-ratio: 2 / 3;
   border-radius: var(--radius-sm);
   object-fit: cover;
-  opacity: clamp(0, 1 - var(--a) * 0.55, 1);
+  opacity: clamp(0, 1.2 - var(--a) * 0.4, 1);
   transform:
     translate(-50%, -50%)
-    /* Spacing between posters, as a share of a poster's width. */
-    translateX(calc(var(--d) * 62%))
+    /* Spacing between posters: a share of a poster's width, tighter when the panel is narrow. */
+    translateX(calc(var(--d) * min(62%, 17cqw)))
     /* Turn angle of the side posters. */
     rotateY(calc(clamp(-1, var(--d), 1) * -45deg))
     /* Side posters' size: 1 - 0.18 = 82%. */
@@ -70,6 +73,21 @@
     opacity 0.7s ease;
   /* Posters that wrap round the ring remount at their new end; this fades them in there. */
   animation: project-bg-in 0.5s ease both;
+}
+
+/* Half-width cards: a narrow panel, so the panel hugs a tighter, larger fan instead of leaving tall black margins. */
+.project-card:not(.wide) .project-bg-track {
+  align-self: center;
+  aspect-ratio: 4 / 5;
+}
+
+.project-card:not(.wide) .project-bg {
+  height: min(88%, 95cqw);
+  transform:
+    translate(-50%, -50%)
+    translateX(calc(var(--d) * min(62%, 12cqw)))
+    rotateY(calc(clamp(-1, var(--d), 1) * -45deg))
+    scale(calc(1 - min(var(--a), 1) * 0.18));
 }
 
 @keyframes project-bg-in {
@@ -644,8 +662,11 @@ html:has(.project-modal[open]) {
     order: 0;
   }
 
-  .project-bg-track {
+  .project-bg-track,
+  .project-card:not(.wide) .project-bg-track {
     height: 18rem;
+    /* Full card width on phones; the half-card panel shape is for the two-up desktop grid only. */
+    aspect-ratio: auto;
   }
 
   .project-mark-title,
