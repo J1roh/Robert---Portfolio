@@ -46,13 +46,23 @@
 
 /* The service is the largest text on the page; the name supports it. */
 .hero-headline {
-  /* Breaks after the arrow in EN ("Japanese →" / "English Translator"); JP fits on one line. */
-  max-width: 9em;
   margin-top: var(--space-6);
   font-size: clamp(3.125rem, 9.6vw, 9.375rem);
   font-weight: var(--weight-medium);
   line-height: var(--leading-display);
   letter-spacing: -0.065em;
+}
+
+.hero-headline span,
+.hero-headline em {
+  display: block;
+}
+
+/* Second line in lime, pushed right, like the old "Robert Roy / Dela Serna" name treatment. */
+.hero-headline em {
+  color: var(--color-accent);
+  font-style: normal;
+  text-align: right;
 }
 
 .hero-name {
@@ -61,11 +71,6 @@
   font-weight: var(--weight-medium);
   line-height: var(--leading-tight);
   letter-spacing: var(--tracking-snug);
-}
-
-.hero-name em {
-  color: var(--color-accent);
-  font-style: normal;
 }
 
 .hero-bottom {
@@ -183,6 +188,10 @@
 
   .hero-headline {
     font-size: clamp(3.125rem, 15vw, 5.125rem);
+  }
+
+  .hero-headline em {
+    text-align: left;
   }
 
   .hero-bottom {
