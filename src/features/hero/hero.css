@@ -50,6 +50,8 @@
      and the group sits in the middle of the hero (owner request). */
   display: grid;
   grid-template-columns: auto auto;
+  /* Space between where the first line ends and the lime line starts. */
+  column-gap: 0.5em;
   width: fit-content;
   margin: var(--space-6) auto 0;
   font-size: clamp(3.125rem, 9.6vw, 9.375rem);
