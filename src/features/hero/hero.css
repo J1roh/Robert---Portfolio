@@ -26,7 +26,8 @@
 .availability {
   position: absolute;
   top: 8rem;
-  right: var(--gutter);
+  /* One column in from the right (of the 12 across the content), mirroring the left indent. */
+  right: calc(var(--gutter) + (100% - 2 * var(--gutter)) / 12);
   display: flex;
   align-items: center;
   gap: var(--space-2);
@@ -51,8 +52,8 @@
   display: grid;
   grid-template-columns: auto auto;
   justify-content: space-between;
-  column-gap: 0.5em;
-  margin: var(--space-6) 0 0 calc(100% / 12);
+  column-gap: 0.3em;
+  margin: var(--space-6) calc(100% / 12) 0;
   font-size: clamp(3.125rem, 9.6vw, 9.375rem);
   font-weight: var(--weight-medium);
   line-height: var(--leading-display);
@@ -141,7 +142,7 @@
 }
 
 .circle-link {
-  grid-column: 10 / span 3;
+  grid-column: 9 / span 3;
   justify-self: end;
   display: flex;
   width: 8.25rem;
@@ -210,7 +211,7 @@
   /* Too narrow for the two lines side by side: stack them, with the lime line stepped in. */
   .hero-headline {
     display: block;
-    margin-left: 0;
+    margin-inline: 0;
     font-size: clamp(3.125rem, 15vw, 5.125rem);
   }
 
@@ -263,8 +264,16 @@
     margin-left: 0;
   }
 
+  .availability {
+    right: var(--gutter);
+  }
+
+  .circle-link {
+    grid-column: 10 / span 3;
+  }
+
   .hero-headline {
-    margin-left: 0;
+    margin-inline: 0;
     font-size: clamp(4rem, 10.5vw, 8.625rem);
   }
 
