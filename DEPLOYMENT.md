@@ -57,3 +57,13 @@ Recommendation: pick whichever matches where the repo already lives. Owner decid
 - Never commit secrets, tokens, or API keys.
 - Do not add analytics, trackers, or third-party embeds without a Decision Log entry and owner approval.
 - Do not configure hosting or domains yourself; provide steps for the owner.
+
+## 9. Supabase down (free tier pauses after 7 days idle)
+Kept awake by `.github/workflows/keep-alive.yml` plus an UptimeRobot monitor on the same URL, which emails when it fails. `.github/workflows/backup.yml` keeps 90 days of weekly encrypted data dumps (Actions → Back up Supabase → artifacts).
+
+1. **Paused under 90 days:** Supabase dashboard → project → **Restore project**. Nothing else to do.
+2. **Project lost:**
+   1. Create a new project. Run `supabase/mitigations/01…13` in order in the SQL editor.
+   2. Download the latest `supabase-data` artifact, then `gpg -d data.sql.gpg > data.sql` (passphrase = `BACKUP_PASSPHRASE`). Run `data.sql` in the SQL editor.
+   3. Put the new URL and anon key in `deploy.yml`, `keep-alive.yml` and the UptimeRobot monitor, and the new ref in `supabase/config.toml` `project_id`. Update the `SUPABASE_DB_URL` secret.
+   4. Redeploy `supabase/functions` and set their secrets again. Re-upload poster images in the CMS: storage files aren't in the dump.
