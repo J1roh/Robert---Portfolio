@@ -1,7 +1,6 @@
 import { useEffect, useState, type FormEvent } from 'react'
-import { supabase } from '../lib/supabase.ts'
 import { site } from '../lib/content.ts'
-import { useSession } from '../lib/use-session.ts'
+import { signIn, useSession } from '../lib/use-session.ts'
 import Arrow from '../components/Arrow.tsx'
 import './login.css'
 
@@ -13,21 +12,12 @@ export default function Login() {
   const [busy, setBusy] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
 
-  // Already signed in on this browser (Supabase keeps the session): skip the form and open the CMS.
+  // Already signed in on this browser (the session cookie lasts 30 days): skip the form and open the CMS.
   // Inside the CMS this component only renders while signed out, so it never loops.
   useEffect(() => {
     if (session && !location.hash.startsWith('#/cms')) location.replace('#/cms')
   }, [session])
 
-  if (!supabase) {
-    return (
-      <section className="login-panel">
-        <h1>{text.heading}</h1>
-        <p role="alert">Login is not configured: set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in .env.</p>
-      </section>
-    )
-  }
-  const auth = supabase.auth
   if (session) return null
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
@@ -35,12 +25,9 @@ export default function Login() {
     const form = new FormData(e.currentTarget)
     setBusy(true)
     setError('')
-    const { error } = await auth.signInWithPassword({
-      email: String(form.get('email')),
-      password: String(form.get('password')),
-    })
+    const error = await signIn(String(form.get('email')), String(form.get('password')))
     setBusy(false)
-    if (error) setError(error.message)
+    if (error) setError(error)
     else location.hash = '#/cms'
   }
 
@@ -53,7 +40,7 @@ export default function Login() {
           <p className="login-copy">{text.intro}</p>
           <form className="login-form" onSubmit={onSubmit}>
             <label htmlFor="email">Email</label>
-            <input id="email" name="email" type="email" autoComplete="email" placeholder="name@example.com" required />
+            <input id="email" name="email" type="email" autoComplete="username" required />
             <label htmlFor="password">Password</label>
             <div className="password-field">
               <input id="password" name="password" type={showPassword ? 'text' : 'password'} autoComplete="current-password" required />

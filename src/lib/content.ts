@@ -1,9 +1,7 @@
 import site from '../../content/site.json'
 import projects from '../../content/projects.json'
 import { mergeContent } from './merge-content.ts'
-
-// Fetched after first paint: the Supabase client is about a third of the JS and the landing page renders from bundled defaults first.
-const client = () => import('./supabase.ts').then((m) => m.supabase)
+import { api, jsonBody } from './api.ts'
 
 // Bundled JSON is type-checked at build time, so no runtime validation layer is needed.
 export type Language = keyof typeof site.copy
@@ -20,7 +18,7 @@ export type Project = Omit<(typeof projects)[number], 'details'> & {
 export type Links = typeof site.links
 export type Stat = Copy['stats'][number]
 
-// The CMS-editable slice of the site; saved as one row (key 'site') in the Supabase `content` table.
+// The CMS-editable slice of the site; saved as one row (key 'site') in the D1 `content` table (worker/schema.sql).
 export type Content = { projects: Project[]; stats: Record<Language, Stat[]>; clientRoster: Record<Language, string>; links: Links }
 
 export const defaults: Content = {
@@ -31,37 +29,27 @@ export const defaults: Content = {
   links: site.links,
 }
 
+// Bundled defaults if the backend can't be reached, so the site always renders.
 export async function loadContent(): Promise<Content> {
-  const supabase = await client()
-  if (!supabase) return defaults
-  const { data, error } = await supabase.from('content').select('value').eq('key', 'site').maybeSingle()
-  return error ? defaults : mergeContent(data?.value, defaults)
+  const { data } = await api<{ value: unknown }>('content')
+  return mergeContent(data?.value, defaults)
 }
 
 // Returns an error message, or null on success.
 export async function saveContent(value: Content): Promise<string | null> {
-  const supabase = await client()
-  if (!supabase) return 'Supabase is not configured.'
-  const { error } = await supabase.from('content').upsert({ key: 'site', value, updated_at: new Date().toISOString() })
-  return error?.message ?? null
+  return (await api('content', jsonBody('PUT', value))).error
 }
 
-// Uploads a title image to the public `posters` bucket (supabase/mitigations/04). Returns its URL, or an error message.
+// Uploads a title image (stored in Workers KV). Returns its URL, or an error message.
 export async function uploadPoster(file: File): Promise<{ url: string } | { error: string }> {
-  const supabase = await client()
-  if (!supabase) return { error: 'Supabase is not configured.' }
-  // Same cap as the bucket's file_size_limit (supabase/mitigations/09); checked here for a friendlier message.
+  // Same cap as the server (worker/index.ts); checked here for a friendlier message.
   if (file.size > 5 * 1024 * 1024) return { error: 'Images must be 5 MB or smaller.' }
-  const path = `${Date.now()}-${file.name.toLowerCase().replace(/[^a-z0-9.]+/g, '-')}`
-  const { error } = await supabase.storage.from('posters').upload(path, file, { contentType: file.type })
-  if (error) {
-    return {
-      error: /bucket not found/i.test(error.message)
-        ? 'The "posters" storage bucket is missing. Run supabase/mitigations/04_posters_bucket.sql in the Supabase SQL editor, then try again.'
-        : error.message,
-    }
-  }
-  return { url: supabase.storage.from('posters').getPublicUrl(path).data.publicUrl }
+  const { data, error } = await api<{ url: string }>(`posters?name=${encodeURIComponent(file.name)}`, {
+    method: 'POST',
+    headers: { 'Content-Type': file.type },
+    body: file,
+  })
+  return data ?? { error }
 }
 
 export { site, projects }

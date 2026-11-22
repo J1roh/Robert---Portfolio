@@ -1,0 +1,24 @@
+// Cloudflare Worker: serves dist/ and the /api backend (worker/index.ts). Free plan; never pauses, no card needed.
+// One-time setup (in your own terminal, so secrets never land in a chat or log):
+//   1. npx wrangler login
+//   2. npx wrangler d1 create portfolio            → paste the database_id below
+//   3. npx wrangler kv namespace create POSTERS    → paste the id below
+//   4. npx wrangler d1 execute portfolio --remote --file worker/schema.sql
+//   5. npx wrangler secret put CMS_PASSWORD        (first sign-in only: while there is no CMS account, signing in with any
+//                                                   email + this password creates the one account with that email.
+//                                                   Ignored afterwards; change the password in CMS → Settings.)
+//      npx wrangler secret put SESSION_SECRET      (any long random text; changing it signs everyone out)
+//      npx wrangler secret put RESEND_API_KEY      (same Resend key the Supabase function used)
+//      Optional: npx wrangler secret put NOTIFY_TO (defaults to bontilaojiroh@gmail.com)
+//   6. npm run deploy
+// Local: put the same secrets in .dev.vars (gitignored), then `npm run build && npx wrangler dev`, or run it beside `npm run dev`.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "jiroh-portfolio",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-11-01",
+  "assets": { "directory": "./dist", "binding": "ASSETS", "not_found_handling": "single-page-application" },
+  "d1_databases": [{ "binding": "DB", "database_name": "portfolio", "database_id": "fcedfb2e-c25c-4590-a4fb-8d28b6b5f82b" }],
+  "kv_namespaces": [{ "binding": "POSTERS", "id": "93e29ce0bcb7454fbbb78d0a29cc8e87" }],
+  "observability": { "enabled": true }
+}

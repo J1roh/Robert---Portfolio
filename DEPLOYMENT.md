@@ -58,12 +58,14 @@ Recommendation: pick whichever matches where the repo already lives. Owner decid
 - Do not add analytics, trackers, or third-party embeds without a Decision Log entry and owner approval.
 - Do not configure hosting or domains yourself; provide steps for the owner.
 
-## 9. Supabase down (free tier pauses after 7 days idle)
-Kept awake by `.github/workflows/keep-alive.yml` plus an UptimeRobot monitor on the same URL, which emails when it fails. `.github/workflows/backup.yml` keeps 90 days of weekly encrypted data dumps (Actions → Back up Supabase → artifacts).
+## 9. Backend (Cloudflare Worker, free plan, never pauses)
+One Worker (`wrangler.jsonc`, `worker/index.ts`) serves the site and `/api`: D1 database `portfolio` (CMS content, enquiries), KV namespace `POSTERS` (uploaded title images), Resend for the new-enquiry email. Setup steps are at the top of `wrangler.jsonc`. `.github/workflows/backup.yml` keeps 90 days of weekly encrypted D1 exports (Actions → Back up database → artifacts).
 
-1. **Paused under 90 days:** Supabase dashboard → project → **Restore project**. Nothing else to do.
-2. **Project lost:**
-   1. Create a new project. Run `supabase/mitigations/01…13` in order in the SQL editor.
-   2. Download the latest `supabase-data` artifact, then `gpg -d data.sql.gpg > data.sql` (passphrase = `BACKUP_PASSPHRASE`). Run `data.sql` in the SQL editor.
-   3. Put the new URL and anon key in `deploy.yml`, `keep-alive.yml` and the UptimeRobot monitor, and the new ref in `supabase/config.toml` `project_id`. Update the `SUPABASE_DB_URL` secret.
-   4. Redeploy `supabase/functions` and set their secrets again. Re-upload poster images in the CMS: storage files aren't in the dump.
+**Database lost or corrupted:**
+1. `npx wrangler d1 create portfolio`, put the new id in `wrangler.jsonc`, then `npx wrangler d1 execute portfolio --remote --file worker/schema.sql`.
+2. Download the latest `d1-data` artifact, `gpg -d data.sql.gpg > data.sql` (passphrase = `BACKUP_PASSPHRASE`), then `npx wrangler d1 execute portfolio --remote --file data.sql`.
+3. Poster images live in KV and aren't in the export; re-upload any missing ones in the CMS.
+
+**CMS account:** one account, email + password (D1 table `users`, one row). Change the password in CMS → Settings. The very first sign-in uses the `CMS_PASSWORD` secret with any email, which creates the account.
+
+**Forgot the CMS password:** `npx wrangler d1 execute portfolio --remote --command "delete from users"`, then sign in with your email and `CMS_PASSWORD` (set a new one with `npx wrangler secret put CMS_PASSWORD` first if needed), and change it in Settings. To sign every browser out at once, change `SESSION_SECRET`.

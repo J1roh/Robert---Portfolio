@@ -1,13 +1,12 @@
 import { useState, type FormEvent } from 'react'
-import { supabase } from '../lib/supabase.ts'
 import { sendEnquiry } from '../lib/enquiries.ts'
 import type { Copy, Links } from '../lib/content.ts'
 import Arrow from '../components/Arrow.tsx'
 import './enquiry.css'
 
-// Enquiry form in the landing page's Contact section, after the owner's "Parallax Scrolling Website" design. Enquiries are saved to Supabase
-// and read in the CMS. Max lengths match the table's checks in supabase/mitigations/02_create_enquiries_table.sql.
-// Send times on this browser. The server refuses a 4th within 2 days anyway (supabase/mitigations/13);
+// Enquiry form in the landing page's Contact section, after the owner's "Parallax Scrolling Website" design. Enquiries are saved by
+// the backend (worker/index.ts) and read in the CMS. Max lengths match the table's checks in worker/schema.sql.
+// Send times on this browser. The server refuses a 4th within 2 days anyway (worker/index.ts);
 // this just shows the "already sent" note up front instead of letting the visitor fill the form in vain.
 const SENT_KEY = 'enquiry-sent-times'
 const LIMIT = 3
@@ -85,9 +84,7 @@ export default function Enquiry({ copy, links }: { copy: Copy; links: Links }) {
         )}
       </div>
 
-      {!supabase ? (
-        <p className="enquiry-form" role="alert">{text.notConfigured}</p>
-      ) : status === 'duplicate' ? (
+      {status === 'duplicate' ? (
         <p className="enquiry-form enquiry-already" role="status">{text.alreadySent}</p>
       ) : (
         <form key={formKey} className="enquiry-form" onSubmit={onSubmit}>

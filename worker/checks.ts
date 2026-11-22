@@ -1,7 +1,7 @@
 // Spam checks for contact-form enquiries. Pure (no Deno or Node APIs; fetch is passed in) so node:test can run them.
 export type EnquiryFields = { name: string; email: string; company: string; timeline: string; message: string }
 
-// Same limits as the enquiries table's checks (supabase/mitigations/02).
+// Same limits as the enquiries table's checks (worker/schema.sql).
 const LIMITS = { name: [1, 200], email: [3, 320], company: [0, 200], timeline: [0, 200], message: [1, 5000] } as const
 // Deliberately loose: something@domain.tld with no spaces. The DNS check below does the real work.
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/

@@ -1,4 +1,4 @@
-// Run: node --test supabase/functions/notify-enquiry/email.test.ts
+// Run: node --test worker/email.test.ts
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { enquiryEmail } from './email.ts'

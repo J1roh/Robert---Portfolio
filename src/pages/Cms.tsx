@@ -1,13 +1,13 @@
 import { useEffect, useState, type KeyboardEvent } from 'react'
-import { supabase } from '../lib/supabase.ts'
 import { defaults, saveContent, site, uploadPoster, type Content, type Language, type Project, type WorkDetails } from '../lib/content.ts'
 import { mergeContent } from '../lib/merge-content.ts'
 import { posterSrc } from '../lib/posters.ts'
 import { posterKey } from '../lib/poster-key.ts'
 import { countUnread } from '../lib/enquiries.ts'
-import { useSession } from '../lib/use-session.ts'
+import { signOut, useSession } from '../lib/use-session.ts'
 import Login from './Login.tsx'
 import CmsEnquiries from './CmsEnquiries.tsx'
+import CmsSettings from './CmsSettings.tsx'
 import CmsTitleEditor from './CmsTitleEditor.tsx'
 import CmsLangToggle from './CmsLangToggle.tsx'
 import CmsConfirm from './CmsConfirm.tsx'
@@ -29,6 +29,7 @@ const AUTH_ERROR = /jwt|row-level security|permission denied|not authori[sz]ed|4
 
 // Layout follows the owner's "Parallax Scrolling Website" CMS design (Figma Make zip).
 const ENQUIRIES = '#/cms/enquiries'
+const SETTINGS = '#/cms/settings'
 const pad = (n: number) => String(n).padStart(2, '0')
 const languages: Language[] = ['en', 'ja']
 // Sidebar order from the design. Enquiries is its own page (#/cms/enquiries); the rest are sections of #/cms.
@@ -37,7 +38,10 @@ const sections = [
   { id: 'cms-portfolio', label: 'Portfolio' },
   { id: 'cms-socials', label: 'Social links' },
   { id: ENQUIRIES, label: 'Enquiries' },
+  { id: SETTINGS, label: 'Settings' },
 ]
+// Sidebar entries that are pages of their own, by hash.
+const pageFor: Record<string, Props['page']> = { [ENQUIRIES]: 'enquiries', [SETTINGS]: 'settings' }
 const scrollBehavior = () => (matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth')
 
 // Moves item `from` to index `to`; used by drag-and-drop and Alt+Arrow keys.
@@ -47,9 +51,9 @@ const move = <T,>(list: T[], from: number, to: number) => {
   return next
 }
 
-type Props = { content: Content; onSaved: (content: Content) => void; page: 'content' | 'enquiries' }
+type Props = { content: Content; onSaved: (content: Content) => void; page: 'content' | 'enquiries' | 'settings' }
 
-// Stays mounted across #/cms and #/cms/enquiries, so unsaved content edits survive a visit to the inbox.
+// Stays mounted across #/cms, #/cms/enquiries and #/cms/settings, so unsaved content edits survive a visit to the other pages.
 export default function Cms({ content, onSaved, page }: Props) {
   const session = useSession()
   // A section picked from the Enquiries page; scrolled to once the content page has rendered.
@@ -73,7 +77,7 @@ export default function Cms({ content, onSaved, page }: Props) {
   const [status, setStatus] = useState<'saved' | 'saving' | 'dirty'>('saved')
   const [error, setError] = useState('')
 
-  // Content can arrive from Supabase after this page mounts; start editing from the latest,
+  // Content can arrive from the backend after this page mounts; start editing from the latest,
   // unless this browser holds unsaved changes that differ from it.
   if (base !== content) {
     setBase(content)
@@ -128,7 +132,6 @@ export default function Cms({ content, onSaved, page }: Props) {
 
   const project = draft.projects[active]
   const langLabel = lang === 'ja' ? 'JP' : 'EN'
-  const shortName = site.name.split(' ').slice(0, 2)
 
   const edit = (next: Content) => {
     setDraft(next)
@@ -197,7 +200,7 @@ export default function Cms({ content, onSaved, page }: Props) {
     requestAnimationFrame(() => handle.closest('.project-rows')?.children[to]?.scrollIntoView({ block: 'nearest' }))
   }
 
-  // Titles still shown with a bundled poster from assets/projects (no image saved in Supabase yet).
+  // Titles still shown with a bundled poster from assets/projects (no uploaded image saved yet).
   const bundled = draft.projects.flatMap((p) => p.allTitles.filter((t) => !p.details?.[t]?.image && posterSrc(t)))
 
   // One-time move of those posters into the `posters` bucket; the URLs land in the draft, published on Save.
@@ -240,9 +243,7 @@ export default function Cms({ content, onSaved, page }: Props) {
     const message = await saveContent(draft)
     if (message) {
       setError(
-        message.includes('schema cache')
-          ? 'The "content" table is missing in Supabase. Run supabase/mitigations/01_create_content_table.sql in the Supabase SQL editor, then save again.'
-          : AUTH_ERROR.test(message)
+        AUTH_ERROR.test(message)
             ? 'Your session has ended or this account can’t publish. Sign out and sign in again — your changes are kept in this browser.'
             : message,
       )
@@ -262,10 +263,10 @@ export default function Cms({ content, onSaved, page }: Props) {
         </a>
         <nav aria-label="CMS sections">
           {sections.map(({ id, label }, i) =>
-            id === ENQUIRIES ? (
-              <a key={id} href={ENQUIRIES} aria-current={page === 'enquiries' ? 'page' : undefined}>
+            pageFor[id] ? (
+              <a key={id} href={id} aria-current={page === pageFor[id] ? 'page' : undefined}>
                 <span>{pad(i + 1)}</span> {label}
-                {unread > 0 && <b className="cms-badge" aria-label={`${unread} unread`}>{unread}</b>}
+                {id === ENQUIRIES && unread > 0 && <b className="cms-badge" aria-label={`${unread} unread`}>{unread}</b>}
               </a>
             ) : (
               // Buttons, not #anchors: an in-page #hash would leave the #/cms route.
@@ -288,18 +289,20 @@ export default function Cms({ content, onSaved, page }: Props) {
           )}
         </nav>
         <div className="cms-user">
-          <span aria-hidden="true">{shortName.map((w) => w[0]).join('')}</span>
+          <span aria-hidden="true">{session.email[0].toUpperCase()}</span>
           <div>
-            <strong>{shortName.join(' ')}</strong>
+            <strong title={session.email}>{session.email}</strong>
             <small>Administrator</small>
           </div>
-          <button type="button" onClick={() => supabase?.auth.signOut()}>Sign out</button>
+          <button type="button" onClick={() => signOut()}>Sign out</button>
         </div>
       </aside>
 
       <main id="main" className={page === 'enquiries' ? 'cms-main enquiries-main' : 'cms-main'} tabIndex={-1}>
         {page === 'enquiries' ? (
           <CmsEnquiries onUnread={setUnread} />
+        ) : page === 'settings' ? (
+          <CmsSettings account={session} />
         ) : (
         <>
         <header className="cms-header">
@@ -534,3 +537,4 @@ export default function Cms({ content, onSaved, page }: Props) {
     </div>
   )
 }
+ 

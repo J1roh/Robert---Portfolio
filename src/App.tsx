@@ -14,7 +14,8 @@ import { useStoredChoice } from './lib/use-stored-choice.ts'
 const LOGIN = '#/login'
 const CMS = '#/cms'
 const CMS_ENQUIRIES = '#/cms/enquiries'
-const pageRoute = (hash: string) => ([LOGIN, CMS, CMS_ENQUIRIES].includes(hash) ? hash : null)
+const CMS_SETTINGS = '#/cms/settings'
+const pageRoute = (hash: string) => ([LOGIN, CMS, CMS_ENQUIRIES, CMS_SETTINGS].includes(hash) ? hash : null)
 // The contact form moved from its own page (#/contact) into the landing page's Contact section; old links land there.
 const redirectOldContact = () => {
   // A real hash navigation (not history.replaceState), so the browser keeps scrolling to it while the page loads.
@@ -58,7 +59,7 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    document.title = route === LOGIN ? `${site.login.heading} — ${site.name}` : route === CMS ? `CMS — ${site.name}` : route === CMS_ENQUIRIES ? `Enquiries — CMS — ${site.name}` : site.pageTitle
+    document.title = route === LOGIN ? `${site.login.heading} — ${site.name}` : route === CMS ? `CMS — ${site.name}` : route === CMS_ENQUIRIES ? `Enquiries — CMS — ${site.name}` : route === CMS_SETTINGS ? `Settings — CMS — ${site.name}` : site.pageTitle
     // Deep links (or nav clicks from another page) to a section scroll there once the page renders.
     const target = location.hash.startsWith('#/') ? null : document.getElementById(location.hash.slice(1))
     if (target) target.scrollIntoView({ behavior: 'instant' })
@@ -77,12 +78,12 @@ export default function App() {
   const skipLink = <a className="skip-link" href="#main">Skip to main content</a>
 
   // The CMS is a full-screen app of its own, like the owner's design: no site header, footer or loader.
-  if (route === CMS || route === CMS_ENQUIRIES) {
+  if (route === CMS || route === CMS_ENQUIRIES || route === CMS_SETTINGS) {
     return (
       <>
         {skipLink}
         <Suspense fallback={null}>
-          <Cms content={content} onSaved={setContent} page={route === CMS ? 'content' : 'enquiries'} />
+          <Cms content={content} onSaved={setContent} page={route === CMS ? 'content' : route === CMS_SETTINGS ? 'settings' : 'enquiries'} />
         </Suspense>
       </>
     )

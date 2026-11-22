@@ -1,4 +1,4 @@
-// Run: node --test supabase/functions/submit-enquiry/checks.test.ts
+// Run: node --test worker/checks.test.ts
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { canReceiveMail, cleanFields, emailDomain, isDisposable } from './checks.ts'

@@ -25,6 +25,11 @@ dist-ssr
 
 .env
 .venv
+# Cloudflare: local secrets and wrangler's local D1/KV state
+.dev.vars
+.wrangler/
+# Supabase enquiries export for scripts/migrate-from-supabase.mjs (personal data)
+enquiries.json
 
 # AI-tool folders and local artifacts (kept on disk, not published)
 .agents/

@@ -130,11 +130,15 @@
 .cms-user div {
   display: grid;
   gap: 2px;
+  min-width: 0;
 }
 
 .cms-user strong {
+  overflow: hidden;
   font-size: 0.7rem;
   font-weight: var(--weight-medium);
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .cms-user small {
@@ -1413,5 +1417,46 @@ html:has(.cms-project-modal[open], .confirm-modal[open]) {
 
   .enquiries-main .enquiry-detail-body {
     padding: 42px 22px 56px;
+  }
+}
+
+/* Settings page (#/cms/settings) */
+.cms-settings-card {
+  margin-top: 1.5rem;
+  padding: 1.75rem 2rem 2rem;
+  border: 1px solid var(--cms-line);
+  background: var(--cms-panel);
+}
+
+.cms-settings-card h2 {
+  margin-top: 0.45rem;
+  font-size: 1.25rem;
+  font-weight: var(--weight-medium);
+  letter-spacing: -0.04em;
+  overflow-wrap: anywhere;
+}
+
+.cms-page .cms-settings-submit {
+  justify-self: start;
+  padding: 0.75rem 1.05rem;
+  border: 1px solid var(--cms-ink);
+  border-radius: 2px;
+  color: #eff2e8;
+  background: var(--cms-ink);
+  font-size: 0.65rem;
+}
+
+.cms-settings-submit:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+@media (max-width: 50rem) {
+  .cms-settings-card {
+    padding: 1.25rem;
+  }
+
+  .cms-settings-card .editor-fields {
+    grid-template-columns: minmax(0, 1fr);
   }
 }

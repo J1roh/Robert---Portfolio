@@ -3,7 +3,7 @@ import ScrambleText from '../../components/ScrambleText.tsx'
 import type { Copy, Links } from '../../lib/content.ts'
 import './contact.css'
 
-// Loaded after first paint: the form pulls in the Supabase client.
+// Loaded after first paint, so the landing page ships less JS up front.
 const Enquiry = lazy(() => import('../../pages/Enquiry.tsx'))
 
 export default function Contact({ copy, links }: { copy: Copy; links: Links }) {
